@@ -1,10 +1,10 @@
 ```javascript
-const REPO_NAME = 'I-Can-Study-Pro';
+const REPO_NAME = 'I-Can-Study-Pro.html';
 const CACHE_NAME = 'i-can-study-pro-cache-v1';
 
 const assetsToCache = [
   `/${REPO_NAME}/`,
-  `/${REPO_NAME}/I-Can-Study-Pro.html`,
+  `/${REPO_NAME}/index.html`,
   `/${REPO_NAME}/manifest.json`,
   `/${REPO_NAME}/icon-192.png`,
   `/${REPO_NAME}/icon-512.png`,
