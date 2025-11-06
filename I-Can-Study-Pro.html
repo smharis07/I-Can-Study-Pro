@@ -1,0 +1,4260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>I Can Study</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐝</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<!-- PWA Manifest Link -->
+<link rel="manifest" href="manifest.json" />
+<!-- Theme color for Safari on iOS & other browsers -->
+<meta name="theme-color" content="#3F3D56">
+
+<style>
+  /* ========================================================== */
+  /* ==   .ᐟ Can Stひdy :: Rights - Asma & CO. by sm.haris    == */
+  /* ========================================================== */
+  :root {
+    --bg-main: #0d0d0d;
+    --bg-panel: #1a1a1a;
+    --bg-panel-light: #242424;
+    --bg-panel-dark: #151515;
+    --ink-main: #f0f0f0;
+    --ink-muted: #a0a0a0;
+    --line-main: #2b2b2b;
+    --line-accent: #3c3c3c;
+
+    --yellow-main: #FFC107;
+    --yellow-glow: rgba(255, 193, 7, 0.5);
+    --blue-main: #2196F3;
+    --blue-glow: rgba(33, 150, 243, 0.5);
+    --danger-main: #e53935;
+    --danger-glow: rgba(229, 57, 53, 0.5);
+    --ok-main: #4CAF50;
+    --ok-glow: rgba(76, 175, 80, 0.5);
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  /* --- Base & Scrollbar --- */
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font-main);
+    background-color: var(--bg-main);
+    color: var(--ink-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(255,193,7,0.08), transparent 30%),
+      radial-gradient(circle at 80% 70%, rgba(33,150,243,0.07), transparent 35%);
+    z-index: -1;
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg-main); }
+  ::-webkit-scrollbar-thumb { background: var(--line-accent); border-radius: 5px; border: 2px solid var(--bg-main); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--yellow-main); }
+  
+  /* --- Layout & Utilities --- */
+  .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .hidden { display: none !important; }
+
+  /* --- App Bar --- */
+  .appbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 24px;
+    background: rgba(13, 13, 13, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line-main);
+    box-shadow: 0 6px 24px rgba(0,0,0,.5);
+    transition: transform 0.4s ease-in-out; /* scroll animation */
+  }
+  /* hide app bar on scroll down */
+  .appbar--hidden {
+    transform: translateY(-110%);
+  }
+  .brand { 
+    font-weight: 900; 
+    font-size: 22px; 
+    color: var(--yellow-main); 
+    display: flex; 
+    align-items: baseline; 
+    gap: 10px; 
+    margin-right: auto; 
+    text-shadow: 0 0 10px var(--yellow-glow);
+    transition: text-shadow 0.3s ease-in-out;
+  }
+  .brand:hover {
+    text-shadow: 0 0 20px var(--yellow-glow), 0 0 5px var(--yellow-main);
+  }
+  .trademark { font-size: 10px; color: var(--ink-muted); font-weight: 300; }
+  .search { 
+    flex: 1 1 320px; 
+    padding: 10px 16px; 
+    border: 1px solid var(--line-main); 
+    border-radius: 10px; 
+    background: var(--bg-panel-light); 
+    color: var(--ink-main); 
+    font-size: 15px; 
+    transition: all .2s;
+    max-width: 100%;
+  }
+  .search:focus { 
+    box-shadow: 0 0 15px var(--yellow-glow); 
+    border-color: var(--yellow-main); 
+    outline: none;
+  }
+  
+  /* --- Buttons --- */
+  .btn { 
+    border: none; 
+    border-radius: 10px; 
+    padding: 10px 16px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: all .2s ease-out; 
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* gap for icon and text */
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease-out;
+    z-index: -1;
+  }
+  .btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .btn:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+  }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .btn-primary { background: var(--yellow-main); color: #111; box-shadow: 0 0 15px var(--yellow-glow); }
+  .btn-primary:hover { background: #ffd040; box-shadow: 0 0 25px var(--yellow-glow);}
+  
+  .btn-danger { background: var(--danger-main); color: #fff; box-shadow: 0 0 15px var(--danger-glow);}
+  .btn-danger:hover { background: #ff5252; box-shadow: 0 0 25px var(--danger-glow);}
+  
+  .btn-ghost { background: transparent; color: var(--ink-main); border: 1px solid var(--line-accent); }
+  .btn-ghost:hover { background: var(--line-accent); color: var(--yellow-main); border-color: var(--yellow-main); }
+  
+  .btn-mini { padding: 6px 10px; border-radius: 8px; font-weight: 700; }
+  
+  /* --- Hero Section --- */
+  .hero-section {
+    text-align: center;
+    padding-bottom: 40px;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin: 0 0 10px;
+    color: var(--yellow-main);
+    text-shadow: 0 0 15px var(--yellow-glow);
+  }
+  .hero-section p {
+    font-size: 1.1rem;
+    color: var(--ink-muted);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* --- Cards --- */
+  .card { 
+    background: rgba(26, 26, 26, 0.5); 
+    border: 1px solid var(--line-main); 
+    border-radius: 16px; 
+    margin-bottom: 16px; 
+    box-shadow: 0 8px 32px rgba(0,0,0,.35); 
+    overflow: hidden; 
+    transition: all 0.3s ease;
+    will-change: transform, opacity;
+    contain: layout style paint;
+  }
+  .card:hover {
+    border-color: var(--line-accent);
+    transform: translateY(-2px);
+  }
+  .subject-card { border-left: 6px solid var(--blue-main); }
+  .chapter-card { border-left: 6px solid var(--yellow-main); margin-left: 14px; }
+  .topic-card { border-left: 6px solid var(--line-accent); margin-left: 28px; }
+  .card-header { position: relative; display: flex; align-items: center; gap: 12px; padding: 16px; }
+  .card-body-wrapper { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .4s ease-in-out, opacity .3s ease-in-out; }
+  .card-body-wrapper.open { grid-template-rows: 1fr; opacity: 1; }
+  .card-body-content { padding: 0 16px 16px; min-height: 0; }
+  .twist { font-weight: 900; color: var(--yellow-main); width: 32px; height: 32px; text-align: center; border: 1px solid var(--line-main); border-radius: 8px; background: var(--bg-panel-light); transition: transform 0.3s, background 0.3s; cursor: pointer;}
+  .twist:hover { background-color: var(--line-accent); }
+  .twist.closed { transform: rotate(-90deg); }
+  .title { margin: 0; color: var(--ink-main); font-weight: 700; }
+  .title[contenteditable="true"] { outline: none; border-radius: 6px; padding: 2px 6px; }
+  .title[contenteditable="true"]:focus { box-shadow: 0 0 0 2px var(--yellow-main) inset; background: var(--bg-panel-dark); }
+  .subject-card .title { color: var(--blue-main); }
+  .chapter-card .title { color: var(--yellow-main); }
+  .space { flex: 1; }
+  .card-progress { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink-muted); margin-left: 10px; }
+  .card-progress .meter-mini { width: 60px; height: 8px; background: var(--bg-panel-light); border-radius: 4px; overflow:hidden; }
+  .meter-mini > div { height: 100%; transition: width .4s, background-color .4s; }
+  
+  @keyframes fadeInSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card.new-item {
+    animation: fadeInSlideUp 0.5s ease-out forwards;
+  }
+  @keyframes fadeOutShrink {
+    from { opacity: 1; transform: scale(1); max-height: 300px; }
+    to { opacity: 0; transform: scale(0.95); margin-bottom: -60px; max-height: 0; }
+  }
+  .card.is-deleting {
+    animation: fadeOutShrink 0.4s ease-in forwards;
+  }
+
+  /* --- Cookies (formerly biscuits) --- */
+  .group { margin: 10px 0; }
+  .group-label { font-weight: 700; margin: 4px 0 8px; display: block; }
+  .biscuit { 
+      display: inline-block; 
+      margin: 4px; 
+      padding: 8px 14px; 
+      font-weight: 600; 
+      border-radius: 999px; 
+      cursor: pointer; 
+      background: var(--bg-panel-light); 
+      border: 1px solid var(--line-accent); 
+      color: var(--ink-muted); 
+      transition: all .2s; 
+  }
+  .biscuit:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 0 12px 2px var(--yellow-glow); 
+      color: var(--yellow-main); 
+      border-color: var(--yellow-main);
+  }
+  .biscuit.selected { 
+      background: var(--yellow-main); 
+      color: #111; 
+      border-color: var(--yellow-main); 
+      box-shadow: 0 0 18px 3px var(--yellow-glow);
+      transform: translateY(-2px) scale(1.05);
+  }
+  
+  /* --- Notes & Score --- */
+  .score-line { display: flex; align-items: center; gap: 10px; margin-top: 12px; margin-bottom: 8px; }
+  .badge { font-weight: 700; padding: 6px 12px; border-radius: 10px; background: var(--bg-panel-light); color: var(--yellow-main); }
+  .feedback { color: var(--ink-muted); font-style: italic; margin-top: 6px; }
+  .feedback .fa-solid { margin: 0 4px; }
+  
+  .notes-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    background: var(--bg-panel-dark);
+    border: 1px solid var(--line-main);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .toolbar-group {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .toolbar-separator {
+    width: 1px;
+    height: 20px;
+    background-color: var(--line-main);
+    margin: 0 8px;
+  }
+  .notes-toolbar .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: 34px;
+    height: 34px;
+    padding: 4px 8px;
+    font-size: 14px;
+    background: var(--bg-panel-light);
+    color: var(--ink-muted);
+    box-shadow: none;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+  .notes-toolbar .btn:hover {
+    transform: none;
+    background: var(--line-accent);
+    color: var(--yellow-main);
+    border-color: var(--line-accent);
+  }
+  .notes-toolbar .btn:active {
+    transform: scale(0.92);
+    transition: transform 0.1s;
+  }
+  .notes-toolbar .btn.active {
+    background: var(--yellow-main);
+    color: #111;
+    border-color: var(--yellow-main);
+  }
+  .notes-toolbar .btn i {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+  }
+  .notes-container {
+      margin-top: 16px;
+      position: relative;
+  }
+  .notes {
+    width: 100%;
+    min-height: 140px;
+    resize: vertical;
+    overflow: auto;
+    padding: 14px;
+    background: var(--bg-panel-light);
+    color: var(--ink-main);
+    border: 1px solid var(--line-main);
+    white-space: pre-wrap;
+    font-family: var(--font-main);
+    font-size: 16px;
+    line-height: 1.6;
+    border-bottom: none;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .notes[contenteditable=true]:focus {
+    outline: none;
+    border-color: var(--yellow-main);
+    box-shadow: 0 0 10px var(--yellow-glow);
+  }
+  .notes[contenteditable=true]:empty:before {
+    content: attr(data-placeholder);
+    color: var(--ink-muted);
+    pointer-events: none;
+  }
+  .notes img { max-width: 100%; border-radius: 8px; margin: 8px 0; }
+  .notes ul, .notes ol { padding-left: 2em; }
+  
+  /* --- Beehive Styling --- */
+  .beehive-tag {
+    color: var(--yellow-main);
+    font-weight: bold;
+  }
+
+  [data-note-color="white"] .beehive-tag {
+    color: var(--blue-main);
+  }
+
+  .notes h1, .cornell-cues h1, .cornell-main h1, .cornell-summary h1 {
+    font-size: 1.6em;
+    color: var(--yellow-main);
+    font-weight: 900;
+    margin: 1em 0 0.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--line-accent);
+    line-height: 1.2;
+  }
+  .notes h2, .cornell-cues h2, .cornell-main h2, .cornell-summary h2 {
+    font-size: 1.4em;
+    color: white; 
+    font-weight: 700;
+    margin: 1em 0 0.5em;
+    line-height: 1.3;
+  }
+  
+  .cornell-notes-container {
+      display: grid;
+      grid-template-columns: 1fr 2.5fr;
+      grid-template-rows: auto auto;
+      gap: 10px;
+      visibility: hidden;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease-in-out;
+  }
+  .cornell-notes-container.visible {
+      visibility: visible;
+      opacity: 1;
+      max-height: 2000px;
+  }
+  .notes.hidden-transition, .note-view.hidden-transition {
+      visibility: hidden;
+      opacity: 0;
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 0;
+      border: 0;
+      transition: all 0.4s ease-in-out;
+  }
+  .cornell-cues, .cornell-main, .cornell-summary {
+      width: 100%;
+      min-height: 140px;
+      resize: vertical;
+      overflow: auto;
+      padding: 14px;
+      background: var(--bg-panel-light);
+      color: var(--ink-main);
+      border: 1px solid var(--line-main);
+      white-space: pre-wrap;
+      font-family: var(--font-main);
+      font-size: 16px;
+      line-height: 1.6;
+      border-radius: 12px;
+  }
+  .cornell-cues:focus, .cornell-main:focus, .cornell-summary:focus {
+      outline: none;
+      border-color: var(--yellow-main);
+      box-shadow: 0 0 10px var(--yellow-glow);
+  }
+  .cornell-cues:empty:before, .cornell-main:empty:before, .cornell-summary:empty:before {
+      content: attr(data-placeholder);
+      color: var(--ink-muted);
+      pointer-events: none;
+  }
+  .cornell-summary {
+      grid-column: 1 / -1;
+      min-height: 80px;
+  }
+  .cornell-cues img, .cornell-main img, .cornell-summary img {
+      max-width: 100%; border-radius: 8px; margin: 4px 0;
+  }
+  .cornell-cues ul, .cornell-cues ol,
+  .cornell-main ul, .cornell-main ol,
+  .cornell-summary ul, .cornell-summary ol {
+      padding-left: 2em;
+  }
+
+  .color-palette {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-bottom: 8px;
+    background: var(--bg-panel-dark);
+    border: 1px solid var(--line-accent);
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 180px;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.2s ease-out;
+  }
+  .color-palette.visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .color-swatch:hover {
+    transform: scale(1.1);
+    border-color: var(--ink-main);
+  }
+  .color-swatch.active {
+    border-color: var(--yellow-main);
+  }
+  .color-swatch[data-color="default"] {
+    background-color: var(--bg-panel-light);
+    border: 1px solid var(--line-main);
+  }
+  .color-swatch[data-color="default"] i {
+    color: var(--ink-muted);
+  }
+  [data-note-color] {
+    color: #ffffff;
+  }
+  [data-note-color]:empty:before {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  [data-note-color="red"]    { background-color: #7D3C3C; }
+  [data-note-color="orange"] { background-color: #8C5A2D; }
+  [data-note-color="white"]  { background-color: #FFFFFF; color: #111111; }
+  [data-note-color="white"]:empty:before { color: rgba(0, 0, 0, 0.6); }
+  [data-note-color="white"] h1, [data-note-color="white"] h2 { color: #111111 !important; }
+  [data-note-color="teal"]   { background-color: #2E6C63; }
+  [data-note-color="blue"]   { background-color: #3E6D83; }
+  [data-note-color="indigo"] { background-color: #3A5683; }
+  [data-note-color="purple"] { background-color: #644682; }
+  [data-note-color="pink"]   { background-color: #833F63; }
+  [data-note-color="gray"]   { background-color: #4A4E53; }
+  
+  .color-swatch[data-color="red"]    { background-color: #7D3C3C; }
+  .color-swatch[data-color="orange"] { background-color: #8C5A2D; }
+  .color-swatch[data-color="white"]  { background-color: #FFFFFF; border: 1px solid var(--line-accent); }
+  .color-swatch[data-color="teal"]   { background-color: #2E6C63; }
+  .color-swatch[data-color="blue"]   { background-color: #3E6D83; }
+  .color-swatch[data-color="indigo"] { background-color: #3A5683; }
+  .color-swatch[data-color="purple"] { background-color: #644682; }
+  .color-swatch[data-color="pink"]   { background-color: #833F63; }
+  .color-swatch[data-color="gray"]   { background-color: #4A4E53; }
+  
+  mark {
+    background-color: var(--yellow-main);
+    color: #111 !important;
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+  *[style*="background-color: rgb(255, 193, 7)"] {
+    color: #111 !important;
+  }
+
+  /* --- BEEHIVE AUTOCOMPLETE --- */
+  .tag-autocomplete {
+    position: absolute;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--line-accent);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 1000;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 4px;
+  }
+  .tag-suggestion {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    color: var(--ink-muted);
+  }
+  .tag-suggestion:hover, .tag-suggestion.active {
+    background-color: var(--line-accent);
+    color: var(--yellow-main);
+  }
+  .tag-suggestion strong {
+    color: var(--ink-main);
+  }
+
+  .scrollable-dash-list {
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right: 5px;
+  }
+
+  /* START: Loader Styles */
+  .loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+  }
+  .loader {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    box-shadow: 0 0 20px 2px var(--yellow-glow);
+    border-radius: 50%;
+  }
+  .loader::before, .loader::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+  }
+  .loader::before {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, var(--yellow-main) 0%, transparent 50%);
+    animation: spin 2s linear infinite;
+  }
+  .loader::after {
+    width: 85%;
+    height: 85%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-panel);
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .loader-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .loader-content {
+    text-align: center;
+    color: var(--yellow-main);
+  }
+  .loader-content p {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  /* END: Loader Styles */
+  
+  /* --- Dashboard --- */
+  #dashboard { display: none; position: relative; }
+  .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+  .dash-card { 
+      background: rgba(26, 26, 26, 0.7);
+      border: 1px solid var(--line-main); 
+      border-radius: 16px; 
+      padding: 20px; 
+      display: flex;
+      flex-direction: column;
+       position: relative; /* For hover button */
+  }
+  .dash-card h3 { margin: 0 0 16px; color: var(--yellow-main); font-weight: 700; display: flex; align-items: center; gap: 8px;}
+  .dash-card.all-topics-card {
+      grid-column: 1 / -1;
+  }
+  .meter-bar { height: 12px; background: var(--bg-panel-light); border-radius: 999px; overflow: hidden; border: 1px solid var(--line-main); }
+  .meter-bar > div { height: 100%; width: 0; transition: width .4s ease-out; }
+  .summary-row { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 12px; 
+    background: var(--bg-panel-dark); 
+    border: 1px solid var(--line-main); 
+    border-radius: 12px; 
+    transition: background 0.2s;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+  .summary-row:hover {
+      background: var(--bg-panel-light);
+  }
+  .deadline-item-container {
+    margin-bottom: 8px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .score-tag { font-weight: 700; font-size: 13px; padding: 6px 10px; border-radius: 8px; color: #fff; }
+  .good { background-color: var(--ok-main); } .mid { background-color: var(--blue-main); } .warn { background-color: var(--yellow-main); color: #111 !important; } .bad { background-color: var(--danger-main); }
+  .dot.good { background: var(--ok-main); } .dot.mid { background: var(--blue-main); } .dot.warn { background: var(--yellow-main); } .dot.bad { background: var(--danger-main); }
+  #biscuitStats li { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  #biscuitStats .label { flex: 1; } #biscuitStats .score-tag { margin-left: auto; }
+
+  /* Buzzing Icon Style */
+  .dashboard-title { cursor: pointer; }
+  .vibrating-icon {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+  }
+  .vibrating-icon::before,
+  .vibrating-icon::after {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.2s ease-out, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .vibrating-icon::before {
+    content: '₍₍≽';
+    transform: translateX(8px);
+  }
+  .vibrating-icon::after {
+    content: '≼⁾⁾';
+    transform: translateX(-8px);
+  }
+  .dashboard-title:hover .vibrating-icon, .vibrating-icon.celebrate {
+    animation: quick-shake 0.4s ease-in-out infinite alternate;
+  }
+  .dashboard-title:hover .vibrating-icon::before,
+  .dashboard-title:hover .vibrating-icon::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  @keyframes quick-shake {
+    from { transform: rotate(-2deg); }
+    to { transform: rotate(2deg); }
+  }
+  
+  /* === Dashboard Kaomoji Animations- So cute; kawaii === */
+  .dash-card h3 {
+    transition: color 0.3s ease-in-out;
+  }
+  
+  @keyframes bite {
+    0%, 100% { transform: rotate(0) scale(1); }
+    50% { transform: rotate(-15deg) scale(0.9); }
+  }
+  .dash-card h3:hover .fa-cookie-bite {
+    animation: bite 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) infinite;
+  }
+
+  @keyframes flicker {
+    0%, 100% { transform: scaleY(1) rotate(-1deg); text-shadow: 0 0 8px var(--danger-glow); }
+    50% { transform: scaleY(1.1) rotate(2deg); text-shadow: 0 0 15px var(--danger-glow), 0 0 5px var(--danger-main); }
+  }
+  .dash-card h3:hover .fa-fire {
+    animation: flicker 0.5s ease-in-out infinite alternate;
+    color: var(--danger-main);
+  }
+
+  .sweat-kaomoji {
+    position: relative;
+    display: inline-block;
+  }
+  .sweat-kaomoji::after {
+    content: '💧';
+    color: var(--blue-main);
+    text-shadow: 0 0 5px var(--blue-glow);
+    font-size: 0.5em;
+    position: absolute;
+    top: -5px;
+    left: 0px;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  @keyframes sweat-drop {
+    0% { opacity: 0; transform: translateY(0) translateX(5px); }
+    20% { opacity: 1; transform: translateY(0) translateX(5px); }
+    100% { opacity: 0; transform: translateY(20px) translateX(0px); }
+  }
+  .dash-card h3:hover .sweat-kaomoji::after {
+    animation: sweat-drop 1.5s ease-in-out infinite;
+    animation-delay: 0.2s;
+  }
+
+  .pointing-hand {
+    display: inline-block;
+    will-change: transform;
+  }
+  @keyframes point-down {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+  .dash-card h3:hover .pointing-hand {
+    animation: point-down 0.6s ease-in-out infinite;
+  }
+  
+  .wavy-mouth {
+    display: inline-block;
+    font-weight: 900;
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: scaleX(1) skewX(0); }
+    50% { transform: scaleX(1.3) skewX(10deg); }
+  }
+  .dash-card h3:hover .wavy-mouth {
+    animation: wiggle 0.5s ease-in-out infinite alternate;
+  }
+  
+  .shaky-mouth {
+    display: inline-block;
+    font-weight: 900;
+  }
+  @keyframes shake-horizontal {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-1.5px); }
+    50% { transform: translateX(1.5px); }
+    75% { transform: translateX(-1px); }
+  }
+  .dash-card h3:hover .shaky-mouth {
+    animation: shake-horizontal 0.3s linear infinite;
+  }
+
+  @keyframes pop-in {
+    from { transform: scale(0.95) translateY(15px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .dash-card.play-animation-once {
+    transform: scale(0.95) translateY(15px); opacity: 0;
+    animation: pop-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  @keyframes pop-out {
+    from { transform: scale(1) translateY(0); opacity: 1; }
+    to { transform: scale(0.95) translateY(15px); opacity: 0; }
+  }
+  .dash-card.play-animation-out {
+    animation: pop-out 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+  }
+  
+  /* --- Time of Day, rainy days for me --- */
+  @keyframes morning-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px) rotate(2deg); }
+  }
+  .kaomoji-morning { animation: morning-bounce 1s ease-in-out infinite; }
+
+  @keyframes afternoon-tilt {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-4deg); }
+    75% { transform: rotate(4deg); }
+  }
+  .kaomoji-afternoon { animation: afternoon-tilt 3.5s ease-in-out infinite alternate; }
+
+  @keyframes evening-breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .kaomoji-evening { animation: evening-breathe 3s ease-in-out infinite; }
+
+  @keyframes night-sway {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  .kaomoji-night { animation: night-sway 4s ease-in-out infinite alternate; }
+
+  #dashboard.theme-morning, #dashboard.theme-afternoon,
+  #dashboard.theme-evening, #dashboard.theme-night {
+      position: relative;
+      z-index: 1;
+  }
+  #dashboard::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    z-index: -1;
+    pointer-events: none;
+  }
+  #dashboard.theme-morning::before {
+    background-image: radial-gradient(circle at 10% 10%, #FFD180, transparent 50%),
+                      radial-gradient(circle at 90% 90%, #81D4FA, transparent 50%);
+    opacity: 0.15;
+  }
+  #dashboard.theme-afternoon::before {
+    background-image: radial-gradient(circle at 50% 90%, #FFB74D, transparent 50%),
+                      radial-gradient(circle at 20% 10%, #FFD54F, transparent 40%);
+    opacity: 0.2;
+  }
+  #dashboard.theme-evening::before {
+    background-image: radial-gradient(circle at 90% 20%, #7E57C2, transparent 50%),
+                      radial-gradient(circle at 10% 80%, #42A5F5, transparent 40%);
+    opacity: 0.2;
+  }
+  #dashboard.theme-night::before {
+    background-image: radial-gradient(circle at 80% 80%, #303F9F, transparent 40%),
+                      radial-gradient(circle at 20% 20%, #512DA8, transparent 40%);
+    opacity: 0.25;
+  }
+  .time-of-day-greeting {
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    min-height: 50px;
+    color: var(--ink-muted);
+  }
+  .time-of-day-prompt-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+
+  /* === WAVY CHART STYLES === */
+  #subjectChart {
+    min-height: 300px;
+    width: 100%;
+    margin-top: 15px;
+    padding-top: 20px;
+  }
+  .chart-svg {
+    height: 100%;
+    display: block; 
+  }
+  .chart-wave-fill {
+    opacity: 0.1;
+  }
+  .chart-wave-stroke {
+    fill: none;
+    stroke-width: 3px;
+    stroke-linecap: round;
+  }
+  .chart-dot {
+    stroke-width: 3px;
+    stroke: var(--bg-panel);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .chart-dot:hover {
+    
+    stroke: var(--yellow-main);
+    stroke-width: 5px;
+  }
+  .chart-pct-label-bg {
+    font-size: 14px;
+    font-weight: 900;
+    fill: none;
+    stroke: var(--bg-panel);
+    stroke-width: 6px;
+    stroke-linejoin: round;
+  }
+  .chart-pct-label {
+    font-size: 14px;
+    font-weight: 900;
+    fill: var(--ink-main);
+  }
+  .chart-name-label {
+    font-size: 13px;
+    fill: var(--ink-muted);
+    font-weight: 600;
+  }
+  .animated-hex {
+      display: inline-block;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .dash-card h3:hover .animated-hex {
+      transform: rotate(60deg) scale(1.2);
+      color: var(--yellow-main);
+  }
+  
+  /* --- STREAK STYLES --- */
+  .streak-display {
+      text-align: center;
+      padding: 10px 0;
+  }
+  .streak-number {
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--yellow-main);
+      text-shadow: 0 0 20px var(--yellow-glow);
+  }
+  .streak-label {
+      font-size: 1.1rem;
+      color: var(--ink-muted);
+      margin-top: -5px;
+  }
+  .streak-week {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+  }
+  .streak-day {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg-panel-light);
+      border: 1px solid var(--line-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--ink-muted);
+  }
+  .streak-day.active {
+      background: var(--ok-main);
+      border-color: var(--ok-main);
+      box-shadow: 0 0 10px var(--ok-glow);
+      color: #fff;
+  }
+  .streak-day.missed {
+      background: var(--danger-main);
+      border-color: var(--danger-main);
+      box-shadow: 0 0 10px var(--danger-glow);
+      color: #fff;
+  }
+
+  /* --- To-Do List Styles --- */
+  #newTodoInput {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-panel-dark);
+    border: 1px solid var(--line-accent);
+    color: var(--ink-main);
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  #newTodoInput:focus {
+    outline: none;
+    border-color: var(--yellow-main);
+    box-shadow: 0 0 10px var(--yellow-glow);
+  }
+  .todo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.2s, opacity 0.3s;
+  }
+  .todo-item:hover {
+    background: var(--bg-panel-dark);
+  }
+  .todo-drag-handle, .card-drag-handle {
+      opacity: 0.2;
+      cursor: grab;
+      color: var(--ink-muted);
+      transition: opacity 0.2s;
+      padding: 0 4px;
+      touch-action: none;
+  }
+  .todo-item:hover .todo-drag-handle,
+  .card-header:hover .card-drag-handle {
+      opacity: 1;
+  }
+  .todo-drag-handle:active, .card-drag-handle:active {
+      cursor: grabbing;
+  }
+  .todo-drag-handle:hover,
+  .card-drag-handle:hover {
+      opacity: 1;
+      color: var(--yellow-main);
+  }
+  .todo-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border: 2px solid var(--line-accent);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .todo-item input[type="checkbox"]:hover {
+    border-color: var(--yellow-main);
+  }
+  .todo-item input[type="checkbox"]:checked {
+    background-color: var(--ok-main);
+    border-color: var(--ok-main);
+  }
+  .todo-item input[type="checkbox"]:checked::before {
+    content: '✘'; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .todo-item .todo-text {
+    flex: 1;
+    cursor: text;
+    transition: color 0.2s;
+  }
+  .todo-item .todo-text[contenteditable="plaintext-only"]:focus {
+    outline: none;
+    background: var(--bg-panel);
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin: -2px -4px;
+  }
+  .todo-item .todo-text.completed {
+    text-decoration: line-through;
+    color: var(--ink-muted);
+  }
+  .todo-delete {
+    opacity: 0.2;
+    background: none;
+    border: none;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .todo-item:hover .todo-delete {
+    opacity: 1;
+  }
+  .todo-delete:hover {
+      opacity: 1;
+      color: var(--danger-main);
+  }
+  
+  /* --- Drag & Drop Styles --- */
+  .dragging {
+    opacity: 0.4;
+    background: var(--bg-panel-dark) !important;
+  }
+  .drop-indicator {
+    height: 4px;
+    background-color: var(--yellow-main);
+    border-radius: 2px;
+    margin: 2px 0;
+    box-shadow: 0 0 10px var(--yellow-glow);
+    animation: fadeIn 0.3s;
+    list-style: none;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scaleX(0.5); }
+    to { opacity: 1; transform: scaleX(1); }
+  }
+
+  /* --- Journal Styles --- */
+  #honeysJournalCard { flex: 1; }
+  .journal-prompt {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--ink-main);
+      margin-bottom: 16px;
+      line-height: 1.5;
+  }
+  .journal-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+  }
+  .journal-option {
+      background: var(--bg-panel-light);
+      border: 1px solid var(--line-accent);
+      color: var(--ink-muted);
+      text-align: left;
+  }
+  .journal-option:hover {
+      background: var(--line-accent);
+      border-color: var(--yellow-main);
+      color: var(--yellow-main);
+  }
+  .journal-option.selected {
+      background: var(--blue-main);
+      border-color: var(--blue-main);
+      color: #fff;
+      box-shadow: 0 0 15px var(--blue-glow);
+  }
+  .journal-textarea {
+      width: 100%;
+      min-height: 80px;
+      resize: vertical;
+      padding: 12px;
+      background: var(--bg-panel-light);
+      border: 1px solid var(--line-main);
+      border-radius: 12px;
+      color: var(--ink-main);
+      font-family: var(--font-main);
+      font-size: 15px;
+      margin-bottom: 12px;
+  }
+  .journal-textarea:focus {
+      outline: none;
+      border-color: var(--yellow-main);
+      box-shadow: 0 0 10px var(--yellow-glow);
+  }
+  .journal-response {
+      background: var(--bg-panel-dark);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+  }
+  .journal-response p { margin: 0; white-space: pre-wrap; line-height: 1.6;}
+  .journal-response .response-option { font-weight: bold; color: var(--blue-main); margin-bottom: 8px;}
+  
+  /* --- Deadline Completion Prompt Styles --- */
+  .deadline-prompt {
+      background: var(--bg-panel-dark);
+      border-top: 1px solid var(--line-accent);
+      padding: 14px;
+      margin-top: 0;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      animation: fadeIn 0.5s ease-out;
+  }
+  .deadline-prompt p {
+      margin: 0 0 10px;
+      font-weight: 600;
+      color: var(--ink-muted);
+  }
+  .deadline-summary-input {
+      width: 100%;
+      min-height: 60px;
+      resize: vertical;
+      padding: 10px;
+      background: var(--bg-panel-light);
+      border: 1px solid var(--line-main);
+      border-radius: 8px;
+      color: var(--ink-main);
+      font-family: var(--font-main);
+      font-size: 14px;
+      margin-bottom: 12px;
+  }
+  .deadline-summary-input:focus {
+      outline: none;
+      border-color: var(--yellow-main);
+      box-shadow: 0 0 10px var(--yellow-glow);
+  }
+  .deadline-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+  }
+  .btn.btn-deadline-yes:hover {
+      background: var(--ok-main);
+      box-shadow: 0 0 15px var(--ok-glow);
+      color: #fff;
+  }
+  .btn.btn-deadline-no:hover {
+      background: var(--danger-main);
+      box-shadow: 0 0 15px var(--danger-glow);
+      color: #fff;
+  }
+  .deadline-feedback {
+      padding: 10px;
+      text-align: center;
+      font-style: italic;
+      color: var(--ink-muted);
+  }
+
+  /* --- Search Results --- */
+  #searchResults { padding-top: 10px; }
+  .search-result-item { background: var(--bg-panel); border: 1px solid var(--line-accent); border-radius: 12px; padding: 14px; margin-bottom: 10px; cursor: pointer; transition: background .2s; }
+  .search-result-item:hover { background: var(--bg-panel-light); border-color: var(--yellow-main); }
+  .search-result-path { font-size: 13px; color: var(--ink-muted); margin-bottom: 4px; }
+  .search-result-path mark, .search-result-notes mark { background: var(--yellow-main); color: #111; border-radius: 3px; padding: 0 2px; }
+  .search-result-notes { font-size: 15px; color: var(--ink-main); max-height: 60px; overflow: hidden; text-overflow: ellipsis; }
+
+  /* --- Empty State --- */
+  #emptyState { 
+    text-align: center; 
+    padding: 80px 20px 40px; 
+    background: rgba(26, 26, 26, 0.3); 
+    border: 2px dashed var(--line-accent); 
+    border-radius: 16px; 
+    margin-top: 20px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #emptyState h2 { color: var(--yellow-main); font-size: 2rem; }
+  #emptyState p { font-size: 1.1rem; color: var(--ink-muted); }
+
+  .hero-bee-logo {
+    font-size: 8rem;
+    margin-bottom: 20px;
+    line-height: 1;
+    color: var(--yellow-main); 
+    text-shadow: 0 0 15px var(--yellow-glow), 0 0 30px rgba(255,193,7,0.4); 
+    display: inline-block;
+    filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5));
+    animation: bounceIn 1s ease-out;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .hero-bee-logo:hover {
+    transform: scale(1.08) rotate(-3deg);
+  }
+  
+  .hero-bee-logo:active {
+    transform: scale(0.95);
+    transition-duration: 0.1s;
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    70% { transform: scale(0.97); }
+    100% { transform: scale(1); }
+  }
+
+  /* === Styled Upcoming Deadline === */
+  .due-date-input {
+      color-scheme: dark;
+      background: var(--bg-panel-light);
+      border: 1px solid var(--line-accent);
+      color: var(--ink-muted);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 15px;
+      font-family: var(--font-main);
+      transition: all .2s ease-out;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      line-height: 1;
+  }
+  
+  .due-date-label {
+    font-size: 16px;
+    color: var(--ink-muted);
+  }
+
+  .due-date-input:valid {
+    color: var(--ink-main);
+  }
+
+  .due-date-input:focus {
+      outline: none;
+      border-color: var(--yellow-main);
+      box-shadow: 0 0 10px var(--yellow-glow);
+  }
+  
+  .due-date-input::-webkit-calendar-picker-indicator {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0a0a0'%3E%3Cpath d='M19,4H18V2H16V4H8V2H6V4H5C3.89,4 3,4.9 3,6V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V6A2,2 0 0,0 19,4ZM19,20H5V10H19V20ZM19,8H5V6H19V8Z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+      cursor: pointer;
+      transition: opacity 0.2s;
+  }
+  .due-date-input::-webkit-calendar-picker-indicator:hover {
+      opacity: 1;
+  }
+  
+  /* --- Modal --- */
+  .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1600; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+  .modal-overlay.visible { opacity: 1; visibility: visible; }
+  .modal-content { background: var(--bg-panel); padding: 24px; border-radius: 16px; border: 1px solid var(--line-main); box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 90%; max-width: 400px; transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .modal-overlay.visible .modal-content { transform: scale(1); }
+  .modal-message { white-space: pre-wrap; margin-bottom: 20px; line-height: 1.6; color: var(--ink-main); }
+  .modal-buttons { display: flex; justify-content: flex-end; gap: 12px; }
+  
+  /* --- Focus Session --- */
+  .focus-session-trigger {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.2s ease-out;
+  }
+  .dash-card:hover .focus-session-trigger {
+    opacity: 1;
+    transform: scale(1);
+  }
+  #focusSessionModal .modal-content {
+      max-width: 500px;
+  }
+  .modal-header {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: var(--yellow-main);
+      margin-bottom: 16px;
+  }
+  .focus-topics-list {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid var(--line-main);
+      border-radius: 12px;
+      padding: 8px;
+      margin: 16px 0;
+  }
+  .focus-topic-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 8px;
+  }
+  .focus-topic-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--yellow-main);
+      cursor: pointer;
+  }
+  .focus-time-setter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 16px;
+  }
+  .focus-time-setter input {
+      width: 70px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--line-accent);
+      background: var(--bg-panel-light);
+      color: var(--ink-main);
+      font-size: 1.2em;
+      text-align: center;
+  }
+
+  /* === FOCUS MODE OVERLAY === */
+  #focusModeOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--bg-main);
+    z-index: 1500;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .focus-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+  #focusStageTitle {
+    font-size: 1.8em;
+    font-weight: 900;
+    margin: 0;
+    flex: 1;
+    color: var(--yellow-main);
+  }
+  #focusTimerDisplay {
+    font-size: 2.5em;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+  }
+  #focusControls {
+    display: flex;
+    gap: 10px;
+  }
+  #focusContent {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: var(--bg-panel-dark);
+    border-radius: 16px;
+    border: 1px solid var(--line-main);
+    transition: opacity 0.4s ease-in-out;
+  }
+  #focusContent > * {
+      margin-left: 0;
+      margin-right: 0;
+  }
+  #focusContent.fade-out {
+    opacity: 0;
+  }
+  #focusPrompt {
+      text-align: center;
+      padding: 16px;
+      margin-top: 20px;
+      background: var(--bg-panel-light);
+      border-radius: 12px;
+      border-left: 4px solid var(--blue-main);
+      color: var(--ink-muted);
+      font-weight: 600;
+      flex-shrink: 0;
+  }
+
+  /* === BEEHIVE CANVAS STYLES === */
+  #beehiveCanvasOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1700;
+    background-color: rgba(13, 13, 13, 0.9);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out;
+    cursor: grab;
+    touch-action: none; /* For touch events */
+  }
+  #beehiveCanvasOverlay.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  #beehiveCanvasOverlay:active {
+    cursor: grabbing;
+  }
+  #beehiveCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-main);
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(255,193,7,0.1), transparent 30%),
+      radial-gradient(circle at 80% 70%, rgba(33,150,243,0.09), transparent 35%);
+    transition: opacity 0.4s ease-in-out; /* For smooth hive transitions */
+  }
+  .beehive-ui {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+  }
+  #beehiveExitBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    left: auto;
+    pointer-events: all;
+  }
+  #beehiveTooltip {
+    position: absolute;
+    background: var(--bg-panel-dark);
+    color: var(--ink-main);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line-main);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    font-size: 14px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -100%) translateY(-10px);
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+    z-index: 1710;
+  }
+  #beehiveTooltip.visible {
+    opacity: 1;
+    transform: translate(-50%, -100%) translateY(-20px);
+  }
+  #beehiveTooltip strong {
+    color: var(--yellow-main);
+    display: block;
+    margin-bottom: 4px;
+  }
+  #beehiveTooltip small {
+    color: var(--ink-muted);
+  }
+
+  /* === Celebration Animations === */
+  @keyframes happy-dance {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    15% { transform: translateX(-5px) rotate(-5deg); }
+    30% { transform: translateX(5px) rotate(5deg); }
+    45% { transform: translateX(-3px) rotate(-3deg); }
+    60% { transform: translateX(3px) rotate(3deg); }
+    75% { transform: translateX(-1px) rotate(-1deg); }
+  }
+  .happy-dance-animation {
+    display: inline-block;
+    animation: happy-dance 0.8s ease-in-out;
+  }
+
+  .celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+  }
+  .celebration-overlay.hidden {
+    display: none;
+  }
+  .petal {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0;
+    animation: fall 5s linear forwards;
+    will-change: transform, opacity;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) translateX(5vw) rotate(720deg); opacity: 0; }
+  }
+  
+  /* --- Responsive --- */
+  @media (max-width: 768px) {
+      .appbar { padding: 12px; }
+      .hero-section h1 { font-size: 2rem; }
+      .hero-section p { font-size: 1rem; }
+      #focusModeOverlay { padding: 10px; }
+      #focusStageTitle { font-size: 1.4em; }
+      #focusTimerDisplay { font-size: 1.8em; }
+      .focus-header { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+  <div class="appbar">
+    <div class="brand">
+      <span>.ᐟ Can Stひdy</span>
+      <span class="trademark">Pro ⚘</span>
+    </div>
+    <input id="search" class="search" placeholder="Find My Name..." />
+    <button id="addSubject" class="btn btn-primary">Add Subject</button>
+    <button id="dashboardBtn" class="btn btn-ghost"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
+    <button id="backBtn" class="btn btn-primary hidden">Back</button>
+    <button id="backupBtn" class="btn btn-ghost"><i class="fa-solid fa-cloud-arrow-down"></i> Backup</button>
+    <button id="restoreBtn" class="btn btn-ghost"><i class="fa-solid fa-box-archive"></i> Restore</button>
+    <button id="mergeBtn" class="btn btn-ghost"><i class="fa-solid fa-layer-group"></i> Merge</button>
+    <button id="clearAll" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Clear All</button>
+  </div>
+
+  <div id="main" class="container">
+    <div id="emptyState" class="hidden">
+      <div class="hero-section">
+        <h1>Unlock Your Potential</h1>
+        <p>Your personal hive of knowledge. Track subjects, Master topics, and Watch your progress bloom.</p>
+      </div>
+      <!-- Honey Bun Here -->
+      <div id="heroBeeLogo" class="hero-bee-logo">( ˃⤙˂ ")</div>
+      <h2>Welcome to .ᐟ Can Stひdy !</h2>
+      <p>Hello, I'm Honey Bun ♡ ˎˊ˗ Your personal study tracker.</p>
+      <button id="addFirstSubject" class="btn btn-primary"><i class=></i> ⌞ Create Your First Subject ⌝ </button>
+    </div>
+    <div id="contentArea" data-drop-zone-for="subject"></div>
+  </div>
+  <div id="searchResults" class="container hidden"></div>
+
+  <div id="dashboard" class="container">
+    <h2 class="title dashboard-title" style="font-size: 2rem; color:var(--yellow-main); margin-bottom: 20px;">
+        <span class="vibrating-icon">(｡˃ ᵕ ˂)</span>
+    </h2>
+    <div id="timeOfDayGreeting" class="time-of-day-greeting"></div>
+    <div class="dash-grid">
+      <div class="dash-card">
+        <h3>Overall Progress</h3>
+        <div class="row" style="display:flex; align-items:center; gap: 10px; margin-bottom: 8px;">
+          <strong>Total Average</strong><div class="space"></div><span id="overallPct" class="badge">0%</span>
+        </div>
+        <div class="meter-bar"><div id="overallFill"></div></div>
+        <div id="overallAdvice" class="feedback" style="margin-top: 10px;"></div>
+      </div>
+      <div class="dash-card">
+        <h3><i class="fa-solid fa-cookie-bite"></i> Cookie Analysis</h3>
+        <ul id="biscuitStats" style="list-style:none; padding-left:0; margin:0;"></ul>
+      </div>
+       <div class="dash-card">
+          <h3><i class="fa-solid fa-fire"></i> Current Streak</h3>
+          <div id="studyStreak"></div>
+      </div>
+      <div id="todoCard" class="dash-card">
+        <h3><span class="sweat-kaomoji">(; ｡> ༝ <)</span> What To Do?</h3>
+        <div class="todo-input-container">
+            <input type="text" id="newTodoInput" placeholder="Add a task and press Enter...">
+        </div>
+        <div id="todoListContainer" class="scrollable-dash-list" style="padding: 0;" data-drop-zone-for="todo"></div>
+        <div class="todo-actions" style="margin-top: 12px; display: flex; justify-content: flex-end;">
+            <button id="clearCompletedBtn" class="btn btn-ghost btn-mini">Clear Completed</button>
+        </div>
+      </div>
+      <div class="dash-card">
+          <h3>(づ ˕ ¬｡)っ<span class="pointing-hand">ᶻz 𐰁</span>Upcoming Deadlines</h3>
+          <div id="upcomingDeadlines"></div>
+      </div>
+      <div id="honeysJournalCard" class="dash-card">
+        <h3>(｡Ò<span class="wavy-mouth">∼</span>Ó) Honey Bun Journal</h3>
+        <div id="journalContent"></div>
+      </div>
+      <div class="dash-card all-topics-card">
+          <h3>(<span class="shaky-mouth">࿔Ó﹏Ò</span>) Weak Topics Analysis</h3>
+          <div id="reviewNeeded"></div>
+      </div>
+    </div>
+    <div class="dash-card" style="margin-top:20px;">
+      <h3 title="A BeeHive of knowledge awaits! The Dots𓈒𓏸"><span class="animated-hex">⌬</span> Subject Performance </h3>
+      <div id="subjectChart"></div>
+    </div>
+    <div class="dash-card" style="margin-top:20px;">
+        <h3>Detailed Breakdown</h3>
+        <div id="summaryList"></div>
+    </div>
+  </div>
+  
+  <!-- BEEHIVE CANVAS OVERLAY -->
+  <div id="beehiveCanvasOverlay">
+      <div class="beehive-ui">
+          <button id="beehiveExitBtn" class="btn btn-danger">Exit Hive</button>
+          <div id="beehiveTooltip"></div>
+      </div>
+      <canvas id="beehiveCanvas"></canvas>
+  </div>
+
+  <!-- Regular Confirmation Modal -->
+  <div id="customModal" class="modal-overlay">
+    <div class="modal-content">
+      <div id="modalMessage" class="modal-message"></div>
+      <div class="modal-buttons">
+        <button id="modalCancel" class="btn btn-ghost">Cancel</button>
+        <button id="modalOk" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Focus Session Setup Modal -->
+  <div id="focusSessionModal" class="modal-overlay">
+      <div class="modal-content">
+          <div class="modal-header">Create a Focus Session</div>
+          <p>Select 2 to 4 weak topics you'd like to work on.</p>
+          <div id="focusTopicsList" class="focus-topics-list"></div>
+          <p id="focusTopicWarning" style="color:var(--danger-main); text-align:center; display:none;">Please select between 2 and 4 topics.</p>
+          <hr style="border-color: var(--line-accent); margin: 20px 0;">
+          <p style="text-align:center;">Set total session duration:</p>
+          <div class="focus-time-setter">
+              <input id="focusHours" type="number" min="0" max="5" value="1">
+              <span>hours</span>
+              <input id="focusMinutes" type="number" min="0" max="59" value="0">
+              <span>minutes</span>
+          </div>
+          <div class="modal-buttons" style="margin-top: 24px;">
+              <button id="focusCancelBtn" class="btn btn-ghost">Cancel</button>
+              <button id="focusStartBtn" class="btn btn-primary" disabled>Start Session</button>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Full-Screen Focus Mode Overlay, damn it works -->
+  <div id="focusModeOverlay" class="hidden">
+      <div class="focus-header">
+          <h2 id="focusStageTitle"></h2>
+          <div id="focusControls">
+              <button id="focusPrevBtn" class="btn btn-ghost btn-mini"><i class="fa-solid fa-backward-step"></i></button>
+              <button id="focusPlayPauseBtn" class="btn btn-ghost btn-mini"><i class="fa-solid fa-pause"></i></button>
+              <button id="focusNextBtn" class="btn btn-ghost btn-mini"><i class="fa-solid fa-forward-step"></i></button>
+          </div>
+          <div id="focusTimerDisplay">00:00</div>
+          <div class="focus-header-actions" style="margin-left: auto;">
+              <button id="focusAddTimeBtn" class="btn btn-ghost">+5 min</button>
+              <button id="focusExitBtn" class="btn btn-danger">Exit Session</button>
+          </div>
+      </div>
+      <div id="focusContent"></div>
+      <div id="focusPrompt" class="hidden"></div>
+  </div>
+
+  <div id="celebrationOverlay" class="celebration-overlay hidden"></div>
+  <div id="globalLoader" class="loader-overlay hidden">
+    <div class="loader-content">
+        <div class="loader"></div>
+        <p>Processing data...</p>
+    </div>
+  </div>
+
+<script>
+// =================================================================================================================================================
+// == I CAN STUDY-Pro :: I'm tired, my eyes hurts! (⇀‸↼‶). Please refrain from modifying the source code!! it can hinder the app funtionality
+// =================================================================================================================================================
+(function() {
+  'use strict';
+
+  // ======== Data, State & Constants ========
+  const DB_NAME = 'ICanStudyDB';
+  const DB_VERSION = 1;
+  const STORE_NAME = 'keyval';
+  const HEAVY_DATA_THRESHOLD = 5;
+  const SAVE_THROTTLE_MS = 1000;
+  
+  let model = { subjects: [], activityDates: [], streak: 0, lastActivityDate: null, lastDailyCheck: null, journalEntries: [], todoList: [], beehiveTags: [], beehiveLayouts: {}, promptResponses: {} };
+  let uiState = { openCards: {}, scrollY: 0 };
+  let saveTimeout = null;
+  let revertKaomojiTimeout = null;
+  let greetingTimeout = null;
+  
+  let focusSession = {
+      isActive: false,
+      schedule: [],
+      currentIndex: -1,
+      timerInterval: null,
+      remainingTime: 0,
+      isPaused: false,
+      pointsEarned: 0
+  };
+  
+  const biscuits = [
+    { key: 'facts', label: 'Confidence recalling facts', options: [{ text: 'Very Low', w: 10 }, { text: 'Low', w: 25 }, { text:'Medium', w: 50 }, { text: 'High', w: 75 }, { text: 'Very High', w: 100 }] },
+    { key: 'curve', label: 'Answering curveball questions', options: [{ text: 'Not Confident', w: 20 }, { text: 'Somewhat', w: 50 },{ text: 'Confident', w: 75 }, { text: 'Very Confident', w: 100 }] },
+    { key: 'study', label: 'Time spent studying', options: [{ text: 'Minimal', w: 10 }, { text: 'Light', w: 25 }, { text: 'Moderate', w: 40 }, { text: 'Extensive', w: 55 }, { text: 'Very Extensive', w: 70 }, { text: 'Integrated', w: 85 }, { text: 'Deep', w: 100 }] },
+    { key: 'relearn', label: 'Time spent relearning', options: [{ text: 'Rarely', w: 100 }, { text: 'Interval', w: 75 }, { text: 'Sometimes', w: 50 }, { text: 'Often', w: 25 }] }
+  ];
+
+  const noteColors = [
+    { name: 'default', icon: 'fa-ban' }, { name: 'red' }, { name: 'orange' }, 
+    { name: 'white' }, { name: 'teal' }, { name: 'blue' }, { name: 'indigo' }, 
+    { name: 'purple' }, { name: 'pink' }, { name: 'gray' }
+  ];
+
+  const journalPrompts = [
+    "What was the most challenging concept you tackled today, and what made it difficult?", "Describe a 'lightbulb' moment you had while studying. What clicked into place?", "If you had to teach one thing you learned today to a friend, how you would explain it?", "What a a study technique was most effective for you today, and why do you think it worked well?", "Identify one area where you still feel uncertain. What's one specific question you have about it?", "How does something you learned today connect to what you already know?", "What was your biggest distraction today, and how can you minimize it tomorrow?", "Reflect on your energy and focus levels. When were you most productive, and when did you struggle?", "What are you most proud of accomplishing in your study session today?", "What is one small, actionable goal you can set for your next study session to improve?", "Did you encounter any surprising connections between different topics today?", "How did you handle a moment of frustration or feeling 'stuck' during your study?", "What's one thing you could do differently next time to make your study session even better?", "Summarize the most important takeaway from today's study in a single sentence.", "If you were to create a quiz question about what you learned, what would it be?", "Based on today's session, what topic needs the most attention next time?", "Was this a 'deep work' session or a 'shallow work' session? Why?", "Describe your thought process when you encountered a particularly tricky problem.", "How effective were your breaks? Did you come back feeling refreshed or more distracted?", "How well did you stick to your study plan? What went right, and what went wrong?", "If you had to create a metaphor or analogy for the main topics, what would it be?", "What's one thing you did today just for yourself, outside of studying?", "How are you feeling as you sit down to study today? What's on your mind?", "What are you grateful for in this moment?", "Describe a moment of confusion. What was the exact point where you got lost?", "What is one thing you will start doing, stop doing, and continue doing in your studies?", "Who is one person you could talk to about what you learned today? Why them?", "On a scale of 1-10, how would you rate the efficiency of your study session? What would it take to make it a 10?", "Did your mood affect your studies today? If so, how?", "Hey, just take a deep breath. Regardless of how much you understood or how much you finished, you showed up for yourself today. What's one kind thought you can offer yourself for that effort?", "Could you maybe share a little bit about yourself, I'd love to get to know you! (⸝⸝ò﹏ò⸝⸝)"
+  ];
+
+  const journalOptions = [
+      { id: 'breakthrough', text: 'A major breakthrough' }, { id: 'progress', text: 'A small step forward' }, { id: 'confusion', text: 'A point of confusion' }, { id: 'review', text: 'A moment of review' }
+  ];
+
+  // ======== IndexedDB Module ========
+  const idb = {
+    db: null,
+    async open() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = () => reject("Error opening database");
+        request.onsuccess = (event) => { this.db = event.target.result; resolve(this.db); };
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) { db.createObjectStore(STORE_NAME); }
+        };
+      });
+    },
+    async get(key) {
+      if (!this.db) await this.open();
+      return new Promise((resolve, reject) => {
+        const transaction = this.db.transaction(STORE_NAME, 'readonly');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.get(key);
+        request.onerror = () => reject("Error getting data");
+        request.onsuccess = () => resolve(request.result);
+      });
+    },
+    async set(key, value) {
+      if (!this.db) await this.open();
+      return new Promise((resolve, reject) => {
+        const transaction = this.db.transaction(STORE_NAME, 'readwrite');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.put(value, key);
+        request.onerror = () => reject("Error setting data");
+        request.onsuccess = () => resolve(request.result);
+      });
+    },
+    async delete(key) {
+        if (!this.db) await this.open();
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.delete(key);
+            request.onerror = () => reject("Error deleting data");
+            request.onsuccess = () => resolve();
+        });
+    }
+  };
+
+  // ======== Data Persistence & Utils ========
+  const loadModel = async () => {
+      const defaultModel = { subjects: [], activityDates: [], streak: 0, lastActivityDate: null, lastDailyCheck: null, journalEntries: [], todoList: [], beehiveTags: [], beehiveLayouts: {}, promptResponses: {} };
+      try {
+          const loaded = await idb.get('model') || defaultModel;
+          model = { ...defaultModel, ...loaded };
+           if (!model.beehiveLayouts) model.beehiveLayouts = {}; // Ensure layout object exists
+          if (model.todoList) { model.todoList.forEach(task => { if (!task.id) task.id = uid(); }); }
+      } catch { model = defaultModel; }
+  };
+  const saveModel = async () => { await idb.set('model', model); };
+  const saveModelThrottled = () => { clearTimeout(saveTimeout); saveTimeout = setTimeout(saveModel, SAVE_THROTTLE_MS); };
+  const loadUiState = async () => { try { uiState = await idb.get('uiState') || { openCards: {}, scrollY: 0 }; } catch { uiState = { openCards: {}, scrollY: 0 }; } };
+  const saveUiState = async () => {
+      uiState.openCards = {};
+      document.querySelectorAll('.card-body-wrapper.open').forEach(body => {
+          const card = body.closest('.card');
+          if (card?.dataset.id) uiState.openCards[card.dataset.id] = true;
+      });
+      await idb.set('uiState', uiState);
+  };
+  
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
+  const el = (tag, className, textContent) => { const e = document.createElement(tag); if (className) e.className = className; if (textContent != null) e.textContent = textContent; return e; };
+  const avg = arr => arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length) : 0;
+  const debounce = (func, delay) => { let timeout; return (...args) => { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), delay); }; };
+  const toYYYYMMDD = (date) => date.toISOString().split('T')[0];
+    
+  // --- Streak Logic-aaahhhhhh ---
+  const logActivityAndAddPoint = (points = 1) => {
+    model.streak = (model.streak || 0) + points;
+    const todayStr = toYYYYMMDD(new Date());
+    model.lastActivityDate = todayStr;
+    model.activityDates = model.activityDates || [];
+    if (!new Set(model.activityDates).has(todayStr)) { model.activityDates.push(todayStr); }
+    saveModelThrottled();
+    updateDashboardIfVisible();
+  };
+
+  const deductStreakPoint = (points = 1) => {
+      model.streak = Math.max(0, (model.streak || 0) - points);
+      saveModelThrottled();
+      updateDashboardIfVisible();
+  };
+
+  const runDailyCheck = () => {
+    const todayStr = toYYYYMMDD(new Date());
+    if (model.lastDailyCheck === todayStr) return;
+    let modelChanged = false;
+    if (model.lastActivityDate) {
+        const lastActivity = new Date(model.lastActivityDate);
+        const todayNormalized = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        const lastActivityNormalized = new Date(lastActivity.getFullYear(), lastActivity.getMonth(), lastActivity.getDate());
+        const daysMissed = Math.round((todayNormalized - lastActivityNormalized) / (1000 * 60 * 60 * 24));
+        if (daysMissed >= 2) {
+            if (model.streak === 1) { model.streak = 0; modelChanged = true; } 
+            else if (model.streak > 1) { model.streak = Math.max(0, model.streak - 2); modelChanged = true; }
+        }
+    }
+    model.lastDailyCheck = todayStr;
+    if (modelChanged) { saveModel(); }
+  };
+  
+  let savedRange = null;
+  const saveSelection = (containerEl) => {
+      if (!containerEl) return;
+      const selection = window.getSelection();
+      if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          if (containerEl.contains(range.commonAncestorContainer)) savedRange = range;
+      } else { savedRange = null; }
+  };
+  const restoreSelection = () => {
+      if (savedRange) {
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(savedRange);
+      }
+  };
+  
+  // ======== Core UI & Interaction Logic ========
+  const smoothScrollTo = (element) => {
+    if (!element) return;
+    requestAnimationFrame(() => {
+        const appbarHeight = document.querySelector('.appbar')?.offsetHeight || 0;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - appbarHeight - 20;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    });
+  };
+  
+  const slideToggle = (bodyWrapper, twist) => {
+    const isOpen = bodyWrapper.classList.contains('open');
+    if (isOpen) {
+        bodyWrapper.classList.remove('open');
+        twist.classList.add('closed');
+    } else {
+        bodyWrapper.classList.add('open');
+        twist.classList.remove('closed');
+    }
+    setTimeout(saveUiState, 450);
+  };
+   
+  function revealAndScroll(targetId) {
+    const targetCard = document.querySelector(`.card[data-id="${targetId}"]`);
+    if (!targetCard) return;
+    let current = targetCard;
+    while (current) {
+        const body = current.querySelector('.card-body-wrapper');
+        const twist = current.querySelector('.twist');
+        if (body && !body.classList.contains('open')) {
+            body.style.transition = 'none'; 
+            body.classList.add('open');
+            if(twist) twist.classList.remove('closed');
+            setTimeout(() => { body.style.transition = ''; }, 50); 
+        }
+        current = current.parentElement.closest('.card');
+    }
+    setTimeout(() => smoothScrollTo(targetCard), 400);
+    targetCard.style.transition = 'box-shadow 0.3s ease-in-out';
+    targetCard.style.boxShadow = '0 0 25px 5px var(--yellow-glow)';
+    setTimeout(() => { targetCard.style.boxShadow = ''; }, 2500);
+    saveUiState();
+  }
+
+  function navigateToCard(targetId) {
+    if (!targetId) return;
+    if (!mainView.classList.contains('hidden')) { revealAndScroll(targetId); } 
+    else { backBtn.click(); setTimeout(() => revealAndScroll(targetId), 600); }
+  }
+
+  const editable = (tag, text, onDone) => {
+    const h = el(tag, 'title', text);
+    h.contentEditable = "true";
+    h.spellcheck = false;
+    h.onfocus = () => {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(h);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    };
+    h.onkeydown = e => { if (e.key === 'Enter' || e.key === 'Escape') { e.preventDefault(); h.blur(); } };
+    h.onblur = () => { onDone(h.innerText.trim() || text); };
+    return h;
+  };
+  
+  const customModal = {
+    el: document.getElementById('customModal'),
+    messageEl: document.getElementById('modalMessage'),
+    okBtn: document.getElementById('modalOk'),
+    cancelBtn: document.getElementById('modalCancel'),
+    resolvePromise: null,
+    init() {
+      this.okBtn.onclick = () => this.close(true);
+      this.cancelBtn.onclick = () => this.close(false);
+      this.el.onclick = (e) => { if (e.target === this.el) this.close(false); };
+    },
+    show(message, showCancel = false) {
+      return new Promise(resolve => {
+        this.resolvePromise = resolve;
+        this.messageEl.textContent = message;
+        this.cancelBtn.style.display = showCancel ? '' : 'none';
+        this.el.classList.add('visible');
+        this.okBtn.focus();
+      });
+    },
+    close(value) {
+      this.el.classList.remove('visible');
+      if (this.resolvePromise) { this.resolvePromise(value); this.resolvePromise = null; }
+    }
+  };
+
+  // ======== Data Calculation & UI Update Helpers ========
+  const topicScore = t => avg((t.sel || []).map(x => x.w));
+  const chapterScore = c => avg((c.topics || []).map(topicScore));
+  const subjectScore = s => avg((s.chapters || []).map(chapterScore));
+  const getScoreColorClass = (score) => { if (score >= 75) return "good"; if (score >= 50) return "mid"; if (score > 0) return "warn"; return "bad"; }
+    
+  const updateDashboardIfVisible = debounce(() => {
+    if (document.getElementById('dashboard').style.display === 'block') {
+      renderDashboard();
+    }
+  }, 300);
+
+  function updateTopicProgress(topicCard, t) {
+      const score = topicScore(t);
+      const scoreVal = topicCard.querySelector('.score-line .badge:last-child');
+      const feedback = topicCard.querySelector('.feedback');
+      scoreVal.textContent = score + '%';
+      feedback.innerHTML = score >= 90 ? "Now, it's honey-sweet! <i class='fa-solid fa-clover' style='color: #ff80ab'></i> Your hard work is paying off." 
+                        : score >= 75 ? "<i class='fa-solid fa-tree' style='color: var(--ok-main)'></i> Keep growing! You've planted a strong foundation." 
+                        : score >= 50 ? "<i class='fa-solid fa-seedling' style='color: #9ccc65'></i> Needs more caring. Let's tend to your garden."
+                        : score >= 30 ? "<i class='fa-solid fa-leaf' style='color: var(--yellow-main)'></i> A sprout is showing! Keep nurturing it to see it grow."
+                        : score > 0 ? "<i class='fa-solid fa-leaf' style='color: var(--yellow-main)'></i> Needs Attention. A little extra effort will help you bloom." 
+                        : "Select cookies to see score.";
+  }
+  function updateChapterProgress(chapterCard, c) {
+      if (!chapterCard || !c) return;
+      const score = chapterScore(c);
+      const progress = chapterCard.querySelector('.card-progress');
+      if (progress) {
+          const fill = progress.querySelector('.meter-mini > div');
+          progress.lastChild.textContent = ` ${score}%`;
+          fill.style.width = `${score}%`;
+          fill.className = getScoreColorClass(score);
+      }
+  }
+  function updateSubjectProgress(subjectCard, s) {
+      if (!subjectCard || !s) return;
+      const score = subjectScore(s);
+      const progress = subjectCard.querySelector('.card-progress');
+      if (progress) {
+          const fill = progress.querySelector('.meter-mini > div');
+          progress.lastChild.textContent = ` ${score}%`;
+          fill.style.width = `${score}%`;
+          fill.className = getScoreColorClass(score);
+      }
+  }
+  
+  // ======== Renderer Functions ========
+  const mainContent = document.getElementById('contentArea');
+
+  function renderTopicBody(t, s, c, container) {
+    container.innerHTML = ''; 
+
+    // Legacy data migration
+    if (typeof t.notes === 'string' || !t.notes) t.notes = { normal: t.notes || '', cues: '', main: '', summary: '' };
+    if (!t.noteType) t.noteType = 'normal';
+    // Adding beehiveLabels if missing
+    if (!t.beehiveLabels) t.beehiveLabels = [];
+
+
+    biscuits.forEach(g => {
+        const gBox = el('div', 'group');
+        gBox.appendChild(el('span', 'group-label', g.label));
+        g.options.forEach(o => {
+            const biscuitEl = el('span', 'biscuit', o.text);
+            if ((t.sel || []).some(x => x.group === g.key && x.w === o.w)) biscuitEl.classList.add('selected');
+            biscuitEl.onclick = () => {
+                const currentScore = topicScore(t);
+                let oldSubjectScore = -1;
+                const subjectCardEl = biscuitEl.closest('.subject-card');
+                if (subjectCardEl && s) { oldSubjectScore = subjectScore(s); }
+
+                t.sel = t.sel || [];
+                const existingIndex = t.sel.findIndex(x => x.group === g.key);
+                const isAlreadySelected = (existingIndex !== -1 && t.sel[existingIndex].w === o.w);
+                if (existingIndex !== -1) t.sel.splice(existingIndex, 1);
+                gBox.querySelectorAll('.biscuit').forEach(b => b.classList.remove('selected'));
+                if (!isAlreadySelected) {
+                    t.sel.push({ group: g.key, w: o.w });
+                    biscuitEl.classList.add('selected');
+                }
+                const newScore = topicScore(t);
+                if (newScore < currentScore) { deductStreakPoint(); }
+                else if (newScore > currentScore) { logActivityAndAddPoint(); }
+                
+                const topicCard = biscuitEl.closest('.topic-card, #focusContent');
+                updateTopicProgress(topicCard, t);
+
+                if (!biscuitEl.closest('#focusContent')) { // updating hierarchy if in main view
+                    const chapterCard = biscuitEl.closest('.chapter-card');
+                    updateChapterProgress(chapterCard, c);
+                    updateSubjectProgress(subjectCardEl, s);
+                }
+                
+                saveModelThrottled();
+                updateDashboardIfVisible();
+
+                if (subjectCardEl && s) {
+                    const newSubjectScore = subjectScore(s);
+                    if (newSubjectScore === 100 && oldSubjectScore !== -1 && oldSubjectScore < 100) {
+                        triggerConfetti();
+                    }
+                }
+            };
+            gBox.appendChild(biscuitEl);
+        });
+        container.appendChild(gBox);
+    });
+
+    const scoreLine = el('div', 'score-line');
+    scoreLine.appendChild(el('span', 'badge', 'Score:'));
+    scoreLine.appendChild(el('span', 'badge', topicScore(t) + '%'));
+    const feedback = el('div', 'feedback');
+    container.append(scoreLine, feedback);
+    updateTopicProgress({querySelector: (sel) => container.querySelector(sel)}, t);
+
+    const notesContainer = el('div', 'notes-container');
+    const notes = el('div', 'notes');
+    notes.contentEditable = true;
+    notes.dataset.placeholder = 'Notes (supports bold, italics, lists, and images)...';
+    notes.innerHTML = t.notes.normal || '';
+
+    const cornellContainer = el('div', 'cornell-notes-container');
+    const cornellCues = el('div', 'cornell-cues');
+    cornellCues.contentEditable = true;
+    cornellCues.dataset.placeholder = 'Cues & Questions...';
+    cornellCues.innerHTML = t.notes.cues || '';
+    const cornellMain = el('div', 'cornell-main');
+    cornellMain.contentEditable = true;
+    cornellMain.dataset.placeholder = 'Main Notes...';
+    cornellMain.innerHTML = t.notes.main || '';
+    const cornellSummary = el('div', 'cornell-summary');
+    cornellSummary.contentEditable = true;
+    cornellSummary.dataset.placeholder = 'Summary...';
+    cornellSummary.innerHTML = t.notes.summary || '';
+    cornellContainer.append(cornellCues, cornellMain, cornellSummary);
+    notesContainer.append(notes, cornellContainer);
+
+    const toolbar = el('div', 'notes-toolbar');
+
+    const createToolbarButton = (command, iconClass, title) => {
+        const button = el('button', 'btn');
+        button.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+        button.title = title;
+        button.onclick = (e) => { e.preventDefault(); document.execCommand(command, false, null); activeEditor?.focus(); updateToolbarState(); };
+        return button;
+    };
+    
+    const createHeadingButton = (level) => {
+      const tagName = `h${level}`;
+      const button = el('button', 'btn', `H${level}`);
+      button.title = `Heading ${level}`;
+      button.onclick = (e) => {
+        e.preventDefault();
+        const currentFormat = document.queryCommandValue('formatBlock');
+        const format = (currentFormat.toLowerCase() === tagName) ? 'p' : tagName;
+        document.execCommand('formatBlock', false, format);
+        activeEditor?.focus(); updateToolbarState();
+      };
+      return button;
+    };
+    
+    const h1Btn = createHeadingButton(1);
+    const h2Btn = createHeadingButton(2);
+    const boldBtn = createToolbarButton('bold', 'fa-bold', 'Bold');
+    const italicBtn = createToolbarButton('italic', 'fa-italic', 'Italic');
+    const ulBtn = createToolbarButton('insertUnorderedList', 'fa-list-ul', 'Bulleted List');
+    const olBtn = createToolbarButton('insertOrderedList', 'fa-list-ol', 'Numbered List');
+    const outdentBtn = createToolbarButton('outdent', 'fa-outdent', 'Decrease Indent');
+    const indentBtn = createToolbarButton('indent', 'fa-indent', 'Increase Indent');
+    
+    const highlighterBtn = el('button', 'btn');
+    highlighterBtn.innerHTML = '<i class="fa-solid fa-highlighter"></i>';
+    highlighterBtn.title = 'Highlight Text';
+    highlighterBtn.onclick = (e) => {
+        e.preventDefault(); activeEditor?.focus(); restoreSelection();
+        if (savedRange && !savedRange.collapsed) {
+            const isHighlighted = document.queryCommandValue('backColor').toLowerCase() === 'rgb(255, 193, 7)';
+            document.execCommand('backColor', false, isHighlighted ? 'transparent' : '#FFC107');
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) { const range = selection.getRangeAt(0); range.collapse(false); selection.removeAllRanges(); selection.addRange(range); }
+        }
+        updateToolbarState();
+    };
+
+    const imgBtn = el('button', 'btn');
+    imgBtn.innerHTML = '<i class="fa-solid fa-image"></i>'; imgBtn.title = "Add Image";
+    imgBtn.onclick = (e) => {
+        e.preventDefault();
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file'; fileInput.accept = 'image/*';
+        fileInput.onchange = () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) { customModal.show("Image is too large (max 5MB)."); return; }
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const MAX_WIDTH = 800, MAX_HEIGHT = 800;
+                    let width = img.width, height = img.height;
+                    if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
+                    else { if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } }
+                    canvas.width = width; canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    activeEditor?.focus(); restoreSelection();
+                    document.execCommand('insertImage', false, dataUrl);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+        fileInput.click();
+    };
+
+    const colorGroup = el('div', 'toolbar-group');
+    const colorBtn = el('button', 'btn');
+    colorBtn.innerHTML = '<i class="fa-solid fa-palette"></i>'; colorBtn.title = 'Change note color';
+    const colorPalette = el('div', 'color-palette');
+    noteColors.forEach(color => {
+        const swatch = el('div', 'color-swatch');
+        swatch.dataset.color = color.name;
+        if (color.icon) swatch.innerHTML = `<i class="fa-solid ${color.icon}"></i>`;
+        swatch.onclick = (e) => {
+            e.stopPropagation();
+            t.noteColor = (color.name === 'default') ? null : color.name;
+            contentEditables.forEach(editor => {
+                editor.removeAttribute('data-note-color');
+                if (t.noteColor) editor.dataset.noteColor = t.noteColor;
+            });
+            colorPalette.querySelector('.active')?.classList.remove('active');
+            swatch.classList.add('active');
+            colorPalette.classList.remove('visible');
+            saveModelThrottled();
+        };
+        colorPalette.appendChild(swatch);
+    });
+    colorGroup.append(colorBtn, colorPalette);
+    
+    const outsideClickListener = (event) => {
+        if (!colorGroup.contains(event.target) && colorPalette.classList.contains('visible')) {
+            colorPalette.classList.remove('visible'); document.removeEventListener('click', outsideClickListener);
+        }
+    };
+    colorBtn.onclick = (e) => {
+        e.stopPropagation();
+        const isVisible = colorPalette.classList.toggle('visible');
+        if (isVisible) {
+            const currentSwatch = colorPalette.querySelector(`[data-color="${t.noteColor || 'default'}"]`);
+            if (currentSwatch) { colorPalette.querySelector('.active')?.classList.remove('active'); currentSwatch.classList.add('active'); }
+            document.addEventListener('click', outsideClickListener);
+        } else { document.removeEventListener('click', outsideClickListener); }
+    };
+
+    const noteTypeGroup = el('div', 'toolbar-group');
+    const normalBtn = el('button', 'btn', 'Normal'); normalBtn.title = 'Standard notes view';
+    const cornellBtn = el('button', 'btn', 'Cornell'); cornellBtn.title = 'Cornell notes view';
+    noteTypeGroup.append(normalBtn, cornellBtn);
+    
+    const beehiveHint = el('span', '', '⌬ Type #tobuildaBeeHive');
+    beehiveHint.style.cssText = 'color: var(--ink-muted); font-size: 12px; margin-left: auto;';
+    
+    toolbar.append(boldBtn, italicBtn, el('div','toolbar-separator'), h1Btn, h2Btn, el('div','toolbar-separator'), ulBtn, olBtn, el('div','toolbar-separator'), outdentBtn, indentBtn, el('div','toolbar-separator'), highlighterBtn, imgBtn, el('div','toolbar-separator'), colorGroup, el('div', 'toolbar-separator'), noteTypeGroup, beehiveHint);
+    
+    container.appendChild(notesContainer);
+    container.appendChild(toolbar);
+    
+    const contentEditables = [notes, cornellCues, cornellMain, cornellSummary];
+    let activeEditor = notes;
+    const updateActiveEditor = (e) => { activeEditor = e.target; };
+    const switchNoteView = (type) => {
+        t.noteType = type;
+        normalBtn.classList.remove('active'); cornellBtn.classList.remove('active');
+        notes.classList.add('hidden-transition'); cornellContainer.classList.remove('visible');
+        if (type === 'cornell') { cornellBtn.classList.add('active'); cornellContainer.classList.add('visible'); } 
+        else { normalBtn.classList.add('active'); notes.classList.remove('hidden-transition'); }
+    };
+    normalBtn.onclick = () => { switchNoteView('normal'); saveModelThrottled(); };
+    cornellBtn.onclick = () => { switchNoteView('cornell'); saveModelThrottled(); };
+    switchNoteView(t.noteType);
+    if (t.noteColor) { contentEditables.forEach(editor => editor.dataset.noteColor = t.noteColor); }
+    
+    const syncNotesAndTagsDebounced = debounce((editor) => {
+        const noteType = editor.classList.contains('cornell-cues') ? 'cues' : editor.classList.contains('cornell-main') ? 'main' : editor.classList.contains('cornell-summary') ? 'summary' : 'normal';
+        t.notes[noteType] = editor.innerHTML;
+        // Call tag sync logic. 
+        BeeHive.syncTagsFromEditor(t, editor);
+        saveModelThrottled();
+    }, 300);
+
+    const updateToolbarState = () => {
+        if (!contentEditables.includes(document.activeElement)) return;
+        saveSelection(activeEditor);
+        const format = document.queryCommandValue('formatBlock').toLowerCase();
+        h1Btn.classList.toggle('active', format === 'h1'); h2Btn.classList.toggle('active', format === 'h2');
+        boldBtn.classList.toggle('active', document.queryCommandState('bold'));
+        italicBtn.classList.toggle('active', document.queryCommandState('italic'));
+        ulBtn.classList.toggle('active', document.queryCommandState('insertUnorderedList'));
+        olBtn.classList.toggle('active', document.queryCommandState('insertOrderedList'));
+        highlighterBtn.classList.toggle('active', document.queryCommandValue('backColor').toLowerCase() === 'rgb(255, 193, 7)');
+    };
+    
+    contentEditables.forEach(editor => {
+        BeeHive.renderInitialTags(editor);
+        editor.addEventListener('input', (e) => {
+            BeeHive.handleTagUnwrapping(e);
+            syncNotesAndTagsDebounced(editor);
+            BeeHive.handleTagAutocomplete(e, editor);
+        });
+        editor.addEventListener('keyup', updateToolbarState);
+        editor.addEventListener('keydown', e => { 
+            // consolidated keydown handler for tags, finally
+            if (BeeHive.handleKeyDown(e, editor)) return;
+        });
+        editor.addEventListener('mouseup', updateToolbarState);
+        editor.addEventListener('focus', (e) => { updateActiveEditor(e); updateToolbarState(); BeeHive.handleTagUnwrapping(e); });
+        editor.addEventListener('click', (e) => {
+             // click a tag to unwrap it
+            const clickedTag = e.target.closest('.beehive-tag');
+            if (clickedTag) {
+                BeeHive.unwrapTag(clickedTag, clickedTag.textContent.length);
+            }
+            BeeHive.hideAutocomplete(); 
+            updateActiveEditor(e); updateToolbarState(); 
+        });
+        editor.addEventListener('blur', () => { setTimeout(BeeHive.hideAutocomplete, 200); });
+    });
+  }
+
+  function renderTopic(t, s, c) {
+    if (!t.id) t.id = uid();
+    const card = el('div', 'card topic-card');
+    card.dataset.id = t.id;
+    card.dataset.type = 'topic';
+    
+    const header = el('div', 'card-header');
+    const dragHandle = el('span', 'card-drag-handle');
+    dragHandle.draggable = true;
+    dragHandle.innerHTML = '<i class="fa-solid fa-grip-vertical"></i>';
+    dragHandle.title = 'Drag to reorder';
+    header.appendChild(dragHandle);
+
+    const twist = el('button', 'btn-mini twist closed', '▾'); header.appendChild(twist);
+    const title = editable('h4', t.name, v => { t.name = v; saveModelThrottled(); }); header.appendChild(title);
+    header.appendChild(el('div', 'space'));
+    const delBtn = el('button', 'btn btn-danger btn-mini');
+    delBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    header.appendChild(delBtn);
+    card.appendChild(header);
+
+    const bodyWrapper = el('div', 'card-body-wrapper');
+    const bodyContent = el('div', 'card-body-content');
+    bodyWrapper.appendChild(bodyContent);
+    card.appendChild(bodyWrapper);
+    
+    const renderBodyOnOpen = () => {
+        if (!bodyContent.hasChildNodes()) {
+            renderTopicBody(t,s,c, bodyContent);
+        }
+        slideToggle(bodyWrapper, twist);
+    };
+    twist.onclick = renderBodyOnOpen;
+    
+    delBtn.onclick = async () => {
+      if (!(await customModal.show('Remove this topic?', true))) return;
+      deductStreakPoint();
+      const chapterCard = card.closest('.chapter-card');
+      const subjectCard = card.closest('.subject-card');
+      c.topics = c.topics.filter(x => x.id !== t.id);
+      
+      // Prune tags after deletion, ease on the brakes
+      if (BeeHive.pruneUnusedTags()) { saveModelThrottled(); }
+      BeeHive.refreshData();
+
+      card.classList.add('is-deleting');
+      card.addEventListener('animationend', async () => {
+          card.remove();
+          await saveModel();
+          updateChapterProgress(chapterCard, c);
+          updateSubjectProgress(subjectCard, s);
+          updateDashboardIfVisible();
+      });
+    };
+    return card;
+  }
+  
+  function renderChapter(c, s) {
+    if (!c.id) c.id = uid();
+    const card = el('div', 'card chapter-card');
+    card.dataset.id = c.id;
+    card.dataset.type = 'chapter';
+    
+    const header = el('div', 'card-header');
+    const dragHandle = el('span', 'card-drag-handle');
+    dragHandle.draggable = true;
+    dragHandle.innerHTML = '<i class="fa-solid fa-grip-vertical"></i>';
+    dragHandle.title = 'Drag to reorder';
+    header.appendChild(dragHandle);
+
+    const twist = el('button', 'btn-mini twist closed', '▾'); header.appendChild(twist);
+    const title = editable('h3', c.name, v => { c.name = v; saveModelThrottled(); }); header.appendChild(title);
+    
+    const dueDateGroup = el('div', '', '');
+    dueDateGroup.style.cssText = 'display:flex; align-items:center; gap:8px; margin-left:12px;';
+    const dueDateLabel = el('span', 'due-date-label');
+    dueDateLabel.innerHTML = '<i class="fa-solid fa-bullseye"></i>';
+    dueDateLabel.title = 'Set due date';
+    const dueDateInput = el('input', 'due-date-input'); 
+    dueDateInput.type = 'date';
+    if (c.dueDate) dueDateInput.value = c.dueDate;
+    dueDateInput.onchange = () => {
+        c.dueDate = dueDateInput.value;
+        if (c.deadlineStatus) {
+            c.deadlineStatus = null;
+            c.deadlineSummary = null;
+        }
+        saveModelThrottled();
+        updateDashboardIfVisible();
+    };
+    dueDateGroup.append(dueDateLabel, dueDateInput);
+    header.appendChild(dueDateGroup);
+
+    const progress = el('div', 'card-progress');
+    progress.innerHTML = `<div class="meter-mini"><div></div></div> <span>${chapterScore(c)}%</span>`;
+    header.appendChild(progress);
+    header.appendChild(el('div', 'space'));
+    const addBtn = el('button', 'btn btn-primary btn-mini', 'Add Topic');
+    const delBtn = el('button', 'btn btn-danger btn-mini');
+    delBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    header.append(addBtn, delBtn);
+    card.appendChild(header);
+
+    const bodyWrapper = el('div', 'card-body-wrapper');
+    const bodyContent = el('div', 'card-body-content');
+    bodyContent.dataset.dropZoneFor = 'topic';
+    bodyWrapper.appendChild(bodyContent);
+    card.appendChild(bodyWrapper);
+
+    (c.topics || []).forEach(t => bodyContent.appendChild(renderTopic(t, s, c)));
+
+    addBtn.onclick = async () => {
+        const newTopic = { id: uid(), name: 'New Topic', sel: [], notes: {normal:'',cues:'',main:'',summary:''}, noteType:'normal', beehiveLabels:[] };
+        c.topics = c.topics || [];
+        c.topics.push(newTopic);
+        const newTopicCard = renderTopic(newTopic, s, c);
+        newTopicCard.classList.add('new-item');
+        newTopicCard.addEventListener('animationend', () => newTopicCard.classList.remove('new-item'));
+        bodyContent.appendChild(newTopicCard);
+        if (!bodyWrapper.classList.contains('open')) { slideToggle(bodyWrapper, twist); setTimeout(() => smoothScrollTo(newTopicCard), 450); } 
+        else { smoothScrollTo(newTopicCard); }
+        logActivityAndAddPoint();
+        await saveModel();
+
+        // real time
+        const chapterCard = newTopicCard.closest('.chapter-card');
+        const subjectCard = newTopicCard.closest('.subject-card');
+        updateChapterProgress(chapterCard, c);
+        updateSubjectProgress(subjectCard, s);
+        
+        updateDashboardIfVisible();
+    };
+    
+    delBtn.onclick = async () => {
+      if (!(await customModal.show('Remove this chapter and all its topics?', true))) return;
+      deductStreakPoint();
+      const subjectCard = card.closest('.subject-card');
+      s.chapters = s.chapters.filter(x => x.id !== c.id);
+      
+      // Prune tags after deletion, here , damn it's hard
+      if (BeeHive.pruneUnusedTags()) { saveModelThrottled(); }
+      BeeHive.refreshData();
+
+      card.classList.add('is-deleting');
+      card.addEventListener('animationend', async () => {
+          card.remove();
+          await saveModel();
+          updateSubjectProgress(subjectCard, s);
+          updateDashboardIfVisible();
+      });
+    };
+    twist.onclick = () => slideToggle(bodyWrapper, twist);
+    updateChapterProgress(card, c);
+    return card;
+  }
+
+  function renderSubject(s) {
+    if (!s.id) s.id = uid();
+    const card = el('div', 'card subject-card');
+    card.dataset.id = s.id;
+    card.dataset.type = 'subject';
+
+    const header = el('div', 'card-header');
+    const dragHandle = el('span', 'card-drag-handle');
+    dragHandle.draggable = true;
+    dragHandle.innerHTML = '<i class="fa-solid fa-grip-vertical"></i>';
+    dragHandle.title = 'Drag to reorder';
+    header.appendChild(dragHandle);
+    
+    const twist = el('button', 'btn-mini twist closed', '▾'); header.appendChild(twist);
+    const title = editable('h2', s.name, v => { s.name = v; saveModelThrottled(); }); header.appendChild(title);
+    const dueDateGroup = el('div', '', '');
+    dueDateGroup.style.cssText = 'display:flex; align-items:center; gap:8px; margin-left:12px;';
+    const dueDateLabel = el('span', 'due-date-label');
+    dueDateLabel.innerHTML = '<i class="fa-solid fa-bullseye"></i>';
+    dueDateLabel.title = 'Set due date';
+    const dueDateInput = el('input', 'due-date-input');
+    dueDateInput.type = 'date';
+    if (s.dueDate) dueDateInput.value = s.dueDate;
+    dueDateInput.onchange = () => {
+        s.dueDate = dueDateInput.value;
+        if (s.deadlineStatus) {
+            s.deadlineStatus = null;
+            s.deadlineSummary = null;
+        }
+        saveModelThrottled();
+        updateDashboardIfVisible();
+    };
+    dueDateGroup.append(dueDateLabel, dueDateInput);
+    header.appendChild(dueDateGroup);
+    
+    const progress = el('div', 'card-progress');
+    progress.innerHTML = `<div class="meter-mini"><div></div></div> <span>${subjectScore(s)}%</span>`;
+    header.appendChild(progress);
+    header.appendChild(el('div', 'space'));
+    const addBtn = el('button', 'btn btn-primary btn-mini', 'Add Chapter');
+    const delBtn = el('button', 'btn btn-danger btn-mini');
+    delBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    header.append(addBtn, delBtn);
+    card.appendChild(header);
+
+    const bodyWrapper = el('div', 'card-body-wrapper');
+    const bodyContent = el('div', 'card-body-content');
+    bodyContent.dataset.dropZoneFor = 'chapter';
+    bodyWrapper.appendChild(bodyContent);
+    card.appendChild(bodyWrapper);
+
+    addBtn.onclick = async () => {
+        const newChapter = { id: uid(), name: 'New Chapter', topics: [] };
+        s.chapters = s.chapters || [];
+        s.chapters.push(newChapter);
+        const newChapterCard = renderChapter(newChapter, s);
+        newChapterCard.classList.add('new-item');
+        newChapterCard.addEventListener('animationend', () => newChapterCard.classList.remove('new-item'));
+        bodyContent.appendChild(newChapterCard);
+        if (!bodyWrapper.classList.contains('open')) { slideToggle(bodyWrapper, twist); setTimeout(() => smoothScrollTo(newChapterCard), 450); } 
+        else { smoothScrollTo(newChapterCard); }
+        logActivityAndAddPoint();
+        await saveModel();
+
+        // Real-time 
+        const subjectCard = newChapterCard.closest('.subject-card');
+        updateSubjectProgress(subjectCard, s);
+        
+        updateDashboardIfVisible();
+    };
+    
+    delBtn.onclick = async () => {
+      if (!(await customModal.show('Remove this subject and all its content?', true))) return;
+      deductStreakPoint();
+      model.subjects = model.subjects.filter(x => x.id !== s.id);
+      
+      // Prune tags after deletion, if only one subject, here
+      if(BeeHive.pruneUnusedTags()) { saveModelThrottled(); }
+
+      card.classList.add('is-deleting');
+      card.addEventListener('animationend', async () => { card.remove(); await saveModel(); checkEmptyState(); updateDashboardIfVisible(); });
+    };
+
+    (s.chapters || []).forEach(c => bodyContent.appendChild(renderChapter(c, s)));
+    twist.onclick = () => slideToggle(bodyWrapper, twist);
+    updateSubjectProgress(card, s);
+    return card;
+  }
+  
+  function checkEmptyState() {
+    const isEmpty = !model.subjects || model.subjects.length === 0;
+    document.getElementById('emptyState').classList.toggle('hidden', !isEmpty);
+  }
+
+  async function renderModelAsync() {
+    return new Promise(resolve => {
+        mainContent.innerHTML = '';
+        checkEmptyState();
+        const subjects = model.subjects || [];
+        if (subjects.length === 0) { hideGlobalLoader(); resolve(); return; }
+        let index = 0;
+        const batchSize = 1;
+        function processBatch() {
+            const frag = document.createDocumentFragment();
+            const end = Math.min(index + batchSize, subjects.length);
+            for (let i = index; i < end; i++) { frag.appendChild(renderSubject(subjects[i])); }
+            mainContent.appendChild(frag);
+            index = end;
+            if (index < subjects.length) { requestAnimationFrame(processBatch); } 
+            else { applyUiState(); hideGlobalLoader(); resolve(); }
+        }
+        processBatch();
+    });
+  }
+
+  function applyUiState() {
+    Object.keys(uiState.openCards || {}).forEach(id => {
+      const card = document.querySelector(`.card[data-id="${id}"]`);
+      if (card) {
+          const body = card.querySelector('.card-body-wrapper');
+          const twist = card.querySelector('.twist');
+          if (body && !body.classList.contains('open')) {
+              body.classList.add('open');
+              if (twist) twist.classList.remove('closed');
+              const topicCard = card.closest('.topic-card');
+              if(topicCard) {
+                  const [s, c, t] = findTopicById(topicCard.dataset.id);
+                  if(t) {
+                      const bodyContent = topicCard.querySelector('.card-body-content');
+                      if(!bodyContent.hasChildNodes()){
+                         renderTopicBody(t,s,c, bodyContent);
+                      }
+                  }
+              }
+          }
+      }
+    });
+    setTimeout(() => { if (uiState.scrollY > 0) window.scrollTo(0, uiState.scrollY); }, 50);
+  }
+
+    // ======== DASHBOARD & CHART RENDERING LOGIC ========
+    function renderStudyStreak() {
+        const container = document.getElementById('studyStreak');
+        container.innerHTML = '';
+        const streak = model.streak || 0;
+        const display = el('div', 'streak-display');
+        display.innerHTML = `<div class="streak-number">${streak}</div><div class="streak-label">Streak Points</div>`;
+        const weekContainer = el('div', 'streak-week');
+        const activityDatesSet = new Set(model.activityDates || []);
+        const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+        for (let i = 6; i >= 0; i--) {
+            const day = new Date();
+            day.setDate(new Date().getDate() - i);
+            const dateString = toYYYYMMDD(day);
+            const dayEl = el('div', 'streak-day', dayNames[day.getDay()]);
+            if (activityDatesSet.has(dateString)) { dayEl.classList.add('active'); }
+            weekContainer.appendChild(dayEl);
+        }
+        display.appendChild(weekContainer);
+        container.appendChild(display);
+    }
+    
+    function checkAllTasksComplete() {
+        if (!model.todoList || model.todoList.length === 0 || dashboardView.style.display !== 'block') return;
+        const allCompleted = model.todoList.every(task => task.completed);
+        const honeyIcon = document.querySelector('.dashboard-title .vibrating-icon');
+        if (!honeyIcon) return;
+
+        if (allCompleted) {
+            const originalContent = honeyIcon.innerHTML;
+            const originalClasses = honeyIcon.className;
+
+            honeyIcon.innerHTML = '⁽⁽ଘ( ˊᵕˋ )ଓ⁾⁾';
+            honeyIcon.className = 'vibrating-icon happy-dance-animation';
+            
+            setTimeout(() => {
+                if (honeyIcon.innerHTML === '⁽⁽ଘ( ˊᵕˋ )ଓ⁾⁾') {
+                    honeyIcon.innerHTML = originalContent;
+                    honeyIcon.className = originalClasses;
+                }
+            }, 5000); 
+        }
+    }
+  
+    function renderTodoList() {
+        const container = document.getElementById('todoListContainer');
+        const input = document.getElementById('newTodoInput');
+        const clearBtn = document.getElementById('clearCompletedBtn');
+        container.innerHTML = '';
+
+        (model.todoList || []).forEach(task => { 
+            const item = el('div', 'todo-item');
+            item.dataset.id = task.id; item.dataset.type = 'todo';
+            const dragHandle = el('span', 'todo-drag-handle');
+            dragHandle.draggable = true;
+            dragHandle.innerHTML = '<i class="fa-solid fa-grip-vertical"></i>'; item.appendChild(dragHandle);
+
+            const checkbox = el('input');
+            checkbox.type = 'checkbox'; checkbox.checked = task.completed;
+            checkbox.onchange = () => {
+                const taskToUpdate = model.todoList.find(t => t.id === task.id);
+                if (!taskToUpdate) return;
+                const wasCompleted = taskToUpdate.completed;
+                taskToUpdate.completed = checkbox.checked;
+                textEl.classList.toggle('completed', checkbox.checked);
+                if (checkbox.checked && !wasCompleted) { logActivityAndAddPoint(); } 
+                else if (!checkbox.checked && wasCompleted) { deductStreakPoint(); }
+                saveModelThrottled();
+                checkAllTasksComplete();
+            };
+            item.appendChild(checkbox);
+
+            const textEl = el('span', 'todo-text', task.text);
+            textEl.contentEditable = "plaintext-only";
+            if (task.completed) textEl.classList.add('completed');
+            textEl.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); textEl.blur(); }};
+            textEl.onblur = () => {
+                const taskToUpdate = model.todoList.find(t => t.id === task.id);
+                if (taskToUpdate && taskToUpdate.text !== textEl.textContent) {
+                    taskToUpdate.text = textEl.textContent.trim(); saveModelThrottled();
+                }
+            };
+            item.appendChild(textEl);
+
+            const deleteBtn = el('button', 'todo-delete');
+            deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+            deleteBtn.onclick = () => {
+                model.todoList = model.todoList.filter(t => t.id !== task.id);
+                item.style.opacity = '0'; item.style.transition = 'opacity 0.3s';
+                setTimeout(() => { item.remove(); saveModelThrottled(); updateDashboardIfVisible();}, 300);
+            };
+            item.appendChild(deleteBtn);
+            container.appendChild(item);
+        });
+
+        input.onkeydown = (e) => {
+            if (e.key === 'Enter' && input.value.trim() !== '') {
+                e.preventDefault();
+                model.todoList.push({ id: uid(), text: input.value.trim(), completed: false });
+                input.value = ''; saveModelThrottled(); renderTodoList(); 
+            }
+        };
+        clearBtn.onclick = () => { model.todoList = model.todoList.filter(task => !task.completed); saveModelThrottled(); renderTodoList(); };
+    }
+    
+    function renderHoneysJournal() {
+        const container = document.getElementById('journalContent');
+        container.innerHTML = '';
+        const todayStr = toYYYYMMDD(new Date());
+        const todaysEntry = (model.journalEntries || []).find(e => e.date === todayStr);
+        const promptIndex = (new Date().getDate() - 1) % journalPrompts.length;
+        const currentPrompt = journalPrompts[promptIndex];
+        container.appendChild(el('div', 'journal-prompt', `${currentPrompt}`));
+        
+        if (todaysEntry) {
+            const responseContainer = el('div', 'journal-response');
+            const selectedOption = journalOptions.find(o => o.id === todaysEntry.responseOption);
+            responseContainer.innerHTML = `<div class="response-option">${selectedOption ? selectedOption.text : 'Your reflection:'}</div><p>${todaysEntry.responseText || 'No additional notes.'}</p>`;
+            container.appendChild(responseContainer);
+        } else {
+            const optionsContainer = el('div', 'journal-options');
+            let selectedOptionId = null;
+            journalOptions.forEach(opt => {
+                const optBtn = el('button', 'btn journal-option', opt.text);
+                optBtn.dataset.id = opt.id;
+                optBtn.onclick = () => { optionsContainer.querySelectorAll('.journal-option').forEach(btn => btn.classList.remove('selected')); optBtn.classList.add('selected'); selectedOptionId = opt.id; };
+                optionsContainer.appendChild(optBtn);
+            });
+            const textArea = el('textarea', 'journal-textarea');
+            textArea.placeholder = "Elaborate on your thoughts here...";
+            const saveBtn = el('button', 'btn btn-primary', 'Save Journal Entry');
+            saveBtn.onclick = () => {
+                if (!selectedOptionId) { customModal.show("Please select an option before saving."); return; }
+                const newEntry = { date: todayStr, prompt: currentPrompt, responseOption: selectedOptionId, responseText: textArea.value.trim() };
+                model.journalEntries = model.journalEntries || [];
+                model.journalEntries.push(newEntry);
+                logActivityAndAddPoint();
+                renderHoneysJournal();
+            };
+            container.append(optionsContainer, textArea, saveBtn);
+        }
+    }
+
+  function renderDashboard() {
+    const allTopics = model.subjects.flatMap(s => s.chapters?.flatMap(c => c.topics || []) || []);
+    const overall = avg(allTopics.map(topicScore));
+    document.getElementById('overallPct').textContent = overall + '%';
+    const fill = document.getElementById('overallFill');
+    fill.style.width = overall + '%';
+    fill.className = getScoreColorClass(overall);
+    const adviceTiers = {
+        tier0: ["We'll start with something you'll truly love ⸜(｡˃ ᵕ ˂ )⸝♡", "Let's plant the first seed of knowledge together! ε(´｡•᎑•`)っ","Ready          to turn the first page? A new adventure in learning awaits! (づ ｡˃ ᵕ ˂ )づ"],
+        tier1: ["You've planted the first seeds! 🌱 Focus on short, daily sessions and active recall to help them sprout.", "Great start! A little bit of consistent effort goes a long way. Keep watering your knowledge garden.","Like a young sprout, your knowledge needs daily sun. A little bit of practice each day makes all the difference."], tier25: ["Your garden is growing! 🪻 Concentrate on weak topics to strengthen their roots.", "Good progress! Now is a great time to revisit tricky concepts and fill in the gaps.","Time to do some weeding! Let's clear out any confusing points to make room for stronger understanding."], tier50: ["Excellent momentum! 🌲 Your knowledge is branching out. Sharpen your skills by practicing a mix of different topics.", "You're building a strong forest of facts! Try explaining a concept to someone else to test your understanding.","Your tree of knowledge is growing tall! Let's see how the branches connect by tackling problems that mix concepts."], tier75: ["You've built a strong foundation! 🧩 Challenge yourself with curveball questions and try explaining concepts to solidify your mastery.", "Amazing work! You're approaching mastery. Look for connections between topics to build a web of knowledge.","The best way to learn is to teach. Try breaking down a complex topic for a friend."], tier90: ["Honey-sweet success! 🌺 Your hard work has blossomed. Now, integrate your knowledge and see how different concepts connect.", "You've achieved mastery! Keep reviewing periodically to ensure this knowledge stays fresh for the long term.", "Your garden is in full bloom! Enjoy the fruits of your labor and see the beautiful connections you've cultivated."]
+    };
+    let adviceKey;
+    if (overall >= 90) adviceKey = 'tier90'; else if (overall >= 75) adviceKey = 'tier75'; else if (overall >= 50) adviceKey = 'tier50'; else if (overall >= 25) adviceKey = 'tier25'; else if (overall > 0) adviceKey = 'tier1'; else adviceKey = 'tier0';
+    let advice = adviceTiers[adviceKey][Math.floor(Math.random() * adviceTiers[adviceKey].length)];
+    const groupAvgs = biscuits.map(b => ({ label: b.label, score: avg(allTopics.flatMap(t => (t.sel || []).filter(sel => sel.group === b.key).map(sel => sel.w))) })).sort((a,b) => a.score - b.score);
+    if (groupAvgs[0] && groupAvgs[0].score < 60 && groupAvgs[0].score > 1 && allTopics.length > 2) { advice += ` It feels like there's a little bee-hive that's just waiting for some gentle attention and a sprinkle of focus on "${groupAvgs[0].label}" (ӦᴗӦ｡)`; }
+    document.getElementById('overallAdvice').textContent = advice;
+
+    const biscuitList = document.getElementById("biscuitStats");
+    biscuitList.innerHTML = "";
+    groupAvgs.forEach(g => { const li = el('li'); li.innerHTML = `<span class="dot ${getScoreColorClass(g.score)}"></span><span class="label"><strong>${g.label}</strong></span><span class="score-tag ${getScoreColorClass(g.score)}">${g.score}%</span>`; biscuitList.appendChild(li); });
+
+    renderStudyStreak(); renderTodoList(); renderHoneysJournal();
+
+    // === Deadline logic ===
+    const now = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(now.getDate() - 1);
+    let modelWasUpdatedByAutoMiss = false;
+
+    model.subjects.forEach(s => {
+        const checkAndMarkMissed = (item) => {
+            if (item.dueDate && !item.deadlineStatus) {
+                // ends 18 hours after end of due date.
+                const promptEndTime = new Date(new Date(item.dueDate + 'T23:59:59').getTime() + 18 * 60 * 60 * 1000);
+                if (now > promptEndTime) {
+                    item.deadlineStatus = 'This little moment was missed.';
+                    item.deadlineSummary = 'Oops! Looks like this one played hide-and-seek & wasn\'t found..';
+                    modelWasUpdatedByAutoMiss = true;
+                }
+            }
+        };
+        checkAndMarkMissed(s);
+        (s.chapters || []).forEach(c => checkAndMarkMissed(c));
+    });
+
+    if (modelWasUpdatedByAutoMiss) {
+        saveModelThrottled();
+    }
+
+    const deadlinesContainer = document.getElementById('upcomingDeadlines');
+    deadlinesContainer.innerHTML = ''; deadlinesContainer.className = 'scrollable-dash-list';
+    const deadlines = [];
+    model.subjects.forEach(s => {
+        if (s.dueDate) deadlines.push({ name: s.name, dueDate: s.dueDate, id: s.id, type: 'subject', status: s.deadlineStatus, summary: s.deadlineSummary });
+        (s.chapters || []).forEach(c => { if (c.dueDate) deadlines.push({ name: `${s.name} > ${c.name}`, dueDate: c.dueDate, id: c.id, type: 'chapter', subjectId: s.id, status: c.deadlineStatus, summary: c.deadlineSummary }); });
+    });
+
+    deadlines.map(d => ({ ...d, dueDateObj: new Date(d.dueDate) })).filter(d => (d.dueDateObj >= yesterday)).sort((a, b) => a.dueDateObj - b.dueDateObj)
+    .forEach(d => {
+        const daysLeft = Math.ceil((d.dueDateObj - new Date()) / (1000 * 60 * 60 * 24));
+        let colorClass = 'good'; if (daysLeft < 3) colorClass = 'bad'; else if (daysLeft < 7) colorClass = 'warn';
+        
+        const deadlineItemContainer = el('div', 'deadline-item-container');
+        const deadlineRow = el('div', 'summary-row'); 
+        deadlineRow.style.cursor = 'pointer';
+        deadlineRow.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><span class="dot ${colorClass}"></span><strong>${d.name}</strong></div><span class="score-tag ${colorClass}">${daysLeft >= 0 ? `${daysLeft} days left` : 'Due'}</span>`;
+        deadlineRow.onclick = () => navigateToCard(d.id);
+        deadlineItemContainer.appendChild(deadlineRow);
+
+        const promptStartTime = new Date(d.dueDate + 'T00:00:00');
+        const promptEndTime = new Date(new Date(d.dueDate + 'T23:59:59').getTime() + 18 * 60 * 60 * 1000);
+        const isDueForPrompt = now >= promptStartTime && now <= promptEndTime;
+        
+        const renderPermanentDeadlineStatus = (container, deadlineData) => {
+            container.innerHTML = '';
+            container.className = 'deadline-prompt';
+            const feedbackEl = el('div', 'deadline-feedback');
+            if (deadlineData.status === 'completed') {
+                feedbackEl.innerHTML = deadlineData.summary
+                    ? `<strong>Completed!</strong><br><p style="white-space:pre-wrap; font-style:normal; margin-top:8px;"><em>Your summary:</em> ${deadlineData.summary}</p>`
+                    : '<strong>Completed!</strong> Great work!';
+            } else { // missed
+                feedbackEl.innerHTML = deadlineData.summary
+                    ? `<strong>Missed.</strong><br><p style="white-space:pre-wrap; font-style:normal; margin-top:8px;"><em>Your notes:</em> ${deadlineData.summary}</p>`
+                    : 'That\'s just how the cookie crumbles sometimes ( ´･･)ﾉ No Biggie.';
+            }
+            container.appendChild(feedbackEl);
+        };
+
+        if (isDueForPrompt && !d.status) {
+            const promptContainer = el('div', 'deadline-prompt');
+            const summaryInput = el('textarea', 'deadline-summary-input');
+            summaryInput.placeholder = 'Add a quick summary or notes...';
+            
+            const deadlinePrompts = [
+                "Did you conquer this quest? How did it go?",
+                "Deadline day! Did you cross the finish line on this one?",
+                "It's due! How do you feel about your work on this?"
+            ];
+            const randomPrompt = deadlinePrompts[Math.floor(Math.random() * deadlinePrompts.length)];
+
+            const actionsContainer = el('div', 'deadline-actions');
+            const noBtn = el('button', 'btn btn-ghost btn-deadline-no'); 
+            noBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> No';
+            const yesBtn = el('button', 'btn btn-primary btn-deadline-yes'); 
+            yesBtn.innerHTML = '<i class="fa-solid fa-check"></i> Yes!';
+
+            const handleCompletion = (status) => {
+                let item;
+                if (d.type === 'subject') { item = model.subjects.find(s => s.id === d.id); } 
+                else { const subject = model.subjects.find(s => s.id === d.subjectId); if (subject) item = subject.chapters.find(c => c.id === d.id); }
+                
+                if (item) {
+                    item.deadlineStatus = status;
+                    item.deadlineSummary = summaryInput.value.trim();
+
+                    const feedbackEl = el('div', 'deadline-feedback');
+                    if (status === 'completed') {
+                        logActivityAndAddPoint();
+                        feedbackEl.innerHTML = item.deadlineSummary ? 'Great job! Summary saved and point awarded (• ֊ •｡)' : 'Great job! Point awarded (• ֊ •｡)';
+                    } else {
+                        deductStreakPoint();
+                        feedbackEl.innerHTML = item.deadlineSummary ? 'Notes saved. Little by little, we will get there .ᐟ' : 'Whoops, a tiny detour.. Little by little, we will get there .ᐟ (•˕ •ゝ';
+                    }
+                    
+                    promptContainer.innerHTML = '';
+                    promptContainer.appendChild(feedbackEl);
+                    saveModelThrottled();
+
+                    setTimeout(() => {
+                        renderPermanentDeadlineStatus(promptContainer, item);
+                    }, 3500);
+                }
+            };
+            
+            noBtn.onclick = () => handleCompletion('missed');
+            yesBtn.onclick = () => handleCompletion('completed');
+            actionsContainer.append(noBtn, yesBtn);
+            promptContainer.append(el('p', '', randomPrompt), summaryInput, actionsContainer);
+            deadlineItemContainer.appendChild(promptContainer);
+        } else if (d.status) {
+            const statusContainer = el('div');
+            deadlineItemContainer.appendChild(statusContainer);
+            renderPermanentDeadlineStatus(statusContainer, d);
+        }
+        deadlinesContainer.appendChild(deadlineItemContainer);
+    });
+
+    if (deadlinesContainer.children.length === 0) { deadlinesContainer.className = ''; deadlinesContainer.innerHTML = '<p style="color: var(--ink-muted); text-align:center;">No upcoming due dates.</p>'; }
+    
+    // Clearing any existing focus trigger before re-rendering
+    const existingTrigger = document.querySelector('.focus-session-trigger');
+    if (existingTrigger) existingTrigger.remove();
+    
+    const reviewContainer = document.getElementById('reviewNeeded');
+    reviewContainer.innerHTML = ''; reviewContainer.className = 'scrollable-dash-list';
+    
+    const allRankedTopics = [];
+    model.subjects.forEach(s => { (s.chapters || []).forEach(c => { (c.topics || []).forEach(t => { allRankedTopics.push({ sId: s.id, cId: c.id, tId: t.id, sName: s.name, cName: c.name, tName: t.name, score: topicScore(t) }); }); }); });
+    const topicsToReview = allRankedTopics.filter(item => item.score < 75).sort((a, b) => a.score - b.score);
+    if (topicsToReview.length > 0) {
+        topicsToReview.forEach(item => {
+            const reviewRow = el('div', 'summary-row'); reviewRow.style.cursor = 'pointer';
+            reviewRow.innerHTML = `<div style="display:flex; flex-direction:column; align-items: flex-start; gap: 2px; flex:1;"><strong>${item.tName}</strong><small style="color:var(--ink-muted)">${item.sName} > ${item.cName}</small></div><span class="score-tag ${getScoreColorClass(item.score)}">${item.score}%</span>`;
+            reviewRow.onclick = () => navigateToCard(item.tId);
+            reviewContainer.appendChild(reviewRow);
+        });
+        if (topicsToReview.length >= 2) {
+            const triggerBtn = el('button', 'btn btn-primary btn-mini focus-session-trigger');
+            triggerBtn.innerHTML = '</i> Start Focus Session ⩇⩇:⩇⩇';
+            triggerBtn.onclick = () => initFocusSessionSetup(topicsToReview);
+            reviewContainer.parentElement.appendChild(triggerBtn);
+        }
+    } else {
+        reviewContainer.className = '';
+        if (allRankedTopics.length === 0) { reviewContainer.innerHTML = '<p style="color: var(--ink-muted); text-align:center;">Let\'s get buzzing! Add some topics to start your analysis.</p>'; } 
+        else { reviewContainer.innerHTML = '<p style="color: var(--ink-muted); text-align:center;">Great! No topics require immediate review (all are 75% or higher).</p>'; } 
+    }
+    
+    renderWavyChart();
+
+    const list = document.getElementById('summaryList');
+    list.innerHTML = '';
+    model.subjects.forEach(s => {
+        const sScore = subjectScore(s);
+        const sRow = el('div', 'summary-row');
+        const dot = el('span', `dot ${getScoreColorClass(sScore)}`);
+        const titleDiv = el('div',''); titleDiv.style.cssText = 'display:flex; align-items:center; gap:8px;';
+        titleDiv.append(dot, el('strong','', s.name));
+        sRow.append(titleDiv, el('span', `score-tag ${getScoreColorClass(sScore)}`, `${sScore}%`));
+        sRow.onclick = () => navigateToCard(s.id);
+        sRow.style.cursor = 'pointer'; 
+        list.appendChild(sRow);
+
+        const sortedChapters = (s.chapters || []).slice().sort((a, b) => chapterScore(a) - chapterScore(b));
+        sortedChapters.forEach(c => {
+            const cScore = chapterScore(c);
+            const cRow = el('div', 'summary-row'); cRow.style.marginLeft = '20px'; cRow.style.cursor = 'pointer'; cRow.onclick = () => navigateToCard(c.id);
+            cRow.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><span class="dot ${getScoreColorClass(cScore)}"></span><span>${c.name}</span></div><span class="score-tag ${getScoreColorClass(cScore)}">${cScore}%</span>`;
+            list.appendChild(cRow);
+        });
+    });
+  }
+  
+  function renderWavyChart() {
+    const chartContainer = document.getElementById("subjectChart");
+    chartContainer.innerHTML = "";
+    const subjects = model.subjects || [];
+    if (subjects.length === 0) { chartContainer.innerHTML = '<p style="text-align:center; color: var(--ink-muted);">Add some subjects to see your performance chart.</p>'; return; }
+    const data = subjects.map(s => ({ id: s.id, name: s.name, score: subjectScore(s) }));
+    const MAX_SUBJECTS_BEFORE_SCROLL = 8, MIN_WIDTH_PER_SUBJECT = 160, MAX_LABEL_LENGTH = 20;
+    let svgWidth;
+    if (data.length > MAX_SUBJECTS_BEFORE_SCROLL) { chartContainer.style.overflowX = 'auto'; svgWidth = data.length * MIN_WIDTH_PER_SUBJECT; } 
+    else { chartContainer.style.overflowX = 'hidden'; svgWidth = chartContainer.clientWidth; }
+    const svgHeight = 370, margin = { top: 40, right: 20, bottom: 130, left: 20 };
+    const chartWidth = svgWidth - margin.left - margin.right, chartHeight = svgHeight - margin.top - margin.bottom;
+    const bandWidth = chartWidth / data.length;
+    const points = data.map((d, i) => ({ x: margin.left + (i * bandWidth) + (bandWidth / 2), y: margin.top + chartHeight - (d.score / 100) * chartHeight, ...d }));
+    const line = (points) => { let d = `M ${points[0].x} ${points[0].y}`; for (let i = 0; i < points.length - 1; i++) { const p0 = i > 0 ? points[i - 1] : points[i], p1 = points[i], p2 = points[i + 1], p3 = i < points.length - 2 ? points[i + 2] : p2, tension = 0.5, cp1x = p1.x + (p2.x - p0.x) / 6 * tension, cp1y = p1.y + (p2.y - p0.y) / 6 * tension, cp2x = p2.x - (p3.x - p1.x) / 6 * tension, cp2y = p2.y - (p3.y - p1.y) / 6 * tension; d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`; } return d; };
+    const pathData = points.length > 1 ? line(points) : `M ${points[0].x},${points[0].y} L ${points[0].x},${points[0].y}`;
+    const areaData = `${pathData} L ${points[points.length-1].x},${svgHeight - margin.bottom} L ${points[0].x},${svgHeight - margin.bottom} Z`;
+    let svgContent = `<svg class="chart-svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}"><defs><linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="var(--yellow-main)" stop-opacity="0.5" /><stop offset="100%" stop-color="var(--yellow-main)" stop-opacity="0" /></linearGradient></defs><g id="chart-content"></g></svg>`;
+    chartContainer.innerHTML = svgContent;
+
+    const svgContentGroup = chartContainer.querySelector('#chart-content');
+
+    const pathFill = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathFill.setAttribute("class", "chart-wave-fill"); pathFill.setAttribute("d", areaData); pathFill.setAttribute("fill", "url(#waveGradient)");
+    
+    const pathStroke = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathStroke.setAttribute("class", "chart-wave-stroke"); pathStroke.setAttribute("d", pathData); pathStroke.setAttribute("stroke", "var(--yellow-main)");
+    
+    svgContentGroup.append(pathFill, pathStroke);
+    
+    points.forEach(p => { 
+        const colorVar = { good: 'var(--ok-main)', mid: 'var(--blue-main)', warn: 'var(--yellow-main)', bad: 'var(--danger-main)'}[getScoreColorClass(p.score)];
+        const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("class", "chart-dot");
+        circle.setAttribute("r", "8"); circle.setAttribute("cx", p.x); circle.setAttribute("cy", p.y);
+        circle.setAttribute("fill", colorVar);
+        circle.onclick = () => BeeHive.open(p.id);
+        group.appendChild(circle);
+
+        let labelY = svgHeight - margin.bottom + 25; let words = p.name.split(' '), line1 = p.name, line2 = ''; 
+        if (p.name.length > MAX_LABEL_LENGTH && words.length > 1) { const middle = p.name.length / 2; let bestSplit = -1, minDiff = Infinity; for (let j = 0; j < words.length - 1; j++) { const potentialSplitPoint = words.slice(0, j + 1).join(' ').length, diff = Math.abs(middle - potentialSplitPoint); if (diff < minDiff) { minDiff = diff; bestSplit = j; } } line1 = words.slice(0, bestSplit + 1).join(' '); line2 = words.slice(bestSplit + 1).join(' '); } 
+       
+        const addText = (content, y, className) => {
+            const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textEl.setAttribute("x", p.x); textEl.setAttribute("y", y); textEl.setAttribute("class", className); textEl.setAttribute("text-anchor", "middle");
+            textEl.textContent = content; return textEl;
+        }
+
+        const addTextWithTspan = (l1, l2, y, className) => {
+            const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textEl.setAttribute("x", p.x); textEl.setAttribute("y", y); textEl.setAttribute("class", className); textEl.setAttribute("text-anchor", "middle");
+            const tspan1 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+            tspan1.setAttribute("x", p.x); tspan1.setAttribute("dy", 0); tspan1.textContent = l1; textEl.appendChild(tspan1);
+            if (l2) { const tspan2 = document.createElementNS("http://www.w3.org/2000/svg", "tspan"); tspan2.setAttribute("x", p.x); tspan2.setAttribute("dy", "1.2em"); tspan2.textContent = l2; textEl.appendChild(tspan2); }
+            return textEl;
+        };
+
+        group.appendChild(addText(`${p.score}%`, p.y - 20, "chart-pct-label-bg"));
+        group.appendChild(addText(`${p.score}%`, p.y - 20, "chart-pct-label"));
+        group.appendChild(addTextWithTspan(line1, line2, labelY, "chart-name-label"));
+        svgContentGroup.appendChild(group);
+    });
+  }
+  
+  // ======== Search Functionality ========
+  const searchInput = document.getElementById('search'), mainView = document.getElementById('main'), searchView = document.getElementById('searchResults'), dashboardView = document.getElementById('dashboard'), backBtn = document.getElementById('backBtn');
+  const highlight = (text, term) => { if (!term || !text) return text || ''; const regex = new RegExp(`(${term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi'); return text.replace(regex, '<mark>$1</mark>'); };
+  const performSearch = () => {
+    const term = searchInput.value.trim().toLowerCase();
+    if (!term) { mainView.classList.remove('hidden'); searchView.classList.add('hidden'); return; }
+    mainView.classList.add('hidden'); dashboardView.style.display = 'none'; backBtn.classList.remove('hidden'); searchView.classList.remove('hidden'); searchView.innerHTML = '';
+    const results = [];
+    model.subjects.forEach(s => {
+        if (s.name.toLowerCase().includes(term)) results.push({ type: 'subject', s, text: s.name });
+        (s.chapters || []).forEach(c => {
+            if (c.name.toLowerCase().includes(term)) results.push({ type: 'chapter', s, c, text: c.name });
+            (c.topics || []).forEach(t => {
+                if (t.name.toLowerCase().includes(term)) results.push({ type: 'topic', s, c, t, text: t.name });
+                if (typeof t.notes === 'object' && t.notes !== null) {
+                    if (t.notes.normal && t.notes.normal.toLowerCase().includes(term)) results.push({ type: 'topic', s, c, t, text: t.notes.normal, fromNotes: true });
+                    if (t.notes.cues && t.notes.cues.toLowerCase().includes(term)) results.push({ type: 'topic', s, c, t, text: t.notes.cues, fromNotes: true });
+                    if (t.notes.main && t.notes.main.toLowerCase().includes(term)) results.push({ type: 'topic', s, c, t, text: t.notes.main, fromNotes: true });
+                    if (t.notes.summary && t.notes.summary.toLowerCase().includes(term)) results.push({ type: 'topic', s, c, t, text: t.notes.summary, fromNotes: true });
+                } else if (typeof t.notes === 'string' && t.notes.toLowerCase().includes(term)) { results.push({ type: 'topic', s, c, t, text: t.notes, fromNotes: true }); }
+            });
+        });
+    });
+    if (results.length === 0) { searchView.innerHTML = '<p>No results found.</p>'; return; }
+    results.forEach(r => {
+        const item = el('div', 'search-result-item');
+        const path = el('div', 'search-result-path'); const preview = el('div', 'search-result-notes');
+        let fullPath = highlight(r.s.name, term);
+        if(r.c) fullPath += ' &gt; ' + highlight(r.c.name, term); if(r.t) fullPath += ' &gt; ' + highlight(r.t.name, term);
+        path.innerHTML = fullPath;
+        if (r.fromNotes) { const tempDiv = document.createElement('div'); tempDiv.innerHTML = r.text; const plainText = tempDiv.textContent || tempDiv.innerText || ""; const snippetIndex = plainText.toLowerCase().indexOf(term); const start = Math.max(0, snippetIndex - 50); const end = Math.min(plainText.length, snippetIndex + 50); preview.innerHTML = '... ' + highlight(plainText.substring(start, end), term) + ' ...'; } else { preview.innerHTML = r.type + ' name matches.'; }
+        item.append(path, preview); item.onclick = () => navigateToCard(r.t?.id || r.c?.id || r.s?.id); searchView.appendChild(item);
+    });
+  };
+    
+  // ======== Centralized Drag-and-Drop System ========
+  let dragState = { element: null, type: null, sourceContainer: null };
+  const dropIndicator = el('div', 'drop-indicator');
+  
+  // --- Mouse D&D Handlers ---
+  function onDragStart(e) {
+      const handle = e.target.closest('[draggable="true"]'); if (!handle) return;
+      const draggable = handle.closest('.card, .todo-item'); if (!draggable) return;
+      e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', draggable.dataset.id);
+      dragState.element = draggable; dragState.type = draggable.dataset.type; dragState.sourceContainer = draggable.parentElement;
+      requestAnimationFrame(() => { draggable.classList.add('dragging'); });
+  }
+  function onDragOver(e) {
+      e.preventDefault(); if (!dragState.element) return;
+      const dropZone = (target => { const zone = target.closest('[data-drop-zone-for]'); if (zone && zone.dataset.dropZoneFor === dragState.type && !dragState.element.contains(zone)) { return zone; } return null; })(e.target);
+      if (dropZone) {
+          const afterElement = ((container, y) => { const draggableElements = [...container.querySelectorAll(`:scope > .card, :scope > .todo-item`)].filter(el => !el.classList.contains('dragging')); return draggableElements.reduce((closest, child) => { const box = child.getBoundingClientRect(); const offset = y - box.top - box.height / 2; if (offset < 0 && offset > closest.offset) { return { offset: offset, element: child }; } else { return closest; } }, { offset: Number.NEGATIVE_INFINITY }).element; })(dropZone, e.clientY);
+          if (afterElement) { dropZone.insertBefore(dropIndicator, afterElement); } else { dropZone.appendChild(dropIndicator); }
+      } else { if (dropIndicator.parentElement) dropIndicator.remove(); }
+  }
+  function onDrop(e) { e.preventDefault(); if (!dragState.element || !dropIndicator.parentElement) { onDragEnd(); return; } dropIndicator.parentElement.insertBefore(dragState.element, dropIndicator); updateModelOrder(dropIndicator.parentElement); onDragEnd(); }
+  function onDragEnd() { if (dragState.element) { dragState.element.classList.remove('dragging'); } if (dropIndicator.parentElement) { dropIndicator.remove(); } dragState = { element: null, type: null, sourceContainer: null }; }
+  
+  // --- Touch D&D Handlers ---
+  let touchDragState = { isDragging: false, scrollInterval: null };
+
+  function onTouchStartDrag(e) {
+      const handle = e.target.closest('[draggable="true"]');
+      if (!handle) return;
+      
+      const draggable = handle.closest('.card, .todo-item');
+      if (!draggable) return;
+      
+      e.preventDefault();
+      touchDragState.isDragging = true;
+      
+      // Setup global dragState 
+      dragState.element = draggable;
+      dragState.type = draggable.dataset.type;
+      dragState.sourceContainer = draggable.parentElement;
+      
+      // dragging style after a small delay to distinguish from taps, man
+      setTimeout(() => {
+          if (touchDragState.isDragging && dragState.element) {
+              requestAnimationFrame(() => { dragState.element.classList.add('dragging'); });
+          }
+      }, 150);
+  }
+
+  function onTouchMoveDrag(e) {
+      if (!touchDragState.isDragging || !dragState.element) return;
+      e.preventDefault();
+      
+      const touch = e.touches[0];
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      
+      // Reusing the existing dragover logic by creating a simulated event
+      onDragOver({ preventDefault: () => {}, target: target, clientY: touch.clientY });
+      
+      // Auto-scroll logic for touch devices
+      const scrollThreshold = 80; // pixels from viewport edge
+      if (touch.clientY < scrollThreshold) {
+          if (!touchDragState.scrollInterval) { touchDragState.scrollInterval = setInterval(() => window.scrollBy(0, -10), 16); }
+      } else if (touch.clientY > window.innerHeight - scrollThreshold) {
+          if (!touchDragState.scrollInterval) { touchDragState.scrollInterval = setInterval(() => window.scrollBy(0, 10), 16); }
+      } else {
+          clearInterval(touchDragState.scrollInterval); touchDragState.scrollInterval = null;
+      }
+  }
+
+  function onTouchEndDrag(e) {
+      if (!touchDragState.isDragging) return;
+      clearInterval(touchDragState.scrollInterval);
+      touchDragState.scrollInterval = null;
+
+      if (dragState.element) {
+          if (dropIndicator.parentElement) {
+              onDrop({ preventDefault: () => {} }); // Reuse drop logic
+          } else {
+              onDragEnd(); // If not on valid zone, clean
+          }
+      }
+      touchDragState.isDragging = false;
+  }
+  
+  function updateModelOrder(container) {
+      const newOrderIds = [...container.children].filter(child => child.dataset.id).map(child => child.dataset.id);
+      const type = container.dataset.dropZoneFor;
+      if (type === 'todo') { model.todoList.sort((a, b) => newOrderIds.indexOf(a.id) - newOrderIds.indexOf(b.id)); } 
+      else if (type === 'subject') { model.subjects.sort((a,b) => newOrderIds.indexOf(a.id) - newOrderIds.indexOf(b.id)); } 
+      else if (type === 'chapter') { const subject = model.subjects.find(s => s.id === container.closest('.subject-card').dataset.id); if (subject) { subject.chapters.sort((a,b) => newOrderIds.indexOf(a.id) - newOrderIds.indexOf(b.id)); } } 
+      else if (type === 'topic') { const subject = model.subjects.find(s => s.id === container.closest('.subject-card').dataset.id); if (subject) { const chapter = subject.chapters.find(c => c.id === container.closest('.chapter-card').dataset.id); if (chapter) { chapter.topics.sort((a,b) => newOrderIds.indexOf(a.id) - newOrderIds.indexOf(b.id)); } } }
+      saveModelThrottled();
+  }
+  
+  // ======== Event Handlers ========
+  const globalLoader = document.getElementById('globalLoader');
+  const showGlobalLoader = () => globalLoader.classList.remove('hidden'); const hideGlobalLoader = () => globalLoader.classList.add('hidden');
+  async function handleAddSubject() {
+    const newSubject = { id: uid(), name: 'New Subject', chapters: [] };
+    model.subjects.push(newSubject);
+    checkEmptyState();
+    const newSubjectCard = renderSubject(newSubject);
+    newSubjectCard.classList.add('new-item'); newSubjectCard.addEventListener('animationend', () => newSubjectCard.classList.remove('new-item'));
+    mainContent.appendChild(newSubjectCard); smoothScrollTo(newSubjectCard);
+    logActivityAndAddPoint(); await saveModel();
+  }
+
+  document.getElementById('addSubject').onclick = handleAddSubject;
+  document.getElementById('addFirstSubject').onclick = handleAddSubject;
+  document.getElementById('dashboardBtn').onclick = () => {
+    mainView.classList.add('hidden'); searchView.classList.add('hidden');
+    dashboardView.style.display = 'block'; backBtn.classList.remove('hidden');
+    renderDashboard();
+    applyTimeOfDayTheme();
+    const cards = document.querySelectorAll('#dashboard .dash-card');
+    cards.forEach((card, index) => {
+      card.classList.remove('play-animation-once');
+      void card.offsetWidth;
+      card.style.animationDelay = `${index * 50}ms`;
+      card.classList.add('play-animation-once');
+    });
+  };
+  backBtn.onclick = () => {
+    const cards = document.querySelectorAll('#dashboard .dash-card');
+    if (dashboardView.style.display === 'block' && cards.length > 0) {
+        let maxDelay = 0;
+        cards.forEach((card, index) => { const delay = (cards.length - 1 - index) * 30; card.style.animationDelay = `${delay}ms`; card.classList.add('play-animation-out'); if(delay > maxDelay) maxDelay = delay; });
+        setTimeout(() => {
+            dashboardView.style.display = 'none'; mainView.classList.remove('hidden'); backBtn.classList.add('hidden');
+            cards.forEach(card => { card.classList.remove('play-animation-out'); card.style.animationDelay = ''; });
+        }, 400 + maxDelay + 50);
+    } else {
+        dashboardView.style.display = 'none'; searchView.classList.add('hidden');
+        mainView.classList.remove('hidden'); backBtn.classList.add('hidden');
+    }
+    searchInput.value = '';
+  };
+  document.getElementById('clearAll').onclick = async () => { if (!(await customModal.show('(?・・)σ This will permanently delete ALL study data. Have you downloaded a backup ?', true))) return; if (!(await customModal.show('( o O ") Are you ABSOLUTELY sure ? This cannot be undone !', true))) return; await idb.delete('model'); await idb.delete('uiState'); model = { subjects: [], activityDates: [], streak: 0, lastActivityDate: null, lastDailyCheck: null, journalEntries: [], todoList: [], beehiveTags: [], beehiveLayouts: {}, promptResponses: {} }; uiState = { openCards: {}, scrollY: 0 }; window.location.reload(); };
+  document.getElementById('backupBtn').onclick = () => { const blob = new Blob([JSON.stringify(model, null, 2)], { type: 'application/json' }); const a = el('a'); a.href = URL.createObjectURL(blob); a.download = `icanstudy-backup-${new Date().toISOString().slice(0,10)}.json`; a.click(); URL.revokeObjectURL(a.href); };
+  
+  const restoreFromFile = (isMerge) => {
+    const input = el('input'); input.type = 'file'; input.accept = '.json';
+    input.onchange = e => {
+      const file = e.target.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        (async () => {
+          let wasLoaderShown = false;
+          try {
+            const incomingModel = JSON.parse(ev.target.result);
+            if (!incomingModel || (!Array.isArray(incomingModel.subjects) && !incomingModel.hasOwnProperty('streak'))) { throw new Error('Invalid backup file format'); }
+            if (incomingModel.subjects && incomingModel.subjects.length > HEAVY_DATA_THRESHOLD) { showGlobalLoader(); wasLoaderShown = true; await new Promise(resolve => setTimeout(resolve, 50)); }
+            let successMessage = '';
+            if (isMerge) { deepMergeModel(incomingModel); successMessage = 'Data merged successfully.'; } 
+            else { const defaultModel = { subjects: [], activityDates: [], streak: 0, lastActivityDate: null, lastDailyCheck: null, journalEntries: [], todoList: [], beehiveTags: [], beehiveLayouts: {}, promptResponses: {} }; model = { ...defaultModel, ...incomingModel }; successMessage = 'Data restored successfully.'; }
+            await saveModel(); await renderModelAsync(); await customModal.show(successMessage);
+          } catch (error) { if (wasLoaderShown) hideGlobalLoader(); await customModal.show('Error: Invalid or corrupted backup file.'); }
+        })();
+      };
+      reader.readAsText(file);
+    }; input.click();
+  };
+  
+  function deepMergeModel(incoming) {
+    const mergeDate = new Date().toLocaleDateString();
+    // Merge primitive properties and simple arrays, Checked!
+    if (incoming.activityDates && Array.isArray(incoming.activityDates)) { model.activityDates = Array.from(new Set([...(model.activityDates || []), ...incoming.activityDates])); }
+    if (incoming.beehiveTags && Array.isArray(incoming.beehiveTags)) { model.beehiveTags = Array.from(new Set([...(model.beehiveTags || []), ...incoming.beehiveTags])); }
+    if (incoming.journalEntries && Array.isArray(incoming.journalEntries)) { const existingDates = new Set((model.journalEntries || []).map(e => e.date)); incoming.journalEntries.forEach(incEntry => { if (!existingDates.has(incEntry.date)) { model.journalEntries.push(incEntry); } }); }
+    if (incoming.todoList && Array.isArray(incoming.todoList)) { const existingTexts = new Set((model.todoList || []).map(t => t.text)); incoming.todoList.forEach(incTask => { if (!existingTexts.has(incTask.text)) { if(!incTask.id) incTask.id = uid(); model.todoList.push(incTask); } }); }
+    
+    (incoming.subjects || []).forEach(incS => {
+        let currentS = model.subjects.find(s => s.name === incS.name);
+        if (!currentS) { model.subjects.push(incS); } 
+        else {
+            (incS.chapters || []).forEach(incC => {
+                let currentC = (currentS.chapters || []).find(c => c.name === incC.name);
+                if (!currentC) { currentS.chapters = currentS.chapters || []; currentS.chapters.push(incC); } 
+                else {
+                    (incC.topics || []).forEach(incT => {
+                        let currentT = (currentC.topics || []).find(t => t.name === incT.name);
+                        currentC.topics = currentC.topics || [];
+                        if (currentT) {
+                            // Merge beehive labels
+                            if (incT.beehiveLabels) { currentT.beehiveLabels = Array.from(new Set([...(currentT.beehiveLabels || []), ...incT.beehiveLabels])); }
+
+                            // Merge notes
+                            const ensureNoteObjectFormat = (topic) => { if (!topic) return; if (typeof topic.notes === 'string' || !topic.notes) { topic.notes = { normal: topic.notes || '', cues: '', main: '', summary: '' }; } };
+                            ensureNoteObjectFormat(currentT); ensureNoteObjectFormat(incT);
+                            const separator = `<hr><p><em>MERGED FROM BACKUP (${mergeDate})</em></p>`;
+                            const mergeNoteIfNeeded = (noteType) => { const currentNote = currentT.notes[noteType] || '', incomingNote = incT.notes[noteType] || ''; if (incomingNote && incomingNote.trim() && currentNote.trim() !== incomingNote.trim()) { currentT.notes[noteType] += (currentNote.trim() ? separator : '') + incomingNote; } };
+                            ['normal', 'cues', 'main', 'summary'].forEach(mergeNoteIfNeeded);
+                        } else { currentC.topics.push(incT); }
+                    });
+                }
+            });
+        }
+    });
+  }
+
+  document.getElementById('restoreBtn').onclick = () => restoreFromFile(false);
+  document.getElementById('mergeBtn').onclick = () => restoreFromFile(true);
+  const adjustLayoutForAppBar = () => { const appbar = document.querySelector('.appbar'); if (appbar) { document.body.style.paddingTop = `${appbar.offsetHeight}px`; } };
+  
+  let lastScrollY = window.scrollY;
+  const handleAppBarScroll = () => { const appbar = document.querySelector('.appbar'); if (!appbar) return; const currentScrollY = window.scrollY; if (currentScrollY > lastScrollY && currentScrollY > appbar.offsetHeight) { appbar.classList.add('appbar--hidden'); } else if (currentScrollY < lastScrollY) { appbar.classList.remove('appbar--hidden'); } lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY; };
+
+  // ======== Time of Day and Celebration Logic ========
+  function applyTimeOfDayTheme() {
+    const dashboardEl = document.getElementById('dashboard');
+    const greetingEl = document.getElementById('timeOfDayGreeting');
+    const titleIcon = document.querySelector('.dashboard-title .vibrating-icon');
+
+    if (!dashboardEl || !greetingEl || !titleIcon) return;
+    
+    clearTimeout(revertKaomojiTimeout);
+    clearTimeout(greetingTimeout);
+
+    const todayStr = toYYYYMMDD(new Date());
+    model.promptResponses = model.promptResponses || {};
+    model.promptResponses[todayStr] = model.promptResponses[todayStr] || {};
+    
+    const hour = new Date().getHours();
+    let themeClass, kaomoji, animationClass, greetingText, showPrompt = false, period;
+
+    if (hour >= 7 && hour < 12) { // Morning
+        themeClass = 'theme-morning';
+        kaomoji = '(⑅Ő ༝ Ő)';
+        animationClass = 'kaomoji-morning';
+        greetingText = '☁︎ Good Morning, Love!';
+    } else if (hour >= 12 && hour < 17) { // Afternoon
+        themeClass = 'theme-afternoon';
+        kaomoji = '(｡ㆁ ㆁ)';
+        animationClass = 'kaomoji-afternoon';
+        greetingText = "☀︎ May your spirit be as bright and hopeful as this day.";
+    } else if (hour >= 17 && hour < 21) { // Evening
+        themeClass = 'theme-evening';
+        kaomoji = '( · ❛ ֊ ❛)';
+        animationClass = 'kaomoji-evening';
+        greetingText = '𓋜 The day is settling down..';
+        showPrompt = true;
+        period = 'evening';
+    } else { // Night (21:00 to 06:59)
+        themeClass = 'theme-night';
+        kaomoji = '(⑅ • ˕ •˶)';
+        animationClass = 'kaomoji-night';
+        greetingText = '⏾ The night is an ocean.. Are you resting in its quiet harbor or exploring its depths?';
+        showPrompt = true;
+        period = 'night';
+    }
+
+    dashboardEl.classList.remove('theme-morning', 'theme-afternoon', 'theme-evening', 'theme-night');
+    dashboardEl.classList.add(themeClass);
+    titleIcon.innerHTML = kaomoji;
+    titleIcon.className = 'vibrating-icon';
+    titleIcon.classList.add(animationClass);
+
+    greetingEl.innerHTML = `<p>${greetingText}</p>`;
+    
+    if (showPrompt && !model.promptResponses[todayStr][period]) {
+        const buttonContainer = el('div', 'time-of-day-prompt-buttons');
+        const btnOpt1Text = period === 'evening' ? 'Winding Down' : 'Calling it a Night';
+        const btnOpt2Text = period === 'evening' ? 'Let breeze with the wind' : 'Night Owl';
+        const btnOpt1 = el('button', 'btn btn-ghost btn-mini', btnOpt1Text);
+        const btnOpt2 = el('button', 'btn btn-ghost btn-mini', btnOpt2Text);
+
+        const handlePromptResponse = (choice) => {
+            clearTimeout(greetingTimeout);
+            logActivityAndAddPoint(2);
+            model.promptResponses[todayStr][period] = choice;
+            saveModelThrottled();
+            customModal.show("Awesome! 2 streak points have been added.");
+
+            let responseText = '';
+            if (period === 'evening') {
+                responseText = choice === 'opt1'
+                    ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.'
+                    : 'Great things are just ahead. Keep flowing!';
+            } else { // Bravo Six, going dark!
+                responseText = choice === 'opt1'
+                    ? 'Sweet dreams. Rest up and be ready for tomorrow, okay !!'
+                    : 'The quiet of the night. May your silence bring you the peace you are seeking, love.';
+            }
+            greetingEl.innerHTML = `<p>${responseText}</p>`;
+        };
+        
+        btnOpt1.onclick = () => handlePromptResponse('opt1');
+        btnOpt2.onclick = () => handlePromptResponse('opt2');
+        buttonContainer.append(btnOpt1, btnOpt2);
+        greetingEl.appendChild(buttonContainer);
+    } else if (showPrompt && model.promptResponses[todayStr][period]) {
+        const choice = model.promptResponses[todayStr][period];
+        let responseText = '';
+         if (period === 'evening') {
+            responseText = choice === 'opt1' ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.' : 'Great things are just ahead. Keep flowing!';
+        } else { // Night
+            responseText = choice === 'opt1' ? 'Sweet dreams. Rest up and be ready for tomorrow, okay !!' : 'The quiet of the night. May your silence bring you the peace you are seeking, love.';
+        }
+        greetingEl.innerHTML = `<p>${responseText}</p>`;
+    }
+    
+    greetingTimeout = setTimeout(() => {
+        if (greetingEl) {
+            greetingEl.style.transition = 'opacity 0.5s ease-out';
+            greetingEl.style.opacity = '0';
+            setTimeout(() => { greetingEl.innerHTML = ''; greetingEl.style.opacity = '1'; greetingEl.style.transition = ''; }, 500);
+        }
+    }, 5 * 60 * 1000);
+
+    revertKaomojiTimeout = setTimeout(() => {
+        const currentTitleIcon = document.querySelector('.dashboard-title .vibrating-icon');
+        if (currentTitleIcon && currentTitleIcon.innerHTML === kaomoji) {
+            currentTitleIcon.innerHTML = '(｡˃ ᵕ ˂)';
+            currentTitleIcon.className = 'vibrating-icon';
+        }
+    }, 5 * 60 * 1000);
+  }
+  
+  function triggerConfetti() {
+    const overlay = document.getElementById('celebrationOverlay');
+    if (!overlay) return;
+    overlay.innerHTML = '';
+    overlay.classList.remove('hidden');
+
+    const petals = ['🍂', '🍁', '🌿', '🌸', '🌼', '🪷'];
+    const count = 70;
+
+    for (let i = 0; i < count; i++) {
+        const petal = el('div', 'petal', petals[Math.floor(Math.random() * petals.length)]);
+        petal.style.left = `${Math.random() * 100}vw`;
+        petal.style.animationDuration = `${Math.random() * 2 + 3}s`; // 3-5 seconds
+        petal.style.animationDelay = `${Math.random() * 2}s`;
+        petal.style.fontSize = `${Math.random() * 16 + 16}px`;
+        const initialRotate = `rotate(${Math.random() * 360}deg)`;
+        const finalTranslateX = `translateX(${(Math.random() - 0.5) * 20}vw)`;
+        petal.style.transform = initialRotate;
+        petal.style.setProperty('--final-translateX', finalTranslateX);
+        
+        petal.animate([
+            { transform: `translateY(-10vh) ${initialRotate}`, opacity: 1 },
+            { transform: `translateY(110vh) ${finalTranslateX} rotate(720deg)`, opacity: 0 }
+        ], {
+            duration: parseFloat(petal.style.animationDuration) * 1000,
+            delay: parseFloat(petal.style.animationDelay) * 1000,
+            easing: 'linear',
+            fill: 'forwards'
+        });
+
+        overlay.appendChild(petal);
+    }
+    
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+        overlay.innerHTML = '';
+    }, 7000);
+  }
+
+  // ======== FOCUS SESSION IMPLEMENTATION ========
+  const focusModal = document.getElementById('focusSessionModal');
+  const focusOverlay = document.getElementById('focusModeOverlay');
+  
+  function findTopicById(topicId) {
+    for (const s of model.subjects) {
+        for (const c of (s.chapters || [])) {
+            const t = (c.topics || []).find(topic => topic.id === topicId);
+            if (t) return [s, c, t];
+        }
+    }
+    return [null, null, null];
+  }
+
+  function initFocusSessionSetup(weakTopics) {
+      const listContainer = document.getElementById('focusTopicsList');
+      const startBtn = document.getElementById('focusStartBtn');
+      const warning = document.getElementById('focusTopicWarning');
+      listContainer.innerHTML = '';
+
+      weakTopics.forEach(topic => {
+          const item = el('div', 'focus-topic-item');
+          item.innerHTML = `
+              <input type="checkbox" id="focus_${topic.tId}" data-topic-id="${topic.tId}">
+              <label for="focus_${topic.tId}" style="flex:1;">${topic.tName} <small>(${topic.sName})</small></label>
+              <span class="score-tag ${getScoreColorClass(topic.score)}">${topic.score}%</span>`;
+          listContainer.appendChild(item);
+      });
+      
+      const checkSelection = () => {
+          const selected = listContainer.querySelectorAll('input:checked');
+          const count = selected.length;
+          const isValid = count >= 2 && count <= 4;
+          startBtn.disabled = !isValid;
+          warning.style.display = (count > 0 && !isValid) ? 'block' : 'none';
+      };
+
+      listContainer.addEventListener('change', checkSelection);
+      checkSelection();
+      focusModal.classList.add('visible');
+  }
+  
+  document.getElementById('focusCancelBtn').onclick = () => focusModal.classList.remove('visible');
+  document.getElementById('focusStartBtn').onclick = () => {
+      const selectedIds = [...document.querySelectorAll('#focusTopicsList input:checked')].map(cb => cb.dataset.topicId);
+      const hours = parseInt(document.getElementById('focusHours').value) || 0;
+      const minutes = parseInt(document.getElementById('focusMinutes').value) || 0;
+      const totalMinutes = (hours * 60) + minutes;
+      if (totalMinutes < 5) {
+          customModal.show("Please set a duration of at least 5 minutes.");
+          return;
+      }
+      
+      focusModal.classList.remove('visible');
+      startFocusSession(selectedIds, totalMinutes);
+  };
+  
+  function startFocusSession(topicIds, totalMinutes) {
+      const numTopics = topicIds.length;
+      const totalReviewTime = Math.floor(totalMinutes * 0.6);
+      const totalPracticeTime = totalMinutes - totalReviewTime;
+      const reviewTimePerTopic = Math.floor(totalReviewTime / numTopics);
+      const practiceTimePerTopic = Math.floor(totalPracticeTime / numTopics);
+      
+      focusSession.schedule = [];
+      topicIds.forEach(id => {
+          focusSession.schedule.push({ type: 'review', topicId: id, duration: reviewTimePerTopic * 60, completed: false });
+      });
+       topicIds.forEach(id => {
+          focusSession.schedule.push({ type: 'practice', topicId: id, duration: practiceTimePerTopic * 60, completed: false });
+      });
+
+      focusSession.isActive = true;
+      focusSession.currentIndex = -1;
+      focusSession.isPaused = false;
+      focusSession.pointsEarned = 0;
+      
+      setupFocusModeEventListeners();
+      
+      focusOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      
+      nextFocusStage();
+  }
+  
+  function loadFocusStage(stageIndex) {
+      const content = document.getElementById('focusContent');
+      content.classList.add('fade-out');
+      
+      setTimeout(() => {
+        focusSession.currentIndex = stageIndex;
+        const stage = focusSession.schedule[stageIndex];
+        const [s, c, t] = findTopicById(stage.topicId);
+
+        if (!t) { endFocusSession(true); return; }
+
+        document.getElementById('focusStageTitle').textContent = `${stage.type === 'review' ? 'Review' : 'Simplify'}: ${t.name}`;
+            renderTopicBody(t, s, c, content);
+            
+        const promptEl = document.getElementById('focusPrompt');
+        if (stage.type === 'practice') {
+            promptEl.textContent = `Can you explain '${t.name}' to me in the simplest way possible? What parts were fuzzy? Use Cornell notes.`;
+            promptEl.classList.remove('hidden');
+        } else {
+            promptEl.classList.add('hidden');
+        }
+        
+        focusSession.remainingTime = stage.duration;
+        updateFocusTimerDisplay();
+        startFocusTimer();
+        updateFocusControls();
+        content.classList.remove('fade-out');
+      }, 400);
+  }
+
+  function nextFocusStage() {
+    if (focusSession.currentIndex >= 0) {
+        const prevStage = focusSession.schedule[focusSession.currentIndex];
+        if (!prevStage.completed) {
+            prevStage.completed = true;
+            if (prevStage.type === 'practice') { focusSession.pointsEarned += 5; }
+        }
+    }
+    
+    const nextIndex = focusSession.currentIndex + 1;
+    if (nextIndex < focusSession.schedule.length) {
+        loadFocusStage(nextIndex);
+    } else {
+        endFocusSession(false);
+    }
+  }
+
+  function prevFocusStage() {
+    if (focusSession.currentIndex > 0) {
+        loadFocusStage(focusSession.currentIndex - 1);
+    }
+  }
+  
+  function updateFocusTimerDisplay() {
+    const minutes = Math.floor(focusSession.remainingTime / 60);
+    const seconds = focusSession.remainingTime % 60;
+    document.getElementById('focusTimerDisplay').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+  
+  function startFocusTimer() {
+    clearInterval(focusSession.timerInterval);
+    focusSession.isPaused = false;
+    document.getElementById('focusPlayPauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+    focusSession.timerInterval = setInterval(() => {
+        if (focusSession.remainingTime > 0) {
+            focusSession.remainingTime--;
+            updateFocusTimerDisplay();
+        } else {
+            clearInterval(focusSession.timerInterval);
+            nextFocusStage();
+        }
+    }, 1000);
+  }
+  
+  function pauseFocusTimer() {
+      clearInterval(focusSession.timerInterval);
+      focusSession.isPaused = true;
+      document.getElementById('focusPlayPauseBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+  }
+  
+  function updateFocusControls() {
+    document.getElementById('focusPrevBtn').disabled = focusSession.currentIndex <= 0;
+    document.getElementById('focusNextBtn').disabled = focusSession.currentIndex >= focusSession.schedule.length - 1;
+  }
+  
+  async function endFocusSession(interrupted = false) {
+    clearInterval(focusSession.timerInterval);
+    focusSession.isActive = false;
+    focusOverlay.classList.add('hidden');
+    document.body.style.overflow = '';
+    
+    let message = '';
+    if (focusSession.pointsEarned > 0) {
+        logActivityAndAddPoint(focusSession.pointsEarned);
+        message = interrupted 
+            ? `Session ended early. You earned ${focusSession.pointsEarned} points for the stages you fully completed.`
+            : `Session complete! You earned a total of ${focusSession.pointsEarned} streak points. Great work!`;
+    } else {
+        message = interrupted ? "Session ended. No, Biggie keep practicing, until next time!" : "Session complete! Keep up the great work.";
+    }
+
+    await customModal.show(message);
+    renderDashboard();
+  }
+  
+  let focusListenersAttached = false;
+  function setupFocusModeEventListeners() {
+      if (focusListenersAttached) return;
+      document.getElementById('focusPlayPauseBtn').onclick = () => { focusSession.isPaused ? startFocusTimer() : pauseFocusTimer(); };
+      document.getElementById('focusNextBtn').onclick = nextFocusStage;
+      document.getElementById('focusPrevBtn').onclick = prevFocusStage;
+      document.getElementById('focusAddTimeBtn').onclick = () => { focusSession.remainingTime += 300; updateFocusTimerDisplay(); };
+      document.getElementById('focusExitBtn').onclick = async () => { 
+          if (await customModal.show("Are you sure you want to end this session early? You won't earn points for the current stage.", true)) {
+              endFocusSession(true); 
+          }
+      };
+      focusListenersAttached = true;
+  }
+  
+  // ======== BEEHIVE IMPLEMENTATION ========
+  const BeeHive = (() => {
+    // --- Autocomplete State & UI ---
+    let autocomplete = { active: false, element: null, editor: null, range: null, searchTerm: '', selectedIndex: -1 };
+    
+    function createAutocompleteElement() {
+        if (document.querySelector('.tag-autocomplete')) return;
+        const el = document.createElement('div');
+        el.className = 'tag-autocomplete';
+        document.body.appendChild(el);
+        autocomplete.element = el;
+    }
+
+    // --- Canvas State & UI ---
+    let canvasState = {
+        isActive: false, currentSubjectId: null, overlay: null, canvas: null, ctx: null,
+        nodes: [], links: [], particles: [], animationFrame: null,
+        transform: { x: 0, y: 0, scale: 1 },
+        drag: { startX: 0, startY: 0, isDraggingNode: false, isPanning: false, node: null },
+        touch: {panning: false, pinchDist: 0},
+        hoverNode: null, tooltip: null,
+    };
+    
+    // ----- Public Methods (API for module) -----
+    return {
+        init,
+        open: openHive, close: closeHive,
+        refreshData: () => { if(canvasState.isActive) openHive(canvasState.currentSubjectId, true); },
+        renderInitialTags, syncTagsFromEditor, handleTagAutocomplete, handleKeyDown,
+        handleTagUnwrapping, hideAutocomplete, unwrapTag,
+        pruneUnusedTags,
+    };
+
+    // ----- Initialization ---
+    function init() {
+        createAutocompleteElement();
+        canvasState.overlay = document.getElementById('beehiveCanvasOverlay');
+        canvasState.canvas = document.getElementById('beehiveCanvas');
+        canvasState.ctx = canvasState.canvas.getContext('2d');
+        canvasState.tooltip = document.getElementById('beehiveTooltip');
+        document.getElementById('beehiveExitBtn').onclick = closeHive;
+        addCanvasEventListeners();
+        initParticles(50);
+    }
+    
+    // ----- Tagging & Autocomplete Logic ---
+    function pruneUnusedTags() {
+      const allUsedTags = new Set(model.subjects.flatMap(s => s.chapters?.flatMap(c => c.topics || []) || []).flatMap(t => t.beehiveLabels || []));
+      const originalTagCount = model.beehiveTags.length;
+      model.beehiveTags = model.beehiveTags.filter(tag => allUsedTags.has(tag));
+      return originalTagCount !== model.beehiveTags.length;
+    }
+
+    function renderInitialTags(editor) {
+        if (!editor || !editor.childNodes) return;
+        const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+        let node; const nodesToProcess = [];
+        while(node = walker.nextNode()) { if (!node.parentElement.closest('.beehive-tag')) { nodesToProcess.push(node); } }
+        nodesToProcess.forEach(node => {
+            const text = node.nodeValue; const matches = [...text.matchAll(/(#\w+)/g)];
+            if (matches.length > 0) {
+              const frag = document.createDocumentFragment(); let lastIndex = 0;
+              matches.forEach(match => {
+                  const index = match.index;
+                  if (index > lastIndex) frag.appendChild(document.createTextNode(text.substring(lastIndex, index)));
+                  const span = el('span', 'beehive-tag', match[0]); frag.appendChild(span);
+                  lastIndex = index + match[0].length;
+              });
+              if (lastIndex < text.length) frag.appendChild(document.createTextNode(text.substring(lastIndex)));
+              node.parentNode.replaceChild(frag, node);
+            }
+        });
+    }
+
+    function syncTagsFromEditor(topic, editor) {
+        const tagsInEditor = new Set([...editor.querySelectorAll('.beehive-tag')].map(span => span.textContent.substring(1)));
+        const oldTags = new Set(topic.beehiveLabels || []);
+        const tagsChanged = tagsInEditor.size !== oldTags.size || ![...tagsInEditor].every(tag => oldTags.has(tag));
+        
+        topic.beehiveLabels = Array.from(tagsInEditor);
+        tagsInEditor.forEach(tag => { if (!model.beehiveTags.includes(tag)) model.beehiveTags.push(tag); });
+
+        if (tagsChanged && canvasState.isActive) { refreshData(); }
+        return tagsChanged;
+    }
+   
+    function unwrapTag(span, cursorOffset) {
+      if (!span.parentNode) return;
+      const text = span.textContent; const textNode = document.createTextNode(text);
+      span.parentNode.replaceChild(textNode, span);
+      const sel = window.getSelection(); const range = document.createRange();
+      range.setStart(textNode, Math.min(cursorOffset, textNode.length)); range.collapse(true);
+      sel.removeAllRanges(); sel.addRange(range);
+    }
+    
+    function handleTagUnwrapping(e) {
+      const sel = window.getSelection(); if (!sel.rangeCount) return; const parentTag = sel.anchorNode.parentElement?.closest('.beehive-tag');
+      if (parentTag) unwrapTag(parentTag, sel.anchorOffset);
+    }
+
+    function handleTagInteraction(e) {
+      if (e.key !== 'Backspace') return false;
+      const sel = window.getSelection(); if (!sel.rangeCount || !sel.isCollapsed) return false;
+      const range = sel.getRangeAt(0); const node = range.startContainer; const offset = range.startOffset;
+      if (offset === 0 && node.previousSibling?.nodeName === 'SPAN' && node.previousSibling.classList.contains('beehive-tag')) {
+        e.preventDefault(); unwrapTag(node.previousSibling, node.previousSibling.textContent.length); return true;
+      } return false;
+    }
+
+    function handleKeyDown(e, editor) {
+        if (handleAutocompleteKeydown(e)) return true;
+    
+        if (e.key === ' ' || e.key === 'Enter') {
+            const sel = window.getSelection();
+            if (!sel.rangeCount || sel.rangeCount === 0) return false;
+            
+            const range = sel.getRangeAt(0);
+            const node = range.startContainer;
+            
+            if (node.nodeType === Node.TEXT_NODE && !node.parentElement.closest('.beehive-tag')) {
+                const textBeforeCursor = node.textContent.substring(0, range.startOffset);
+                const match = textBeforeCursor.match(/#(\w+)$/);
+
+                if (match) {
+                    e.preventDefault();
+                    const fullTagText = match[0];
+                    
+                    const replacementRange = document.createRange();
+                    replacementRange.setStart(node, match.index);
+                    replacementRange.setEnd(node, match.index + fullTagText.length);
+                    replacementRange.deleteContents();
+                    
+                    const tagSpan = el('span', 'beehive-tag', fullTagText);
+                    replacementRange.insertNode(tagSpan);
+                    
+                    const spaceNode = document.createTextNode('\u00A0'); // Non-breaking space, this part
+                    const rangeAfter = document.createRange();
+                    rangeAfter.setStartAfter(tagSpan);
+                    rangeAfter.collapse(true);
+                    rangeAfter.insertNode(spaceNode);
+
+                    const finalRange = document.createRange();
+                    finalRange.setStartAfter(spaceNode);
+                    finalRange.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(finalRange);
+                    
+                    hideAutocomplete();
+                    
+                    const syncEvent = new Event('input', { bubbles: true, cancelable: true });
+                    editor.dispatchEvent(syncEvent);
+                    
+                    return true; 
+                }
+            }
+        }
+    
+        if (handleTagInteraction(e)) return true;
+        
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            document.execCommand(e.shiftKey ? 'outdent' : 'indent', false, null);
+            return true;
+        }
+        return false;
+    }
+
+    function handleTagAutocomplete(event, editor) {
+        const sel = window.getSelection(); if (!sel.rangeCount) return; const range = sel.getRangeAt(0); const node = range.startContainer;
+        if (node.nodeType !== Node.TEXT_NODE || node.parentElement.classList.contains('beehive-tag')) return hideAutocomplete();
+        const text = node.textContent; const cursor = range.startOffset; const match = text.slice(0, cursor).match(/#(\w*)$/);
+        if (match) {
+            autocomplete.active = true; autocomplete.editor = editor; autocomplete.searchTerm = match[1].toLowerCase();
+            const tempRange = range.cloneRange(); tempRange.setStart(node, match.index); autocomplete.range = tempRange; showAutocomplete();
+        } else { hideAutocomplete(); }
+    }
+    function showAutocomplete() {
+        const suggestions = model.beehiveTags.filter(tag => tag.toLowerCase().includes(autocomplete.searchTerm)).slice(0, 10);
+        if (suggestions.length === 0) return hideAutocomplete();
+        const rect = autocomplete.range.getBoundingClientRect(); autocomplete.element.style.left = `${rect.left + window.scrollX}px`; autocomplete.element.style.top = `${rect.bottom + window.scrollY + 5}px`;
+        autocomplete.element.innerHTML = suggestions.map(tag => `<div class="tag-suggestion" data-tag="${tag}">${tag.replace(new RegExp(autocomplete.searchTerm, 'gi'), match => `<strong>${match}</strong>`)}</div>`).join('');
+        autocomplete.element.style.display = 'block';
+        autocomplete.element.querySelectorAll('.tag-suggestion').forEach(el => { el.onmousedown = (e) => { e.preventDefault(); selectTag(el.dataset.tag); }; });
+        autocomplete.selectedIndex = -1;
+    }
+    function hideAutocomplete() { if (!autocomplete.active) return; autocomplete.active = false; if (autocomplete.element) autocomplete.element.style.display = 'none'; autocomplete.selectedIndex = -1; }
+    
+    function selectTag(tag) {
+        const range = autocomplete.range; const editor = autocomplete.editor; range.deleteContents(); const span = el('span', 'beehive-tag', `#${tag}`); range.insertNode(span);
+        const spaceNode = document.createTextNode('\u00A0'); // Non-breaking space
+        range.setStartAfter(span); range.insertNode(spaceNode); range.setStartAfter(spaceNode); range.collapse(true);
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+        hideAutocomplete(); editor.focus();
+        // Trigger save after selection
+        const noteType = editor.classList.contains('cornell-cues') ? 'cues' : editor.classList.contains('cornell-main') ? 'main' : editor.classList.contains('cornell-summary') ? 'summary' : 'normal';
+        const topicCard = editor.closest('[data-id]');
+        const [s,c,t] = findTopicById(topicCard.dataset.id);
+        if(t) {
+            t.notes[noteType] = editor.innerHTML;
+            syncTagsFromEditor(t, editor);
+            saveModelThrottled();
+        }
+    }
+
+    function handleAutocompleteKeydown(e) {
+        if (!autocomplete.active) return false;
+        const suggestions = autocomplete.element.querySelectorAll('.tag-suggestion'); if (!suggestions.length && !autocomplete.searchTerm) return false;
+        const updateSelection = () => { suggestions.forEach((el, i) => el.classList.toggle('active', i === autocomplete.selectedIndex)); suggestions[autocomplete.selectedIndex]?.scrollIntoView({ block: 'nearest' }); };
+        if (e.key === 'ArrowDown') { e.preventDefault(); autocomplete.selectedIndex = (autocomplete.selectedIndex + 1) % suggestions.length; updateSelection(); } 
+        else if (e.key === 'ArrowUp') { e.preventDefault(); autocomplete.selectedIndex = (autocomplete.selectedIndex - 1 + suggestions.length) % suggestions.length; updateSelection(); } 
+        else if (e.key === 'Enter' || e.key === 'Tab') { 
+            e.preventDefault();
+            if (autocomplete.selectedIndex > -1) {
+                selectTag(suggestions[autocomplete.selectedIndex].dataset.tag);
+            } else if (autocomplete.searchTerm) { // creating a new tag with Enter
+                selectTag(autocomplete.searchTerm);
+            } else {
+                hideAutocomplete();
+            }
+        } 
+        else if (e.key === 'Escape') { e.preventDefault(); hideAutocomplete(); } 
+        else { return false; } return true;
+    }
+
+    // ----- Canvas Drawing & Simulation (Time to be an Artist) ---
+    async function openHive(subjectId, isTransition = false) {
+        if (!isTransition) {
+             canvasState.overlay.classList.add('visible'); canvasState.canvas.style.opacity = 1; document.body.style.overflow = 'hidden';
+        }
+        canvasState.isActive = true; canvasState.currentSubjectId = subjectId;
+        const { nodes, links } = gatherDataForSubject(subjectId); canvasState.nodes = nodes; canvasState.links = links;
+        if (!isTransition) {
+            canvasState.transform = { x: canvasState.canvas.width / 2, y: canvasState.canvas.height / 2, scale: 1 };
+        }
+        initializeNodePositions(); startAnimation();
+    }
+    function closeHive() {
+        stopAnimation(); canvasState.isActive = false; canvasState.currentSubjectId = null; 
+        canvasState.overlay.classList.remove('visible'); document.body.style.overflow = '';
+    }
+    function gatherDataForSubject(subjectId) {
+        const nodes = []; const links = []; const nodeMap = new Map();
+        const addNode = (data) => {
+            if (!nodeMap.has(data.id)) {
+                const node = { ...data, x: 0, y: 0, wx: 0, wy:0, wtx:0, wty:0 };
+                nodeMap.set(data.id, node); nodes.push(node);
+            } return nodeMap.get(data.id);
+        };
+        const subject = model.subjects.find(s => s.id === subjectId); if(!subject) return {nodes, links};
+        const subjectNode = addNode({ id: subject.id, type: 'subject', label: subject.name, size: 20 });
+        const relevantTags = new Set();
+        (subject.chapters || []).forEach(c => { (c.topics || []).forEach(t => { (t.beehiveLabels || []).forEach(label => relevantTags.add(label)); }); });
+        model.subjects.forEach(s => {
+            (s.chapters || []).forEach(c => {
+                (c.topics || []).forEach(t => {
+                    const topicTags = t.beehiveLabels || []; const commonTags = topicTags.filter(l => relevantTags.has(l));
+                    if (commonTags.length > 0) {
+                        const isExternal = s.id !== subjectId;
+                        const topicNode = addNode({ id: t.id, type: 'topic', label: t.name, size: 12, sId: s.id, sName: s.name, cName: c.name, isExternal });
+                        commonTags.forEach(label => {
+                            const tagNode = addNode({ id: `tag_${label}`, type: 'tag', label: `#${label}`, size: 8 });
+                            if (s.id === subjectId) { links.push({ source: subjectNode, target: tagNode }); }
+                            links.push({ source: tagNode, target: topicNode });
+                        });
+                    }
+                });
+            });
+        });
+        return { nodes, links };
+    }
+    function initializeNodePositions() {
+        const layoutId = `hive_${canvasState.currentSubjectId}`;
+        const layouts = model.beehiveLayouts[layoutId] || {};
+        const { width, height } = canvasState.canvas;
+        canvasState.nodes.forEach(n => {
+            if(layouts[n.id]) { n.x = layouts[n.id].x; n.y = layouts[n.id].y; }
+            else { n.x = Math.random() * width - width / 2; n.y = Math.random() * height - height / 2; }
+            n.wtx = n.x; n.wty = n.y; n.wx = n.x; n.wy = n.y;
+        });
+    }
+    function startAnimation() {
+        stopAnimation();
+        const tick = () => { updateAnimation(); draw(); canvasState.animationFrame = requestAnimationFrame(tick); };
+        canvasState.animationFrame = requestAnimationFrame(tick);
+    }
+    function stopAnimation() { if (canvasState.animationFrame) cancelAnimationFrame(canvasState.animationFrame); canvasState.animationFrame = null; }
+    
+    function updateAnimation() {
+      // animation
+      canvasState.nodes.forEach(n => {
+        if (n !== canvasState.drag.node) {
+            if (Math.hypot(n.wx - n.wtx, n.wy-n.ty) < 1) { // If reached target, set new one
+                n.wtx = n.x + Math.random() * 80 - 40; n.wty = n.y + Math.random() * 80 - 40;
+            }
+            n.wx += (n.wtx - n.wx) * 0.002;
+            n.wy += (n.wty - n.wy) * 0.002;
+        }
+      });
+      // Simple physics, simulation
+      for (let i = 0; i < canvasState.nodes.length; i++) {
+        const a = canvasState.nodes[i];
+        for (let j = i + 1; j < canvasState.nodes.length; j++) {
+            const b = canvasState.nodes[j];
+            const dx = b.wx - a.wx, dy = b.wy - a.wy; let distSq = dx * dx + dy * dy;
+            const minDist = (a.size || 20) + (b.size || 20) + 20; // node sizes for repulsion
+            if(distSq < minDist * minDist) {
+              const dist = Math.sqrt(distSq) || 1;
+              const force = (dist - minDist) * 0.005;
+              const fx = (dx / dist) * force, fy = (dy / dist) * force;
+              if (a !== canvasState.drag.node) { a.wx += fx; a.wy += fy; }
+              if (b !== canvasState.drag.node) { b.wx -= fx; b.wy -= fy; }
+            }
+        }
+        if (a !== canvasState.drag.node) {
+            a.wx += (a.x - a.wx) * 0.01; // Pull towards original saved position
+            a.wy += (a.y - a.wy) * 0.01;
+        }
+      }
+      updateParticles();
+    }
+    function initParticles(count) {
+        for(let i=0; i<count; i++) canvasState.particles.push({
+            x: Math.random(), y: Math.random(),
+            vx: Math.random() * 0.2 - 0.1, vy: Math.random() * 0.2 - 0.1,
+            life: Math.random() * 100
+        });
+    }
+    function updateParticles() {
+        const { particles, canvas } = canvasState;
+        particles.forEach(p=> {
+            p.x += p.vx / canvas.width; p.y += p.vy / canvas.height;
+            p.life--;
+            if(p.life <= 0) { p.x = Math.random(); p.y = Math.random(); p.life = Math.random() * 100 + 50; }
+        });
+    }
+
+    function draw() {
+        const { ctx, canvas, transform } = canvasState;
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw particles, yes big brain!! Fireflies, so soothing..
+        canvasState.particles.forEach(p => {
+            const alpha = Math.sin(p.life * 0.1) * 0.5 + 0.2;
+            ctx.fillStyle = `rgba(255, 193, 7, ${alpha})`;
+            ctx.fillRect(p.x * canvas.width, p.y * canvas.height, 2, 2);
+        });
+        
+        ctx.save(); ctx.translate(transform.x, transform.y); ctx.scale(transform.scale, transform.scale);
+        
+        const isHovering = canvasState.hoverNode;
+        const connectedNodes = new Set(isHovering ? [isHovering] : []);
+        const connectedLinks = new Set();
+        if (isHovering && isHovering.type === 'topic') {
+            canvasState.links.forEach(l => {
+                if (l.source === isHovering) { connectedNodes.add(l.target); connectedLinks.add(l); }
+                if (l.target === isHovering) { connectedNodes.add(l.source); connectedLinks.add(l); 
+                    canvasState.links.forEach(l2 => { if (l2.target === l.source) { connectedNodes.add(l2.source); connectedLinks.add(l2); } });
+                }
+            });
+        }
+        
+        // Draw links
+        ctx.lineWidth = 1.5;
+        canvasState.links.forEach(link => {
+            const isConnected = connectedLinks.has(link);
+            ctx.globalAlpha = isHovering ? (isConnected ? 0.9 : 0.1) : 0.6;
+            ctx.strokeStyle = isConnected ? '#f0f0f0' : (link.source.type==='subject' ? 'var(--blue-main)' : 'var(--yellow-main)');
+            ctx.beginPath(); ctx.moveTo(link.source.wx, link.source.wy); ctx.lineTo(link.target.wx, link.target.wy); ctx.stroke();
+        });
+        ctx.globalAlpha = 1.0;
+
+        // Draw nodes 
+        canvasState.nodes.forEach(node => {
+            ctx.font = 'bold 12px Inter'; const textMetrics = ctx.measureText(node.label); const textWidth = textMetrics.width;
+            ctx.globalAlpha = isHovering ? (connectedNodes.has(node) ? 1.0 : 0.3) : 1.0;
+            node.size = 12; // default size
+
+            if (node.type === 'subject') {
+                const padding = 10; ctx.fillStyle = 'rgba(33, 150, 243, 0.9)'; const rectPath = new Path2D();
+                rectPath.roundRect(node.wx - textWidth/2 - padding, node.wy - 15, textWidth + padding*2, 30, 8);
+                ctx.fill(rectPath); ctx.fillStyle = '#fff'; ctx.fillText(node.label, node.wx - textWidth/2, node.wy + 4);
+                node.size = textWidth/2 + padding;
+            } else if (node.type === 'tag') {
+                const padding = 8; ctx.fillStyle = '#3c3c3c'; const rectPath = new Path2D();
+                rectPath.roundRect(node.wx - textWidth/2 - padding, node.wy - 12, textWidth + padding*2, 24, 12);
+                ctx.fill(rectPath); ctx.fillStyle = '#f0f0f0'; ctx.fillText(node.label, node.wx - textWidth/2, node.wy + 4);
+                node.size = textWidth/2 + padding;
+            } else { // Topic
+                const size = 30 + Math.min(20, textWidth/3);
+                node.size = size;
+                ctx.fillStyle = (node === canvasState.hoverNode) ? '#FFD60A' : '#FFC107';
+                // White, thicker border for external topics
+                ctx.strokeStyle = node.isExternal ? '#FFFFFF' : '#111';
+                ctx.lineWidth = node.isExternal ? 3.5 : 1.5;
+                drawHexagon(ctx, node.wx, node.wy, size);
+                if(node === canvasState.hoverNode) { ctx.shadowColor = 'var(--yellow-glow)'; ctx.shadowBlur = 15; }
+                ctx.fill(); ctx.stroke(); ctx.shadowBlur = 0;
+                ctx.fillStyle = '#111'; ctx.font = '11px Inter';
+                const label = node.label.length > 15 ? node.label.substring(0, 14) + '…' : node.label;
+                ctx.fillText(label, node.wx - ctx.measureText(label).width/2, node.wy + 4);
+            }
+        });
+        ctx.restore();
+    }
+    function drawHexagon(ctx, x, y, size) {
+      ctx.beginPath(); for (let i = 0; i < 6; i++) { const angle = (Math.PI / 3) * i; ctx.lineTo(x + size * Math.cos(angle), y + size * Math.sin(angle)); } ctx.closePath();
+    }
+    // ----- Canvas Interactivity ---
+    function addCanvasEventListeners() {
+        const { canvas } = canvasState;
+        canvas.addEventListener('mousedown', onMouseDown); canvas.addEventListener('mousemove', onMouseMove);
+        canvas.addEventListener('mouseup', onMouseUp); canvas.addEventListener('mouseleave', onMouseUp);
+        canvas.addEventListener('wheel', onWheel, { passive: false }); canvas.addEventListener('dblclick', onDoubleClick);
+        canvas.addEventListener('touchstart', onTouchStart, { passive: false }); canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+        canvas.addEventListener('touchend', onTouchEnd); canvas.addEventListener('touchcancel', onTouchEnd);
+    }
+    function getMousePos(e) {
+      const rect = canvasState.canvas.getBoundingClientRect(); return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+    function getTransformedPos(pos) {
+        return { x: (pos.x - canvasState.transform.x) / canvasState.transform.scale,
+                 y: (pos.y - canvasState.transform.y) / canvasState.transform.scale };
+    }
+    function getNodeAtPos(pos) {
+      for (const node of canvasState.nodes.slice().reverse()) {
+          const dist = Math.hypot(pos.x - node.wx, pos.y - node.wy);
+          if (dist < (node.size || 20)) return node;
+      } return null;
+    }
+    function onMouseDown(e) {
+        e.preventDefault(); const mousePos = getMousePos(e); const pos = getTransformedPos(mousePos); const node = getNodeAtPos(pos);
+        if (node) {
+            canvasState.drag.isDraggingNode = true; canvasState.drag.node = node;
+            canvasState.drag.node.wx = pos.x; canvasState.drag.node.wy = pos.y;
+        } else {
+            canvasState.drag.isPanning = true;
+            canvasState.drag.startX = mousePos.x - canvasState.transform.x;
+            canvasState.drag.startY = mousePos.y - canvasState.transform.y;
+        }
+    }
+    function onMouseMove(e) {
+        const mousePos = getMousePos(e);
+        if (canvasState.drag.isDraggingNode) {
+            const pos = getTransformedPos(mousePos); canvasState.drag.node.x = pos.x; canvasState.drag.node.y = pos.y;
+            canvasState.drag.node.wx = pos.x;  canvasState.drag.node.wy = pos.y;
+        } else if (canvasState.drag.isPanning) {
+            canvasState.transform.x = mousePos.x - canvasState.drag.startX;
+            canvasState.transform.y = mousePos.y - canvasState.drag.startY;
+        } else { const pos = getTransformedPos(mousePos); canvasState.hoverNode = getNodeAtPos(pos); updateTooltip(canvasState.hoverNode, e); }
+    }
+    function onMouseUp(e) {
+        if (canvasState.drag.isDraggingNode) {
+            const layoutId = `hive_${canvasState.currentSubjectId}`;
+            if (!model.beehiveLayouts[layoutId]) model.beehiveLayouts[layoutId] = {};
+            model.beehiveLayouts[layoutId][canvasState.drag.node.id] = { x: canvasState.drag.node.x, y: canvasState.drag.node.y };
+            saveModelThrottled();
+        }
+        canvasState.drag.isDraggingNode = false; canvasState.drag.isPanning = false; canvasState.drag.node = null;
+    }
+    function onDoubleClick(e) {
+        const node = canvasState.hoverNode; if (!node) return;
+        if (node.type === 'topic') {
+            if (node.isExternal) {
+                // Smooth transition to other hives
+                canvasState.canvas.style.opacity = 0;
+                setTimeout(() => {
+                    openHive(node.sId, true); // Using the transition flag
+                    canvasState.canvas.style.opacity = 1; // Fade back in
+                }, 400);
+            } else { 
+                closeHive(); 
+                navigateToCard(node.id); 
+            }
+        }
+    }
+    function onWheel(e) {
+        e.preventDefault(); const scaleAmount = 1.1; const pos = getMousePos(e); const scaleFactor = e.deltaY < 0 ? scaleAmount : 1 / scaleAmount;
+        canvasState.transform.scale *= scaleFactor; canvasState.transform.x = pos.x - (pos.x - canvasState.transform.x) * scaleFactor; canvasState.transform.y = pos.y - (pos.y - canvasState.transform.y) * scaleFactor;
+    }
+    // --- Touch Handlers, no string ---
+    function onTouchStart(e) {
+        e.preventDefault();
+        if (e.touches.length === 1) { onMouseDown({ clientX: e.touches[0].clientX, clientY: e.touches[0].clientY, preventDefault: ()=>{} }); }
+        else if (e.touches.length === 2) {
+            canvasState.touch.panning = true; const t1 = e.touches[0], t2 = e.touches[1];
+            canvasState.touch.pinchDist = Math.hypot(t1.clientX-t2.clientX, t1.clientY-t2.clientY);
+            const midX = (t1.clientX + t2.clientX)/2; const midY = (t1.clientY + t2.clientY)/2;
+            canvasState.drag.startX = midX - canvasState.transform.x; canvasState.drag.startY = midY - canvasState.transform.y;
+        }
+    }
+    function onTouchMove(e) {
+        e.preventDefault();
+        if (e.touches.length === 1 && !canvasState.touch.panning) { onMouseMove({ clientX: e.touches[0].clientX, clientY: e.touches[0].clientY }); }
+        else if (e.touches.length === 2 && canvasState.touch.panning) {
+            const t1 = e.touches[0], t2 = e.touches[1]; const newDist = Math.hypot(t1.clientX-t2.clientX, t1.clientY-t2.clientY);
+            const midX = (t1.clientX + t2.clientX)/2; const midY = (t1.clientY + t2.clientY)/2;
+            const scaleFactor = newDist / canvasState.touch.pinchDist;
+            canvasState.touch.pinchDist = newDist;
+            const pos = {x:midX, y:midY};
+            canvasState.transform.scale *= scaleFactor;
+            canvasState.transform.x = pos.x - (pos.x - canvasState.transform.x) * scaleFactor;
+            canvasState.transform.y = pos.y - (pos.y - canvasState.transform.y) * scaleFactor;
+
+            canvasState.transform.x = midX - canvasState.drag.startX; canvasState.transform.y = midY - canvasState.drag.startY;
+        }
+    }
+    function onTouchEnd(e) { onMouseUp(); canvasState.touch.panning = false; }
+
+    function updateTooltip(node, e) {
+        if (node) {
+             let html = '';
+             if (node.type === 'topic') {
+                html = `<strong>${node.label}</strong><small>${node.isExternal ? `From: ${node.sName}` : node.cName}</small>`;
+                html += `<br><small style="color: var(--yellow-main); opacity: 0.9;"><em>${node.isExternal ? 'Double-tap to switch hive' : 'Double-tap to open topic'}</em></small>`;
+             } else if (node.type === 'subject') html = `<strong>${node.label}</strong><small>Current Subject</small>`;
+             else if (node.type === 'tag') html = `<strong>${node.label}</strong><small>Connection Tag</small>`;
+             if (html) {
+                canvasState.tooltip.innerHTML = html; canvasState.tooltip.style.left = `${e.clientX}px`; canvasState.tooltip.style.top = `${e.clientY}px`;
+                canvasState.tooltip.classList.add('visible'); return;
+             }
+        }
+        canvasState.tooltip.classList.remove('visible');
+    }
+
+  })();
+  
+
+  // ======== Main Init ========
+  async function init() {
+    customModal.init();
+    BeeHive.init();
+    setupFocusModeEventListeners();
+    await loadModel();
+    runDailyCheck();
+    await loadUiState();
+    adjustLayoutForAppBar();
+    if(model.subjects && model.subjects.length > HEAVY_DATA_THRESHOLD) { showGlobalLoader(); await new Promise(res => setTimeout(res, 50)); }
+    await renderModelAsync();
+    
+    // Event listeners
+    searchInput.addEventListener('input', debounce(performSearch, 300));
+    window.addEventListener('scroll', debounce(() => { if (mainView.classList.contains('hidden')) return; uiState.scrollY = window.scrollY; saveUiState(); }, 200));
+    window.addEventListener('resize', debounce(() => { adjustLayoutForAppBar(); if(dashboardView.style.display === 'block') { renderWavyChart(); } }, 200));
+    window.addEventListener('scroll', handleAppBarScroll, { passive: true });
+    
+    // Mouse Drag & Drop
+    document.body.addEventListener('dragstart', onDragStart); 
+    document.body.addEventListener('dragover', onDragOver); 
+    document.body.addEventListener('drop', onDrop); 
+    document.body.addEventListener('dragend', onDragEnd);
+    
+    // Touch Drag & Drop
+    document.body.addEventListener('touchstart', onTouchStartDrag, { passive: false });
+    document.body.addEventListener('touchmove', onTouchMoveDrag, { passive: false });
+    document.body.addEventListener('touchend', onTouchEndDrag);
+    document.body.addEventListener('touchcancel', onTouchEndDrag);
+
+    window.addEventListener('beforeunload', saveModel);
+  }
+
+  init();
+
+})();
+</script>
+
+<!-- PWA Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    const repositoryName = 'I-Can-Study-Pro'; 
+    const swPath = `/${repositoryName}/sw.js`;
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register(swPath)
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(error => {
+          console.log('Service Worker registration failed:', error);
+        });
+    });
+  }
+</script>
+</body>
+</html>

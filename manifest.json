@@ -1,0 +1,25 @@
+```json
+{
+  "name": "I Can Study Pro",
+  "short_name": "StudyPro",
+  "description": "Your personal hive of knowledge. Track subjects, Master topics, and Watch your progress bloom.",
+  "id": "/I-Can-Study-Pro/",
+  "start_url": "/I-Can-Study-Pro/",
+  "scope": "/I-Can-Study-Pro/",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#3F3D56",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+```
