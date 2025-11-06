@@ -7,7 +7,7 @@
   "scope": "/I-Can-Study-Pro/",
   "display": "standalone",
   "background_color": "#0d0d0d",
-  "theme_color": "#3F3D56",
+  "theme_color": "#0d0d0d",
   "icons": [
     {
       "src": "icon-192.png",
