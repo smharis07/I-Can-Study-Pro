@@ -1,9 +1,4 @@
 # I-Can-Study-Pro
-Hello there, busy bee! (˶> ⤙ <˶)
-Welcome to your new study hive. My name is Honey Bun, and I'll be your personal guide on this
-journey. Think of this app not just as a place to take notes, but as a smart partner that helps you
-understand *how* you learn best.
----
 ### What is .ᐟ Can Stひdy Pro?
 It’s a powerful tool designed to help you organize your studies, track your understanding of
 different topics, and see your knowledge grow. You can structure your learning, identify your
