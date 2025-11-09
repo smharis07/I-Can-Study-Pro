@@ -1,7 +1,7 @@
 {
   "name": "I Can Study Pro",
-  "short_name": "StudyPro",
-  "description": "Your personal hive of knowledge. Track subjects, Master topics, and watch your progress bloom.",
+  "short_name": "Study Pro",
+  "description": "Shhh.. Welcome to the sweet side of studying! Forget stress—this app delivers cozy, personalized lessons and honey-sweet progress delivered right to you.",
   "id": "/I-Can-Study-Pro/",
   "start_url": "/I-Can-Study-Pro/",
   "scope": "/I-Can-Study-Pro/",
@@ -31,14 +31,14 @@
   "screenshots": [
     {
       "src": "screenshot-mobile.png",
-      "sizes": "720 × 728",
+      "sizes": "720x728",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Main Study View on Mobile"
     },
     {
       "src": "screenshot-desktop.png",
-      "sizes": "1366 × 768",
+      "sizes": "1366x768",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Dashboard View on Desktop"
