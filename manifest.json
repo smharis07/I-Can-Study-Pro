@@ -27,5 +27,21 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "720 × 728",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Main Study View on Mobile"
+    },
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "1366 × 768",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard View on Desktop"
+    }
   ]
 }
