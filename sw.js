@@ -1,5 +1,5 @@
 const REPO_NAME = 'I-Can-Study-Pro';
-const CACHE_NAME = 'i-can-study-pro-cache-v4';
+const CACHE_NAME = 'i-can-study-pro-cache-v5';
 
 const assetsToCache = [
   `/${REPO_NAME}/`,
