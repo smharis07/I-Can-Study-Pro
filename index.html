@@ -107,6 +107,7 @@
     margin-right: auto; 
     text-shadow: 0 0 10px var(--yellow-glow);
     transition: text-shadow 0.3s ease-in-out;
+    flex-shrink: 0;
   }
   .brand:hover {
     text-shadow: 0 0 20px var(--yellow-glow), 0 0 5px var(--yellow-main);
@@ -122,11 +123,17 @@
     font-size: 15px; 
     transition: all .2s;
     max-width: 100%;
+    min-width: 180px;
   }
   .search:focus { 
     box-shadow: 0 0 15px var(--yellow-glow); 
     border-color: var(--yellow-main); 
     outline: none;
+  }
+  .appbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
   }
   
   /* --- Buttons --- */
@@ -144,6 +151,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px; /* gap for icon and text */
+    flex-shrink: 0;
   }
   .btn::before {
     content: '';
@@ -184,6 +192,9 @@
   
   .btn-ghost { background: transparent; color: var(--ink-main); border: 1px solid var(--line-accent); }
   .btn-ghost:hover { background: var(--line-accent); color: var(--yellow-main); border-color: var(--yellow-main); }
+  .btn-ghost > .btn-text {
+      font-weight: 700;
+  }
   
   .btn-mini { padding: 6px 10px; border-radius: 8px; font-weight: 700; }
   
@@ -234,7 +245,7 @@
   .twist { font-weight: 900; color: var(--yellow-main); width: 32px; height: 32px; text-align: center; border: 1px solid var(--line-main); border-radius: 8px; background: var(--bg-panel-light); transition: transform 0.3s, background 0.3s; cursor: pointer;}
   .twist:hover { background-color: var(--line-accent); }
   .twist.closed { transform: rotate(-90deg); }
-  .title { margin: 0; color: var(--ink-main); font-weight: 700; }
+  .title { margin: 0; color: var(--ink-main); font-weight: 700; word-break: break-word; }
   .title[contenteditable="true"] { outline: none; border-radius: 6px; padding: 2px 6px; }
   .title[contenteditable="true"]:focus { box-shadow: 0 0 0 2px var(--yellow-main) inset; background: var(--bg-panel-dark); }
   .subject-card .title { color: var(--blue-main); }
@@ -365,6 +376,7 @@
     color: var(--ink-main);
     border: 1px solid var(--line-main);
     white-space: pre-wrap;
+    word-break: break-word;
     font-family: var(--font-main);
     font-size: 16px;
     line-height: 1.6;
@@ -448,6 +460,7 @@
       color: var(--ink-main);
       border: 1px solid var(--line-main);
       white-space: pre-wrap;
+      word-break: break-word;
       font-family: var(--font-main);
       font-size: 16px;
       line-height: 1.6;
@@ -1094,6 +1107,7 @@
     flex: 1;
     cursor: text;
     transition: color 0.2s;
+    word-break: break-word;
   }
   .todo-item .todo-text[contenteditable="plaintext-only"]:focus {
     outline: none;
@@ -1259,9 +1273,9 @@
   #searchResults { padding-top: 10px; }
   .search-result-item { background: var(--bg-panel); border: 1px solid var(--line-accent); border-radius: 12px; padding: 14px; margin-bottom: 10px; cursor: pointer; transition: background .2s; }
   .search-result-item:hover { background: var(--bg-panel-light); border-color: var(--yellow-main); }
-  .search-result-path { font-size: 13px; color: var(--ink-muted); margin-bottom: 4px; }
+  .search-result-path { font-size: 13px; color: var(--ink-muted); margin-bottom: 4px; word-break: break-word; }
   .search-result-path mark, .search-result-notes mark { background: var(--yellow-main); color: #111; border-radius: 3px; padding: 0 2px; }
-  .search-result-notes { font-size: 15px; color: var(--ink-main); max-height: 60px; overflow: hidden; text-overflow: ellipsis; }
+  .search-result-notes { font-size: 15px; color: var(--ink-main); max-height: 60px; overflow: hidden; text-overflow: ellipsis; word-break: break-word;}
 
   /* --- Empty State --- */
   #emptyState { 
@@ -1308,6 +1322,12 @@
   }
 
   /* === Styled Upcoming Deadline === */
+  .due-date-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+  }
   .due-date-input {
       color-scheme: dark;
       background: var(--bg-panel-light);
@@ -1323,6 +1343,7 @@
       appearance: none;
       cursor: pointer;
       line-height: 1;
+      max-width: 150px;
   }
   
   .due-date-label {
@@ -1597,13 +1618,70 @@
   
   /* --- Responsive --- */
   @media (max-width: 768px) {
-      .appbar { padding: 12px; }
+      .container {
+          padding: 15px;
+      }
+      .appbar { 
+        padding: 10px 15px;
+        gap: 10px;
+        justify-content: flex-start;
+      }
+      .appbar .search {
+          flex-basis: 100%;
+          order: 3; /* Move search below brand and actions */
+          min-width: 0;
+      }
+      .appbar .brand {
+         margin-right: 0;
+      }
+      .appbar-actions {
+          margin-left: auto; /* Push actions to the right */
+          order: 2;
+          gap: 6px;
+      }
+      .appbar-actions .btn {
+          padding: 8px;
+          min-width: 40px;
+      }
+      .appbar-actions .btn .btn-text,
+      #addSubject .btn-text {
+          display: none; /* Hide text on buttons to save space */
+      }
+       #addSubject .fa-solid {
+            margin: 0 auto;
+      }
+      .dash-grid {
+          grid-template-columns: 1fr; /* Stack cards vertically */
+      }
       .hero-section h1 { font-size: 2rem; }
       .hero-section p { font-size: 1rem; }
+
+      .card-header {
+          flex-wrap: wrap;
+          gap: 8px;
+      }
+      .card-header .space {
+          display: none; /* remove flexible spacer on mobile */
+      }
+      .card-header .title {
+           flex-basis: 100%; /* Title takes full width */
+      }
+      .due-date-input-group {
+        margin-left: 0;
+      }
+      .chapter-card { margin-left: 8px; }
+      .topic-card { margin-left: 16px; }
+
       #focusModeOverlay { padding: 10px; }
-      #focusStageTitle { font-size: 1.4em; }
-      #focusTimerDisplay { font-size: 1.8em; }
-      .focus-header { flex-wrap: wrap; }
+      .focus-header { 
+          flex-wrap: wrap; 
+          justify-content: center;
+          gap: 10px;
+      }
+      #focusStageTitle { font-size: 1.4em; order: 1; text-align: center; width: 100%;}
+      #focusTimerDisplay { font-size: 2em; order: 2;}
+      #focusControls { order: 3; }
+      .focus-header-actions { margin-left: 0; order: 4; }
   }
 </style>
 </head>
@@ -1614,13 +1692,15 @@
       <span class="trademark">Pro ⚘</span>
     </div>
     <input id="search" class="search" placeholder="Find My Name..." />
-    <button id="addSubject" class="btn btn-primary">Add Subject</button>
-    <button id="dashboardBtn" class="btn btn-ghost"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
-    <button id="backBtn" class="btn btn-primary hidden">Back</button>
-    <button id="backupBtn" class="btn btn-ghost"><i class="fa-solid fa-cloud-arrow-down"></i> Backup</button>
-    <button id="restoreBtn" class="btn btn-ghost"><i class="fa-solid fa-box-archive"></i> Restore</button>
-    <button id="mergeBtn" class="btn btn-ghost"><i class="fa-solid fa-layer-group"></i> Merge</button>
-    <button id="clearAll" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Clear All</button>
+    <div class="appbar-actions">
+      <button id="addSubject" class="btn btn-primary"><i class="fa-solid fa-book"></i> <span class="btn-text">Add Subject</span></button>
+      <button id="dashboardBtn" class="btn btn-ghost"><i class="fa-solid fa-chart-pie"></i> <span class="btn-text">Dashboard</span></button>
+      <button id="backBtn" class="btn btn-primary hidden">Back</button>
+      <button id="backupBtn" class="btn btn-ghost"><i class="fa-solid fa-cloud-arrow-down"></i> <span class="btn-text">Backup</span></button>
+      <button id="restoreBtn" class="btn btn-ghost"><i class="fa-solid fa-box-archive"></i> <span class="btn-text">Restore</span></button>
+      <button id="mergeBtn" class="btn btn-ghost"><i class="fa-solid fa-layer-group"></i> <span class="btn-text">Merge</span></button>
+      <button id="clearAll" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> <span class="btn-text">Clear All</span></button>
+    </div>
   </div>
 
   <div id="main" class="container">
@@ -1672,11 +1752,11 @@
         </div>
       </div>
       <div class="dash-card">
-          <h3>(づ ˕ ¬｡)っ<span class="pointing-hand">ᶻz 𐰁</span>Upcoming Deadlines</h3>
+          <h3>(づ ˕ ¬｡)っ<span class="pointing-hand">ᶻz 𐰁</span>Due Bliss</h3>
           <div id="upcomingDeadlines"></div>
       </div>
       <div id="honeysJournalCard" class="dash-card">
-        <h3>(｡Ò<span class="wavy-mouth">∼</span>Ó) Honey Bun Journal</h3>
+        <h3>(｡Ò<span class="wavy-mouth">∼</span>Ó) Honey's Diary</h3>
         <div id="journalContent"></div>
       </div>
       <div class="dash-card all-topics-card">
@@ -1889,20 +1969,24 @@
   const toYYYYMMDD = (date) => date.toISOString().split('T')[0];
     
   // --- Streak Logic-aaahhhhhh ---
-  const logActivityAndAddPoint = (points = 1) => {
+  const logActivityAndAddPoint = (points = 1, skipUpdate = false) => {
     model.streak = (model.streak || 0) + points;
     const todayStr = toYYYYMMDD(new Date());
     model.lastActivityDate = todayStr;
     model.activityDates = model.activityDates || [];
     if (!new Set(model.activityDates).has(todayStr)) { model.activityDates.push(todayStr); }
     saveModelThrottled();
-    updateDashboardIfVisible();
+    if (!skipUpdate) {
+        updateDashboardIfVisible();
+    }
   };
 
-  const deductStreakPoint = (points = 1) => {
+  const deductStreakPoint = (points = 1, skipUpdate = false) => {
       model.streak = Math.max(0, (model.streak || 0) - points);
       saveModelThrottled();
-      updateDashboardIfVisible();
+      if (!skipUpdate) {
+          updateDashboardIfVisible();
+      }
   };
 
   const runDailyCheck = () => {
@@ -2438,8 +2522,7 @@
     const twist = el('button', 'btn-mini twist closed', '▾'); header.appendChild(twist);
     const title = editable('h3', c.name, v => { c.name = v; saveModelThrottled(); }); header.appendChild(title);
     
-    const dueDateGroup = el('div', '', '');
-    dueDateGroup.style.cssText = 'display:flex; align-items:center; gap:8px; margin-left:12px;';
+    const dueDateGroup = el('div', 'due-date-input-group');
     const dueDateLabel = el('span', 'due-date-label');
     dueDateLabel.innerHTML = '<i class="fa-solid fa-bullseye"></i>';
     dueDateLabel.title = 'Set due date';
@@ -2536,8 +2619,7 @@
     
     const twist = el('button', 'btn-mini twist closed', '▾'); header.appendChild(twist);
     const title = editable('h2', s.name, v => { s.name = v; saveModelThrottled(); }); header.appendChild(title);
-    const dueDateGroup = el('div', '', '');
-    dueDateGroup.style.cssText = 'display:flex; align-items:center; gap:8px; margin-left:12px;';
+    const dueDateGroup = el('div', 'due-date-input-group');
     const dueDateLabel = el('span', 'due-date-label');
     dueDateLabel.innerHTML = '<i class="fa-solid fa-bullseye"></i>';
     dueDateLabel.title = 'Set due date';
@@ -2830,6 +2912,7 @@
 
     // === Deadline logic ===
     const now = new Date();
+    const GRACE_PERIOD_MS = 24 * 60 * 60 * 1000; // 24-hour grace period after due date ends.
     const yesterday = new Date();
     yesterday.setDate(now.getDate() - 1);
     let modelWasUpdatedByAutoMiss = false;
@@ -2837,10 +2920,10 @@
     model.subjects.forEach(s => {
         const checkAndMarkMissed = (item) => {
             if (item.dueDate && !item.deadlineStatus) {
-                // ends 18 hours after end of due date.
-                const promptEndTime = new Date(new Date(item.dueDate + 'T23:59:59').getTime() + 18 * 60 * 60 * 1000);
-                if (now > promptEndTime) {
-                    item.deadlineStatus = 'This little moment was missed.';
+                // The deadline is considered missed if the current time is 24 hours past the end of the due date.
+                const missedDeadlineTime = new Date(new Date(item.dueDate + 'T23:59:59').getTime() + GRACE_PERIOD_MS);
+                if (now > missedDeadlineTime) {
+                    item.deadlineStatus = 'missed';
                     item.deadlineSummary = 'Oops! Looks like this one played hide-and-seek & wasn\'t found..';
                     modelWasUpdatedByAutoMiss = true;
                 }
@@ -2875,7 +2958,8 @@
         deadlineItemContainer.appendChild(deadlineRow);
 
         const promptStartTime = new Date(d.dueDate + 'T00:00:00');
-        const promptEndTime = new Date(new Date(d.dueDate + 'T23:59:59').getTime() + 18 * 60 * 60 * 1000);
+        // The prompt to mark completion is available until the grace period ends.
+        const promptEndTime = new Date(new Date(d.dueDate + 'T23:59:59').getTime() + GRACE_PERIOD_MS);
         const isDueForPrompt = now >= promptStartTime && now <= promptEndTime;
         
         const renderPermanentDeadlineStatus = (container, deadlineData) => {
@@ -2920,22 +3004,23 @@
                 if (item) {
                     item.deadlineStatus = status;
                     item.deadlineSummary = summaryInput.value.trim();
+                    saveModelThrottled();
 
                     const feedbackEl = el('div', 'deadline-feedback');
                     if (status === 'completed') {
-                        logActivityAndAddPoint();
+                        logActivityAndAddPoint(1, true); // skip update
                         feedbackEl.innerHTML = item.deadlineSummary ? 'Great job! Summary saved and point awarded (• ֊ •｡)' : 'Great job! Point awarded (• ֊ •｡)';
                     } else {
-                        deductStreakPoint();
+                        deductStreakPoint(1, true); // skip update
                         feedbackEl.innerHTML = item.deadlineSummary ? 'Notes saved. Little by little, we will get there .ᐟ' : 'Whoops, a tiny detour.. Little by little, we will get there .ᐟ (•˕ •ゝ';
                     }
                     
                     promptContainer.innerHTML = '';
                     promptContainer.appendChild(feedbackEl);
-                    saveModelThrottled();
 
                     setTimeout(() => {
                         renderPermanentDeadlineStatus(promptContainer, item);
+                        renderDashboard(); // Re-render dashboard after timeout
                     }, 3500);
                 }
             };
@@ -3391,7 +3476,7 @@
                     : 'Great things are just ahead. Keep flowing!';
             } else { // Bravo Six, going dark!
                 responseText = choice === 'opt1'
-                    ? 'Sweet dreams. Rest up and be ready for tomorrow, okay !!'
+                    ? 'Aww... Time for bed now. Talk to you tomorrow! xoxo'
                     : 'The quiet of the night. May your silence bring you the peace you are seeking, love.';
             }
             greetingEl.innerHTML = `<p>${responseText}</p>`;
@@ -3407,7 +3492,7 @@
          if (period === 'evening') {
             responseText = choice === 'opt1' ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.' : 'Great things are just ahead. Keep flowing!';
         } else { // Night
-            responseText = choice === 'opt1' ? 'Sweet dreams. Rest up and be ready for tomorrow, okay !!' : 'The quiet of the night. May your silence bring you the peace you are seeking, love.';
+            responseText = choice === 'opt1' ? 'Aww... Time for bed now. Talk to you tomorrow! xoxo' : 'The quiet of the night. May your silence bring you the peace you are seeking, love.';
         }
         greetingEl.innerHTML = `<p>${responseText}</p>`;
     }
