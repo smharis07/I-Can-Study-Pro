@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>I Can Study</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐝</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -914,6 +914,10 @@
     min-height: 50px;
     color: var(--ink-muted);
   }
+    .time-of-day-greeting .fa-moon {
+    color: var(--yellow-main);
+    text-shadow: 0 0 10px var(--yellow-glow);
+  }
   .time-of-day-prompt-buttons {
     margin-top: 10px;
     display: flex;
@@ -1036,7 +1040,9 @@
     color: var(--ink-main);
     border-radius: 10px;
     font-size: 15px;
-    margin-bottom: 12px;
+  }
+  #newTodoForm {
+      margin-bottom: 12px;
   }
   #newTodoInput:focus {
     outline: none;
@@ -1661,7 +1667,7 @@
           gap: 8px;
       }
       .card-header .space {
-          display: none; /* remove flexible spacer on mobile */
+          display: none; /* no flexible spacer on mobile */
       }
       .card-header .title {
            flex-basis: 100%; /* Title takes full width */
@@ -1691,7 +1697,7 @@
       <span>.ᐟ Can Stひdy</span>
       <span class="trademark">Pro ⚘</span>
     </div>
-    <input id="search" class="search" placeholder="Find My Name..." />
+    <input id="search" class="search" placeholder="Find My Name .." />
     <div class="appbar-actions">
       <button id="addSubject" class="btn btn-primary"><i class="fa-solid fa-book"></i> <span class="btn-text">Add Subject</span></button>
       <button id="dashboardBtn" class="btn btn-ghost"><i class="fa-solid fa-chart-pie"></i> <span class="btn-text">Dashboard</span></button>
@@ -1743,12 +1749,12 @@
       </div>
       <div id="todoCard" class="dash-card">
         <h3><span class="sweat-kaomoji">(; ｡> ༝ <)</span> What To Do?</h3>
-        <div class="todo-input-container">
+        <form id="newTodoForm" class="todo-input-container">
             <input type="text" id="newTodoInput" placeholder="Add a task and press Enter...">
-        </div>
+        </form>
         <div id="todoListContainer" class="scrollable-dash-list" style="padding: 0;" data-drop-zone-for="todo"></div>
         <div class="todo-actions" style="margin-top: 12px; display: flex; justify-content: flex-end;">
-            <button id="clearCompletedBtn" class="btn btn-ghost btn-mini">Clear Completed</button>
+            <button id="clearCompletedBtn" type="button" class="btn btn-ghost btn-mini">Clear Completed</button>
         </div>
       </div>
       <div class="dash-card">
@@ -2789,6 +2795,7 @@
   
     function renderTodoList() {
         const container = document.getElementById('todoListContainer');
+        const form = document.getElementById('newTodoForm');
         const input = document.getElementById('newTodoInput');
         const clearBtn = document.getElementById('clearCompletedBtn');
         container.innerHTML = '';
@@ -2837,14 +2844,15 @@
             item.appendChild(deleteBtn);
             container.appendChild(item);
         });
-
-        input.onkeydown = (e) => {
-            if (e.key === 'Enter' && input.value.trim() !== '') {
-                e.preventDefault();
+        
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            if (input.value.trim() !== '') {
                 model.todoList.push({ id: uid(), text: input.value.trim(), completed: false });
                 input.value = ''; saveModelThrottled(); renderTodoList(); 
             }
         };
+
         clearBtn.onclick = () => { model.todoList = model.todoList.filter(task => !task.completed); saveModelThrottled(); renderTodoList(); };
     }
     
@@ -2912,7 +2920,9 @@
 
     // === Deadline logic ===
     const now = new Date();
-    const GRACE_PERIOD_MS = 24 * 60 * 60 * 1000; // 24-hour grace period after due date ends.
+    const INTERACTION_WINDOW_MS = 24 * 60 * 60 * 1000;
+    const MISSED_PROMPT_WINDOW_MS = 4 * 60 * 60 * 1000;
+    const AUTO_MISS_WINDOW_MS = INTERACTION_WINDOW_MS + MISSED_PROMPT_WINDOW_MS;
     const yesterday = new Date();
     yesterday.setDate(now.getDate() - 1);
     let modelWasUpdatedByAutoMiss = false;
@@ -2920,9 +2930,8 @@
     model.subjects.forEach(s => {
         const checkAndMarkMissed = (item) => {
             if (item.dueDate && !item.deadlineStatus) {
-                // The deadline is considered missed if the current time is 24 hours past the end of the due date.
-                const missedDeadlineTime = new Date(new Date(item.dueDate + 'T23:59:59').getTime() + GRACE_PERIOD_MS);
-                if (now > missedDeadlineTime) {
+                const autoMissTime = new Date(new Date(item.dueDate + 'T23:59:59').getTime() + AUTO_MISS_WINDOW_MS);
+                if (now > autoMissTime) {
                     item.deadlineStatus = 'missed';
                     item.deadlineSummary = 'Oops! Looks like this one played hide-and-seek & wasn\'t found..';
                     modelWasUpdatedByAutoMiss = true;
@@ -2958,9 +2967,11 @@
         deadlineItemContainer.appendChild(deadlineRow);
 
         const promptStartTime = new Date(d.dueDate + 'T00:00:00');
-        // The prompt to mark completion is available until the grace period ends.
-        const promptEndTime = new Date(new Date(d.dueDate + 'T23:59:59').getTime() + GRACE_PERIOD_MS);
+        const promptEndTime = new Date(promptStartTime.getTime() + INTERACTION_WINDOW_MS);
+        const missedPromptEndTime = new Date(promptEndTime.getTime() + MISSED_PROMPT_WINDOW_MS);
+
         const isDueForPrompt = now >= promptStartTime && now <= promptEndTime;
+        const isMissedButInWindow = now > promptEndTime && now <= missedPromptEndTime;
         
         const renderPermanentDeadlineStatus = (container, deadlineData) => {
             container.innerHTML = '';
@@ -2983,11 +2994,7 @@
             const summaryInput = el('textarea', 'deadline-summary-input');
             summaryInput.placeholder = 'Add a quick summary or notes...';
             
-            const deadlinePrompts = [
-                "Did you conquer this quest? How did it go?",
-                "Deadline day! Did you cross the finish line on this one?",
-                "It's due! How do you feel about your work on this?"
-            ];
+            const deadlinePrompts = [ "Did you conquer this quest? How did it go?", "Deadline day! Did you cross the finish line on this one?", "It's due! How do you feel about your work on this?" ];
             const randomPrompt = deadlinePrompts[Math.floor(Math.random() * deadlinePrompts.length)];
 
             const actionsContainer = el('div', 'deadline-actions');
@@ -3030,6 +3037,10 @@
             actionsContainer.append(noBtn, yesBtn);
             promptContainer.append(el('p', '', randomPrompt), summaryInput, actionsContainer);
             deadlineItemContainer.appendChild(promptContainer);
+        } else if (isMissedButInWindow && !d.status) {
+             const promptContainer = el('div', 'deadline-prompt');
+             promptContainer.innerHTML = `<div class="deadline-feedback"><strong>Missed.</strong><br>The deadline for this has passed.</div>`;
+             deadlineItemContainer.appendChild(promptContainer);
         } else if (d.status) {
             const statusContainer = el('div');
             deadlineItemContainer.appendChild(statusContainer);
@@ -3442,7 +3453,7 @@
         themeClass = 'theme-night';
         kaomoji = '(⑅ • ˕ •˶)';
         animationClass = 'kaomoji-night';
-        greetingText = '⏾ The night is an ocean.. Are you resting in its quiet harbor or exploring its depths?';
+        greetingText = '<i class="fa-solid fa-moon"></i> The night is an ocean.. Are you resting in its quiet harbor or exploring its depths?';
         showPrompt = true;
         period = 'night';
     }
@@ -3473,7 +3484,7 @@
             if (period === 'evening') {
                 responseText = choice === 'opt1'
                     ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.'
-                    : 'Great things are just ahead. Keep flowing!';
+                    : 'That little chill is just the soft wind guiding you home. Soon, you\'ll be settled in the warm lamplight; keep walking towards it.';
             } else { // Bravo Six, going dark!
                 responseText = choice === 'opt1'
                     ? 'Aww... Time for bed now. Talk to you tomorrow! xoxo'
@@ -3490,7 +3501,7 @@
         const choice = model.promptResponses[todayStr][period];
         let responseText = '';
          if (period === 'evening') {
-            responseText = choice === 'opt1' ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.' : 'Great things are just ahead. Keep flowing!';
+            responseText = choice === 'opt1' ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.' : 'That little chill is just the soft wind guiding you home. Soon, you\'ll be settled in the warm lamplight; keep walking towards it.';
         } else { // Night
             responseText = choice === 'opt1' ? 'Aww... Time for bed now. Talk to you tomorrow! xoxo' : 'The quiet of the night. May your silence bring you the peace you are seeking, love.';
         }
@@ -3521,7 +3532,7 @@
     overlay.classList.remove('hidden');
 
     const petals = ['🍂', '🍁', '🌿', '🌸', '🌼', '🪷'];
-    const count = 70;
+    const count = 60;
 
     for (let i = 0; i < count; i++) {
         const petal = el('div', 'petal', petals[Math.floor(Math.random() * petals.length)]);
@@ -4108,7 +4119,7 @@
         
         ctx.save(); ctx.translate(transform.x, transform.y); ctx.scale(transform.scale, transform.scale);
         
-        const isHovering = canvasState.hoverNode;
+        const isHovering = canvasState.hoverNode || canvasState.drag.node;
         const connectedNodes = new Set(isHovering ? [isHovering] : []);
         const connectedLinks = new Set();
         if (isHovering && isHovering.type === 'topic') {
@@ -4149,7 +4160,7 @@
             } else { // Topic
                 const size = 30 + Math.min(20, textWidth/3);
                 node.size = size;
-                ctx.fillStyle = (node === canvasState.hoverNode) ? '#FFD60A' : '#FFC107';
+                ctx.fillStyle = (node === canvasState.hoverNode || node === canvasState.drag.node) ? '#FFD60A' : '#FFC107';
                 // White, thicker border for external topics
                 ctx.strokeStyle = node.isExternal ? '#FFFFFF' : '#111';
                 ctx.lineWidth = node.isExternal ? 3.5 : 1.5;
@@ -4238,7 +4249,7 @@
         e.preventDefault(); const scaleAmount = 1.1; const pos = getMousePos(e); const scaleFactor = e.deltaY < 0 ? scaleAmount : 1 / scaleAmount;
         canvasState.transform.scale *= scaleFactor; canvasState.transform.x = pos.x - (pos.x - canvasState.transform.x) * scaleFactor; canvasState.transform.y = pos.y - (pos.y - canvasState.transform.y) * scaleFactor;
     }
-    // --- Touch Handlers, no string ---
+    // --- Touch Handlers, ---
     function onTouchStart(e) {
         e.preventDefault();
         if (e.touches.length === 1) { onMouseDown({ clientX: e.touches[0].clientX, clientY: e.touches[0].clientY, preventDefault: ()=>{} }); }
