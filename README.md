@@ -97,9 +97,8 @@ Save the file somewhere safe like Google Drive or Device Storage. If your comput
 this backup file is the only way to get your data back.
 3. Know Your Restore Options: Understand the difference between **Restore (Replace)** and
 **Restore (Merge). Accidentally using "Replace" when you meant to "Merge" can cause you to
-lose recent work.
-4. On mobile phones adjust the zoom to 50% for readibility, after you can install the app. 
-5. Be Honest with the Cookies: The "Weak Topics" and "Focus Session" features are only as
+lose recent work. 
+4. Be Honest with the Cookies: The "Weak Topics" and "Focus Session" features are only as
 good as your self-assessment. Be honest about your confidence levels to get the most accurate
 guidance.
 ---
