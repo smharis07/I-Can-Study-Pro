@@ -3484,7 +3484,7 @@
             if (period === 'evening') {
                 responseText = choice === 'opt1'
                     ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.'
-                    : 'That little chill is just the soft wind guiding you home. Soon, you\'ll be settled in the warm lamplight; keep walking towards it.';
+                    : 'That little chill is just the soft wind guiding you home. Soon, you\'ll get there; keep walking towards it.';
             } else { // Bravo Six, going dark!
                 responseText = choice === 'opt1'
                     ? 'Aww... Time for bed now. Talk to you tomorrow! xoxo'
@@ -3501,7 +3501,7 @@
         const choice = model.promptResponses[todayStr][period];
         let responseText = '';
          if (period === 'evening') {
-            responseText = choice === 'opt1' ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.' : 'That little chill is just the soft wind guiding you home. Soon, you\'ll be settled in the warm lamplight; keep walking towards it.';
+            responseText = choice === 'opt1' ? 'Yep, take a rest. I\'m so grateful you were here. Enjoy your time.' : 'That little chill is just the soft wind guiding you home. Soon, you\'ll get there; keep walking towards it.';
         } else { // Night
             responseText = choice === 'opt1' ? 'Aww... Time for bed now. Talk to you tomorrow! xoxo' : 'The quiet of the night. May your silence bring you the peace you are seeking, love.';
         }
