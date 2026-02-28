@@ -1,15 +1,16 @@
-const REPO_NAME = 'I-Can-Study-Pro';
 const CACHE_NAME = 'i-can-study-pro-cache-v7.1';
 
+//  relative paths
 const assetsToCache = [
-  `/${REPO_NAME}/`,
-  `/${REPO_NAME}/index.html`,
-  `/${REPO_NAME}/manifest.json`,
-  `/${REPO_NAME}/icon-192.png`,
-  `/${REPO_NAME}/icon-512.png`,
-  `/${REPO_NAME}/icon-maskable-512.png`,
-  `/${REPO_NAME}/screenshot-mobile.png`, 
-  `/${REPO_NAME}/screenshot-desktop.png`,
+  './',
+  './index.html',
+  './app.js', 
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-512.png',
+  './screenshot-mobile.png', 
+  './screenshot-desktop.png',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap'
 ];
@@ -27,7 +28,6 @@ self.addEventListener('install', (event) => {
         console.log('Opened cache and caching app shell assets.');
         return cache.addAll(assetsToCache);
       })
-    
       .catch(error => {
         console.error('Failed to cache assets during install:', error);
       })
